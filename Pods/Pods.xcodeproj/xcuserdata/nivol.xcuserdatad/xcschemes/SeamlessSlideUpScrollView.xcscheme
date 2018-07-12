@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E58898865CB0B49288E3DE44463F6BE3"
-               BlueprintName = "Pods-CofeeGo"
+               BlueprintIdentifier = "7E7A9661E4845148AAD71259C6521AD2"
+               BlueprintName = "SeamlessSlideUpScrollView"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "Pods-CofeeGo.framework">
+               BuildableName = "SeamlessSlideUpScrollView.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

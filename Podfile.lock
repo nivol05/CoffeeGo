@@ -3,6 +3,7 @@ PODS:
   - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
   - Kingfisher (4.8.0)
+  - SeamlessSlideUpScrollView (2.0.1)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.1.0)
 
@@ -10,6 +11,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - AlamofireImage (~> 3.3)
   - Kingfisher (~> 4.0)
+  - SeamlessSlideUpScrollView
   - SVProgressHUD
   - SwiftyJSON (~> 4.0)
 
@@ -18,6 +20,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - Kingfisher
+    - SeamlessSlideUpScrollView
     - SVProgressHUD
     - SwiftyJSON
 
@@ -25,9 +28,10 @@ SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  SeamlessSlideUpScrollView: fe569043d844015107a58e0d8ea78b97bfa35d2d
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: cc3edd76196ddf8264cb53b2e30e24d499146219
+PODFILE CHECKSUM: cd52d36598971af82fe5f2641e10b764dd03cc84
 
 COCOAPODS: 1.5.2
