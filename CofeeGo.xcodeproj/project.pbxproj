@@ -1,0 +1,540 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C57743CC07236D7A520190E4 /* Pods_CofeeGo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4016973B38DC3B828FE519 /* Pods_CofeeGo.framework */; };
+		EF71620F20EE66D1000C0C07 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71620E20EE66D1000C0C07 /* User.swift */; };
+		EF71621220EEA08B000C0C07 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621120EEA08A000C0C07 /* ServerManager.swift */; };
+		EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621420EEB90F000C0C07 /* ListVC.swift */; };
+		EF71621720F12A52000C0C07 /* CoffeeListOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621620F12A52000C0C07 /* CoffeeListOnMap.swift */; };
+		EF71621C20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621B20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift */; };
+		EF799DF320C1590300EED722 /* CoffeePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF799DF220C1590200EED722 /* CoffeePage.swift */; };
+		EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF799DF520C15BAA00EED722 /* CommentTable.swift */; };
+		EF89F4F320F7A0F300BED796 /* SpotListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF89F4F220F7A0F300BED796 /* SpotListVC.swift */; };
+		EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */; };
+		EFD3AC4620B5BF9E008B0CE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD3AC4520B5BF9E008B0CE0 /* AppDelegate.swift */; };
+		EFD3AC4820B5BF9E008B0CE0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD3AC4720B5BF9E008B0CE0 /* ViewController.swift */; };
+		EFD3AC4B20B5BF9E008B0CE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFD3AC4920B5BF9E008B0CE0 /* Main.storyboard */; };
+		EFD3AC4D20B5BFA1008B0CE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFD3AC4C20B5BFA1008B0CE0 /* Assets.xcassets */; };
+		EFD3AC5020B5BFA1008B0CE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFD3AC4E20B5BFA1008B0CE0 /* LaunchScreen.storyboard */; };
+		EFE8474720B5E55000449114 /* CofeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8474620B5E55000449114 /* CofeeCell.swift */; };
+		EFE8474920B5EA6C00449114 /* ListCoffee.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8474820B5EA6C00449114 /* ListCoffee.swift */; };
+		EFE8474B20B5ECC000449114 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8474A20B5ECC000449114 /* Constants.swift */; };
+		EFFB2D1620D1A4BC003A21C3 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFB2D1520D1A4BC003A21C3 /* MapVC.swift */; };
+		EFFB2D1820D1A76B003A21C3 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFB2D1720D1A76B003A21C3 /* File.swift */; };
+		EFFB2D1A20D2C477003A21C3 /* MapCoffeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFB2D1920D2C477003A21C3 /* MapCoffeeVC.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		54F80BC995ACCCB2B396D95C /* Pods-CofeeGo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CofeeGo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo.release.xcconfig"; sourceTree = "<group>"; };
+		7A4016973B38DC3B828FE519 /* Pods_CofeeGo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CofeeGo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACE4F67825C3DFD0125A02C1 /* Pods-CofeeGo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CofeeGo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo.debug.xcconfig"; sourceTree = "<group>"; };
+		EF71620E20EE66D1000C0C07 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		EF71621120EEA08A000C0C07 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
+		EF71621420EEB90F000C0C07 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
+		EF71621620F12A52000C0C07 /* CoffeeListOnMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeListOnMap.swift; sourceTree = "<group>"; };
+		EF71621B20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParalaxEffectCoffeeTableView.swift; sourceTree = "<group>"; };
+		EF799DF220C1590200EED722 /* CoffeePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePage.swift; sourceTree = "<group>"; };
+		EF799DF520C15BAA00EED722 /* CommentTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTable.swift; sourceTree = "<group>"; };
+		EF89F4F220F7A0F300BED796 /* SpotListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotListVC.swift; sourceTree = "<group>"; };
+		EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapParelavEffect.swift; sourceTree = "<group>"; };
+		EFD3AC4220B5BF9E008B0CE0 /* CofeeGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CofeeGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFD3AC4520B5BF9E008B0CE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EFD3AC4720B5BF9E008B0CE0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EFD3AC4A20B5BF9E008B0CE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EFD3AC4C20B5BFA1008B0CE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EFD3AC4F20B5BFA1008B0CE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EFD3AC5120B5BFA1008B0CE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFE8474620B5E55000449114 /* CofeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CofeeCell.swift; sourceTree = "<group>"; };
+		EFE8474820B5EA6C00449114 /* ListCoffee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoffee.swift; sourceTree = "<group>"; };
+		EFE8474A20B5ECC000449114 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EFFB2D1520D1A4BC003A21C3 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		EFFB2D1720D1A76B003A21C3 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		EFFB2D1920D2C477003A21C3 /* MapCoffeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoffeeVC.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EFD3AC3F20B5BF9E008B0CE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C57743CC07236D7A520190E4 /* Pods_CofeeGo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		76A3ADDE73750C154C30AD10 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7A4016973B38DC3B828FE519 /* Pods_CofeeGo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D3981CD01B063CB179A6E0EE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ACE4F67825C3DFD0125A02C1 /* Pods-CofeeGo.debug.xcconfig */,
+				54F80BC995ACCCB2B396D95C /* Pods-CofeeGo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EF71620C20EE44FB000C0C07 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				EFD3AC4720B5BF9E008B0CE0 /* ViewController.swift */,
+				EF799DF220C1590200EED722 /* CoffeePage.swift */,
+				EFFB2D1920D2C477003A21C3 /* MapCoffeeVC.swift */,
+				EF89F4F220F7A0F300BED796 /* SpotListVC.swift */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		EF71620D20EE4516000C0C07 /* MapPage */ = {
+			isa = PBXGroup;
+			children = (
+				EFFB2D1520D1A4BC003A21C3 /* MapVC.swift */,
+			);
+			path = MapPage;
+			sourceTree = "<group>";
+		};
+		EF71621020EEA053000C0C07 /* HelperClasses */ = {
+			isa = PBXGroup;
+			children = (
+				EF71621120EEA08A000C0C07 /* ServerManager.swift */,
+			);
+			path = HelperClasses;
+			sourceTree = "<group>";
+		};
+		EF71621320EEB8DC000C0C07 /* ListPage */ = {
+			isa = PBXGroup;
+			children = (
+				EF71621420EEB90F000C0C07 /* ListVC.swift */,
+			);
+			path = ListPage;
+			sourceTree = "<group>";
+		};
+		EF71621820F13C50000C0C07 /* InterfaceElements */ = {
+			isa = PBXGroup;
+			children = (
+				EF71621B20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift */,
+				EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */,
+			);
+			path = InterfaceElements;
+			sourceTree = "<group>";
+		};
+		EF799DF120C1570200EED722 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8474820B5EA6C00449114 /* ListCoffee.swift */,
+				EFE8474A20B5ECC000449114 /* Constants.swift */,
+				EFFB2D1720D1A76B003A21C3 /* File.swift */,
+				EF71620E20EE66D1000C0C07 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EF799DF420C15B6000EED722 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8474620B5E55000449114 /* CofeeCell.swift */,
+				EF799DF520C15BAA00EED722 /* CommentTable.swift */,
+				EF71621620F12A52000C0C07 /* CoffeeListOnMap.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		EFD3AC3920B5BF9E008B0CE0 = {
+			isa = PBXGroup;
+			children = (
+				EFD3AC4420B5BF9E008B0CE0 /* CofeeGo */,
+				EFD3AC4320B5BF9E008B0CE0 /* Products */,
+				D3981CD01B063CB179A6E0EE /* Pods */,
+				76A3ADDE73750C154C30AD10 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		EFD3AC4320B5BF9E008B0CE0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EFD3AC4220B5BF9E008B0CE0 /* CofeeGo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EFD3AC4420B5BF9E008B0CE0 /* CofeeGo */ = {
+			isa = PBXGroup;
+			children = (
+				EF71621820F13C50000C0C07 /* InterfaceElements */,
+				EF71621020EEA053000C0C07 /* HelperClasses */,
+				EF799DF420C15B6000EED722 /* TableView */,
+				EF799DF120C1570200EED722 /* Model */,
+				EFE7CBA020BFF06900DAB3FD /* View */,
+				EFD3AC4520B5BF9E008B0CE0 /* AppDelegate.swift */,
+				EFD3AC4920B5BF9E008B0CE0 /* Main.storyboard */,
+				EFD3AC4E20B5BFA1008B0CE0 /* LaunchScreen.storyboard */,
+				EFD3AC4C20B5BFA1008B0CE0 /* Assets.xcassets */,
+				EFD3AC5120B5BFA1008B0CE0 /* Info.plist */,
+			);
+			path = CofeeGo;
+			sourceTree = "<group>";
+		};
+		EFE7CBA020BFF06900DAB3FD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EF71621320EEB8DC000C0C07 /* ListPage */,
+				EF71620C20EE44FB000C0C07 /* HomePage */,
+				EF71620D20EE4516000C0C07 /* MapPage */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EFD3AC4120B5BF9E008B0CE0 /* CofeeGo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EFD3AC5420B5BFA1008B0CE0 /* Build configuration list for PBXNativeTarget "CofeeGo" */;
+			buildPhases = (
+				7D4150ED052B383E76C0BA44 /* [CP] Check Pods Manifest.lock */,
+				EFD3AC3E20B5BF9E008B0CE0 /* Sources */,
+				EFD3AC3F20B5BF9E008B0CE0 /* Frameworks */,
+				EFD3AC4020B5BF9E008B0CE0 /* Resources */,
+				EB43AEE176DF94EF71DDF745 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CofeeGo;
+			productName = CofeeGo;
+			productReference = EFD3AC4220B5BF9E008B0CE0 /* CofeeGo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EFD3AC3A20B5BF9E008B0CE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = "Ni VoL";
+				TargetAttributes = {
+					EFD3AC4120B5BF9E008B0CE0 = {
+						CreatedOnToolsVersion = 9.3;
+					};
+				};
+			};
+			buildConfigurationList = EFD3AC3D20B5BF9E008B0CE0 /* Build configuration list for PBXProject "CofeeGo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EFD3AC3920B5BF9E008B0CE0;
+			productRefGroup = EFD3AC4320B5BF9E008B0CE0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EFD3AC4120B5BF9E008B0CE0 /* CofeeGo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EFD3AC4020B5BF9E008B0CE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFD3AC5020B5BFA1008B0CE0 /* LaunchScreen.storyboard in Resources */,
+				EFD3AC4D20B5BFA1008B0CE0 /* Assets.xcassets in Resources */,
+				EFD3AC4B20B5BF9E008B0CE0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7D4150ED052B383E76C0BA44 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CofeeGo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB43AEE176DF94EF71DDF745 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EFD3AC3E20B5BF9E008B0CE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFE8474B20B5ECC000449114 /* Constants.swift in Sources */,
+				EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */,
+				EFE8474920B5EA6C00449114 /* ListCoffee.swift in Sources */,
+				EFD3AC4820B5BF9E008B0CE0 /* ViewController.swift in Sources */,
+				EF89F4F320F7A0F300BED796 /* SpotListVC.swift in Sources */,
+				EF71621C20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift in Sources */,
+				EFD3AC4620B5BF9E008B0CE0 /* AppDelegate.swift in Sources */,
+				EF71621220EEA08B000C0C07 /* ServerManager.swift in Sources */,
+				EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */,
+				EF799DF320C1590300EED722 /* CoffeePage.swift in Sources */,
+				EFFB2D1A20D2C477003A21C3 /* MapCoffeeVC.swift in Sources */,
+				EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */,
+				EF71621720F12A52000C0C07 /* CoffeeListOnMap.swift in Sources */,
+				EFFB2D1620D1A4BC003A21C3 /* MapVC.swift in Sources */,
+				EFFB2D1820D1A76B003A21C3 /* File.swift in Sources */,
+				EFE8474720B5E55000449114 /* CofeeCell.swift in Sources */,
+				EF71620F20EE66D1000C0C07 /* User.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EFD3AC4920B5BF9E008B0CE0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EFD3AC4A20B5BF9E008B0CE0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EFD3AC4E20B5BFA1008B0CE0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EFD3AC4F20B5BFA1008B0CE0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EFD3AC5220B5BFA1008B0CE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EFD3AC5320B5BFA1008B0CE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EFD3AC5520B5BFA1008B0CE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACE4F67825C3DFD0125A02C1 /* Pods-CofeeGo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7JSG597976;
+				INFOPLIST_FILE = CofeeGo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.GrishaVoL.CoffeeGo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EFD3AC5620B5BFA1008B0CE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54F80BC995ACCCB2B396D95C /* Pods-CofeeGo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7JSG597976;
+				INFOPLIST_FILE = CofeeGo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.GrishaVoL.CoffeeGo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EFD3AC3D20B5BF9E008B0CE0 /* Build configuration list for PBXProject "CofeeGo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EFD3AC5220B5BFA1008B0CE0 /* Debug */,
+				EFD3AC5320B5BFA1008B0CE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EFD3AC5420B5BFA1008B0CE0 /* Build configuration list for PBXNativeTarget "CofeeGo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EFD3AC5520B5BFA1008B0CE0 /* Debug */,
+				EFD3AC5620B5BFA1008B0CE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EFD3AC3A20B5BF9E008B0CE0 /* Project object */;
+}
