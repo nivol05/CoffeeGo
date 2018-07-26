@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		C57743CC07236D7A520190E4 /* Pods_CofeeGo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4016973B38DC3B828FE519 /* Pods_CofeeGo.framework */; };
+		EF36530420FD712F005E00D3 /* CoffeeManu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36530320FD712F005E00D3 /* CoffeeManu.swift */; };
+		EF3653072100A00B005E00D3 /* OrderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3653062100A00B005E00D3 /* OrderList.swift */; };
+		EF36530A2100A4B4005E00D3 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3653092100A4B4005E00D3 /* MainVC.swift */; };
+		EF36530C2100A4CF005E00D3 /* FavoriteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36530B2100A4CF005E00D3 /* FavoriteListVC.swift */; };
+		EF36530E21012BBF005E00D3 /* PieManu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36530D21012BBF005E00D3 /* PieManu.swift */; };
+		EF36531021012BD5005E00D3 /* BottleManu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36530F21012BD5005E00D3 /* BottleManu.swift */; };
+		EF36531221012BEB005E00D3 /* SendwichManu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36531121012BEB005E00D3 /* SendwichManu.swift */; };
+		EF36531421012BF9005E00D3 /* OtherManu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36531321012BF9005E00D3 /* OtherManu.swift */; };
+		EF36531621012C39005E00D3 /* CakeManu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36531521012C39005E00D3 /* CakeManu.swift */; };
+		EF36531F21061816005E00D3 /* DropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36531D21061816005E00D3 /* DropDownCell.swift */; };
+		EF36532021061816005E00D3 /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF36531E21061816005E00D3 /* DropDownCell.xib */; };
+		EF365328210A5962005E00D3 /* infoWindows.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF365327210A5962005E00D3 /* infoWindows.xib */; };
+		EF36532A210A5A10005E00D3 /* infoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF365329210A5A10005E00D3 /* infoWindow.swift */; };
 		EF71620F20EE66D1000C0C07 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71620E20EE66D1000C0C07 /* User.swift */; };
 		EF71621220EEA08B000C0C07 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621120EEA08A000C0C07 /* ServerManager.swift */; };
 		EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621420EEB90F000C0C07 /* ListVC.swift */; };
@@ -15,8 +28,14 @@
 		EF71621C20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621B20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift */; };
 		EF799DF320C1590300EED722 /* CoffeePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF799DF220C1590200EED722 /* CoffeePage.swift */; };
 		EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF799DF520C15BAA00EED722 /* CommentTable.swift */; };
-		EF89F4F320F7A0F300BED796 /* SpotListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF89F4F220F7A0F300BED796 /* SpotListVC.swift */; };
 		EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */; };
+		EFC712F220FBC6EA00121607 /* OrdersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F120FBC6EA00121607 /* OrdersVC.swift */; };
+		EFC712F620FD056C00121607 /* CoffeeMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F520FD056C00121607 /* CoffeeMenuList.swift */; };
+		EFC712F820FD05C000121607 /* OtherMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F720FD05C000121607 /* OtherMenuList.swift */; };
+		EFC712FA20FD05D600121607 /* CakeMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F920FD05D600121607 /* CakeMenuList.swift */; };
+		EFC712FC20FD062E00121607 /* BottleWaterMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712FB20FD062E00121607 /* BottleWaterMenuList.swift */; };
+		EFC712FE20FD066000121607 /* SendwitchMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712FD20FD066000121607 /* SendwitchMenuList.swift */; };
+		EFC7130020FD068100121607 /* PieMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712FF20FD068100121607 /* PieMenuList.swift */; };
 		EFD3AC4620B5BF9E008B0CE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD3AC4520B5BF9E008B0CE0 /* AppDelegate.swift */; };
 		EFD3AC4820B5BF9E008B0CE0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD3AC4720B5BF9E008B0CE0 /* ViewController.swift */; };
 		EFD3AC4B20B5BF9E008B0CE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFD3AC4920B5BF9E008B0CE0 /* Main.storyboard */; };
@@ -34,6 +53,19 @@
 		54F80BC995ACCCB2B396D95C /* Pods-CofeeGo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CofeeGo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo.release.xcconfig"; sourceTree = "<group>"; };
 		7A4016973B38DC3B828FE519 /* Pods_CofeeGo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CofeeGo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE4F67825C3DFD0125A02C1 /* Pods-CofeeGo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CofeeGo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo.debug.xcconfig"; sourceTree = "<group>"; };
+		EF36530320FD712F005E00D3 /* CoffeeManu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeManu.swift; sourceTree = "<group>"; };
+		EF3653062100A00B005E00D3 /* OrderList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderList.swift; sourceTree = "<group>"; };
+		EF3653092100A4B4005E00D3 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		EF36530B2100A4CF005E00D3 /* FavoriteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListVC.swift; sourceTree = "<group>"; };
+		EF36530D21012BBF005E00D3 /* PieManu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieManu.swift; sourceTree = "<group>"; };
+		EF36530F21012BD5005E00D3 /* BottleManu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleManu.swift; sourceTree = "<group>"; };
+		EF36531121012BEB005E00D3 /* SendwichManu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendwichManu.swift; sourceTree = "<group>"; };
+		EF36531321012BF9005E00D3 /* OtherManu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherManu.swift; sourceTree = "<group>"; };
+		EF36531521012C39005E00D3 /* CakeManu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CakeManu.swift; sourceTree = "<group>"; };
+		EF36531D21061816005E00D3 /* DropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
+		EF36531E21061816005E00D3 /* DropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropDownCell.xib; sourceTree = "<group>"; };
+		EF365327210A5962005E00D3 /* infoWindows.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = infoWindows.xib; sourceTree = "<group>"; };
+		EF365329210A5A10005E00D3 /* infoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infoWindow.swift; sourceTree = "<group>"; };
 		EF71620E20EE66D1000C0C07 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF71621120EEA08A000C0C07 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		EF71621420EEB90F000C0C07 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
@@ -41,8 +73,14 @@
 		EF71621B20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParalaxEffectCoffeeTableView.swift; sourceTree = "<group>"; };
 		EF799DF220C1590200EED722 /* CoffeePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePage.swift; sourceTree = "<group>"; };
 		EF799DF520C15BAA00EED722 /* CommentTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTable.swift; sourceTree = "<group>"; };
-		EF89F4F220F7A0F300BED796 /* SpotListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotListVC.swift; sourceTree = "<group>"; };
 		EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapParelavEffect.swift; sourceTree = "<group>"; };
+		EFC712F120FBC6EA00121607 /* OrdersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVC.swift; sourceTree = "<group>"; };
+		EFC712F520FD056C00121607 /* CoffeeMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMenuList.swift; sourceTree = "<group>"; };
+		EFC712F720FD05C000121607 /* OtherMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherMenuList.swift; sourceTree = "<group>"; };
+		EFC712F920FD05D600121607 /* CakeMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CakeMenuList.swift; sourceTree = "<group>"; };
+		EFC712FB20FD062E00121607 /* BottleWaterMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleWaterMenuList.swift; sourceTree = "<group>"; };
+		EFC712FD20FD066000121607 /* SendwitchMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendwitchMenuList.swift; sourceTree = "<group>"; };
+		EFC712FF20FD068100121607 /* PieMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieMenuList.swift; sourceTree = "<group>"; };
 		EFD3AC4220B5BF9E008B0CE0 /* CofeeGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CofeeGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFD3AC4520B5BF9E008B0CE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EFD3AC4720B5BF9E008B0CE0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -87,13 +125,47 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EF36530220FD710E005E00D3 /* Manu */ = {
+			isa = PBXGroup;
+			children = (
+				EF36531C210617DD005E00D3 /* DropDownCell */,
+				EF36530D21012BBF005E00D3 /* PieManu.swift */,
+				EF36530320FD712F005E00D3 /* CoffeeManu.swift */,
+				EF36530F21012BD5005E00D3 /* BottleManu.swift */,
+				EF36531121012BEB005E00D3 /* SendwichManu.swift */,
+				EF36531321012BF9005E00D3 /* OtherManu.swift */,
+				EF36531521012C39005E00D3 /* CakeManu.swift */,
+			);
+			path = Manu;
+			sourceTree = "<group>";
+		};
+		EF3653082100A47E005E00D3 /* MainPageVC */ = {
+			isa = PBXGroup;
+			children = (
+				EF3653092100A4B4005E00D3 /* MainVC.swift */,
+				EFD3AC4720B5BF9E008B0CE0 /* ViewController.swift */,
+				EF36530B2100A4CF005E00D3 /* FavoriteListVC.swift */,
+			);
+			path = MainPageVC;
+			sourceTree = "<group>";
+		};
+		EF36531C210617DD005E00D3 /* DropDownCell */ = {
+			isa = PBXGroup;
+			children = (
+				EF36531D21061816005E00D3 /* DropDownCell.swift */,
+				EF36531E21061816005E00D3 /* DropDownCell.xib */,
+			);
+			path = DropDownCell;
+			sourceTree = "<group>";
+		};
 		EF71620C20EE44FB000C0C07 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				EFD3AC4720B5BF9E008B0CE0 /* ViewController.swift */,
+				EF3653082100A47E005E00D3 /* MainPageVC */,
 				EF799DF220C1590200EED722 /* CoffeePage.swift */,
 				EFFB2D1920D2C477003A21C3 /* MapCoffeeVC.swift */,
-				EF89F4F220F7A0F300BED796 /* SpotListVC.swift */,
+				EFC712F120FBC6EA00121607 /* OrdersVC.swift */,
+				EFC712F420FD053600121607 /* MenuLists */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -138,6 +210,8 @@
 				EFE8474A20B5ECC000449114 /* Constants.swift */,
 				EFFB2D1720D1A76B003A21C3 /* File.swift */,
 				EF71620E20EE66D1000C0C07 /* User.swift */,
+				EF365327210A5962005E00D3 /* infoWindows.xib */,
+				EF365329210A5A10005E00D3 /* infoWindow.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -145,11 +219,26 @@
 		EF799DF420C15B6000EED722 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
+				EF36530220FD710E005E00D3 /* Manu */,
 				EFE8474620B5E55000449114 /* CofeeCell.swift */,
 				EF799DF520C15BAA00EED722 /* CommentTable.swift */,
 				EF71621620F12A52000C0C07 /* CoffeeListOnMap.swift */,
+				EF3653062100A00B005E00D3 /* OrderList.swift */,
 			);
 			path = TableView;
+			sourceTree = "<group>";
+		};
+		EFC712F420FD053600121607 /* MenuLists */ = {
+			isa = PBXGroup;
+			children = (
+				EFC712F520FD056C00121607 /* CoffeeMenuList.swift */,
+				EFC712F720FD05C000121607 /* OtherMenuList.swift */,
+				EFC712F920FD05D600121607 /* CakeMenuList.swift */,
+				EFC712FB20FD062E00121607 /* BottleWaterMenuList.swift */,
+				EFC712FD20FD066000121607 /* SendwitchMenuList.swift */,
+				EFC712FF20FD068100121607 /* PieMenuList.swift */,
+			);
+			path = MenuLists;
 			sourceTree = "<group>";
 		};
 		EFD3AC3920B5BF9E008B0CE0 = {
@@ -209,6 +298,7 @@
 				EFD3AC3F20B5BF9E008B0CE0 /* Frameworks */,
 				EFD3AC4020B5BF9E008B0CE0 /* Resources */,
 				EB43AEE176DF94EF71DDF745 /* [CP] Embed Pods Frameworks */,
+				7D03DFC127053E7CA9CC9A10 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -257,8 +347,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF365328210A5962005E00D3 /* infoWindows.xib in Resources */,
 				EFD3AC5020B5BFA1008B0CE0 /* LaunchScreen.storyboard in Resources */,
 				EFD3AC4D20B5BFA1008B0CE0 /* Assets.xcassets in Resources */,
+				EF36532021061816005E00D3 /* DropDownCell.xib in Resources */,
 				EFD3AC4B20B5BF9E008B0CE0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +358,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7D03DFC127053E7CA9CC9A10 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7D4150ED052B383E76C0BA44 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -293,6 +403,8 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/CarbonKit/CarbonKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ClusterKit/ClusterKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SeamlessSlideUpScrollView/SeamlessSlideUpScrollView.framework",
@@ -302,6 +414,8 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CarbonKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ClusterKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SeamlessSlideUpScrollView.framework",
@@ -321,19 +435,36 @@
 			files = (
 				EFE8474B20B5ECC000449114 /* Constants.swift in Sources */,
 				EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */,
+				EFC712FC20FD062E00121607 /* BottleWaterMenuList.swift in Sources */,
+				EF36532A210A5A10005E00D3 /* infoWindow.swift in Sources */,
 				EFE8474920B5EA6C00449114 /* ListCoffee.swift in Sources */,
+				EF36530C2100A4CF005E00D3 /* FavoriteListVC.swift in Sources */,
 				EFD3AC4820B5BF9E008B0CE0 /* ViewController.swift in Sources */,
-				EF89F4F320F7A0F300BED796 /* SpotListVC.swift in Sources */,
+				EFC712F820FD05C000121607 /* OtherMenuList.swift in Sources */,
+				EF36531221012BEB005E00D3 /* SendwichManu.swift in Sources */,
+				EF36531421012BF9005E00D3 /* OtherManu.swift in Sources */,
 				EF71621C20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift in Sources */,
 				EFD3AC4620B5BF9E008B0CE0 /* AppDelegate.swift in Sources */,
 				EF71621220EEA08B000C0C07 /* ServerManager.swift in Sources */,
 				EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */,
+				EFC7130020FD068100121607 /* PieMenuList.swift in Sources */,
+				EF36531621012C39005E00D3 /* CakeManu.swift in Sources */,
 				EF799DF320C1590300EED722 /* CoffeePage.swift in Sources */,
+				EF36530420FD712F005E00D3 /* CoffeeManu.swift in Sources */,
 				EFFB2D1A20D2C477003A21C3 /* MapCoffeeVC.swift in Sources */,
 				EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */,
 				EF71621720F12A52000C0C07 /* CoffeeListOnMap.swift in Sources */,
+				EFC712FE20FD066000121607 /* SendwitchMenuList.swift in Sources */,
+				EF3653072100A00B005E00D3 /* OrderList.swift in Sources */,
+				EF36531F21061816005E00D3 /* DropDownCell.swift in Sources */,
+				EFC712F220FBC6EA00121607 /* OrdersVC.swift in Sources */,
+				EFC712FA20FD05D600121607 /* CakeMenuList.swift in Sources */,
+				EF36530A2100A4B4005E00D3 /* MainVC.swift in Sources */,
 				EFFB2D1620D1A4BC003A21C3 /* MapVC.swift in Sources */,
+				EF36530E21012BBF005E00D3 /* PieManu.swift in Sources */,
+				EFC712F620FD056C00121607 /* CoffeeMenuList.swift in Sources */,
 				EFFB2D1820D1A76B003A21C3 /* File.swift in Sources */,
+				EF36531021012BD5005E00D3 /* BottleManu.swift in Sources */,
 				EFE8474720B5E55000449114 /* CofeeCell.swift in Sources */,
 				EF71620F20EE66D1000C0C07 /* User.swift in Sources */,
 			);
@@ -349,6 +480,7 @@
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		EFD3AC4E20B5BFA1008B0CE0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;

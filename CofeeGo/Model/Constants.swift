@@ -17,4 +17,6 @@ let LIST_COMMENTS = "/api/customers/comments/?name="
 let LIST_COFFEE_URL = "\(BASE_URL)\(LIST_COFFEE)"
 let COMMENTS_URL = "\(BASE_URL)\(LIST_COMMENTS)"
 let USER_URL = "\(BASE_URL)/api/customers/user/"
+let ORDER_URL = "\(BASE_URL)/api/customers/products/?id="
+let PRODUCT_TYPES = "\(BASE_URL)/api/customers/product_types/"
 

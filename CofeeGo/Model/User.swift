@@ -13,6 +13,11 @@ class User {
     var name : String!
     var position : Double!
     
+    static var images = [String]()
+    
     var coffeeSpots : [[String: Any]] = [[String: Any]]()
+    
+    static var i : [[Any]] = [[Any]]()
+    
 
 }

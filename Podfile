@@ -19,4 +19,13 @@ target 'CofeeGo' do
 	
 	pod 'SeamlessSlideUpScrollView'
 
+	pod 'CarbonKit'
+
+	pod 'ClusterKit/MapKit'
+
+	pod 'GoogleMaps'
+
+	pod 'GooglePlaces'
+
+
 end

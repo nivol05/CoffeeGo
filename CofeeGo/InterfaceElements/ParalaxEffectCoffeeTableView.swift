@@ -24,7 +24,7 @@ class ParalaxEffectCoffeeTableView: UITableView {
         let offsetY = -contentOffset.y// +
         height.constant = max(header.bounds.height, header.bounds.height + offsetY)
         print(height)
-        bottomConstraint.constant = offsetY >= 0 ? 0 : offsetY / 2
+        bottomConstraint.constant = offsetY >= 0 ? 0 : offsetY / 1.5
         header.clipsToBounds = offsetY <= 0
     }
 

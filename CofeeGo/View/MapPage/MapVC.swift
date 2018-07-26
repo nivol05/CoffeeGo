@@ -1,11 +1,12 @@
 
 import UIKit
 import Alamofire
-import MapKit
+import GoogleMaps
+
 
 class MapVC: UIViewController {
-
-    @IBOutlet weak var mapView: MKMapView!
+    
+    @IBOutlet weak var mapView: UIView!
     
     var coffee : [[String: Any]] = [[String: Any]]()
     
@@ -14,22 +15,22 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        GMSServices.provideAPIKey("AIzaSyC-25GtNVS-4kiObXxAXaHdGby0yDhawLA")
+        let camera = GMSCameraPosition.camera(withLatitude: 50.45366301759805, longitude: 30.486644536805215, zoom: 12)
+        let mapV = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        view = mapV
         
-        let location = CLLocationCoordinate2DMake(50.45366301759805, 30.486644536805215)
-        mapView.setRegion(MKCoordinateRegionMakeWithDistance(location, 1500, 1500), animated: true)
-        let pin = PinAnnotation(title: "", subtitle: "", coordinate: location)
-        mapView.addAnnotation(pin)
         Alamofire.request("http://138.68.79.98/api/customers/coffee_spots/").responseJSON { (response) in
             if let responseValue = response.result.value{
-                
+
                 self.coffee = responseValue as! [[String : Any]]
                 let countCoffee = self.coffee.count
                 print(countCoffee)
-                
+
                 for i in 0...countCoffee - 1{
-                    
+
                     var pinList = self.coffee[i]
-                    
+
                     if let lat = pinList["lat"] as? String {
                         print(Double(lat) ?? 0.0)
                         self.test = Double(lat)!
@@ -39,10 +40,9 @@ class MapVC: UIViewController {
                         self.test2 = Double(lng)!
                     }
                     
-                    let location = CLLocationCoordinate2DMake(self.test , self.test2)
-                    self.mapView.setRegion(MKCoordinateRegionMakeWithDistance(location, 1500, 1500), animated: true)
-                    let pin = PinAnnotation(title: "\(self.test)" , subtitle: "\(self.test2)" , coordinate: location)
-                    self.mapView.addAnnotation(pin)
+                    let marker = GMSMarker()
+                    marker.position = CLLocationCoordinate2D(latitude: self.test, longitude: self.test2)
+                    marker.map = mapV
                 }
             }
         }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+//let kMapsAPIKey = "AIzaSyC-25GtNVS-4kiObXxAXaHdGby0yDhawLA"
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+//        if kMapsAPIKey.isEmpty {
+//            fatalError("Please provide an API Key using kMapsAPIKey")
+//        }
+//        GMSServices.provideAPIKey(kMapsAPIKey)
         UIApplication.shared.statusBarStyle = .lightContent
         return true
     }

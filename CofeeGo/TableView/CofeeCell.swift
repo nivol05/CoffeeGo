@@ -14,6 +14,8 @@ class CofeeCell: UITableViewCell {
     var LC : ListCoffee!
     var VC : ViewController!
     
+    @IBOutlet weak var widthCoffeeImg: NSLayoutConstraint!
+    @IBOutlet weak var heightCoffeeImg: NSLayoutConstraint!
     @IBOutlet weak var CofeeImg: UIImageView!
     @IBOutlet weak var previewImg: UIImageView!
     @IBOutlet weak var nameLbl: UILabel!
@@ -25,8 +27,9 @@ class CofeeCell: UITableViewCell {
         backgroungStyle()
         
         previewImg.layer.cornerRadius = self.CofeeImg.frame.width / 2
+        let screenWidth = UIScreen.main.bounds.size.width
         
-        
+        heightCoffeeImg.constant = screenWidth / 1.7777778
     }
 
     func configureCell(listCoffee : ListCoffee){

@@ -12,7 +12,7 @@ class MapParelavEffect: UITableView {
 
 //    @IBOutlet weak var height : NSLayoutConstraint!
 //    @IBOutlet weak var bottomConstraint : NSLayoutConstraint!
-    var SL = SpotListVC()
+//    var SL = SpotListVC()
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -24,7 +24,6 @@ class MapParelavEffect: UITableView {
 //        height.constant = max(header.bounds.height, header.bounds.height + offsetY)
 //        print(height)
         if offsetY >= 20{
-            SL.moveBack()
         }
 //        bottomConstraint.constant = offsetY >= 0 ? 0 : offsetY / 1
         header.clipsToBounds = offsetY <= 0

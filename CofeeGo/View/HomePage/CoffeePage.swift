@@ -33,11 +33,11 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
     override func viewDidLoad() {
         spinner(shouldSpin: true)
         LoadContent()
+        
         //selectBtn.layer.cornerRadius = 7
         
         tableView.dataSource = self
         tableView.delegate = self
-        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,8 +78,6 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
                     }
                 }
             }
-        } else {
-            
         }
         
         return cell!

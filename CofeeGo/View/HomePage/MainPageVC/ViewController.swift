@@ -52,10 +52,12 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
             
             if let responseValue = response.result.value{
                 self.coffee = responseValue as! [[String : Any]]
+                self.downloadImage()
                 self.spinner(shouldSpin: false)
                 self.tableView?.reloadData()
             }
         }
+        
         
     }
     
@@ -74,20 +76,14 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "cofeeCell" , for : indexPath) as? CofeeCell
             if coffee.count > 0 {
                 let coffeeList = coffee[indexPath.row]
+                var avatar_url: URL
+                
+//              Download data for name lbl
                 cell?.nameLbl?.text = (coffeeList["name"] as? String) ?? ""
                 
-                //Download coffeeImg
-                if let caffeeImg = coffeeList["img"] as? String{
-                    Alamofire.request(caffeeImg).responseImage(completionHandler: {(response) in
-                        if let image = response.result.value{
-                            DispatchQueue.main.async {
-                                self.imageCache.setObject(image, forKey: NSString(string : caffeeImg))
-                                cell?.CofeeImg.image = image
-                            }
-                        }
-                    })
-                    
-                }
+//              Make Coffee image
+                avatar_url = URL(string: User.images[indexPath.row])!
+                cell?.CofeeImg.kf.setImage(with: avatar_url)
 
                 //Download logo
                 if let logoImg = coffeeList["logo_img"] as? String{
@@ -152,24 +148,6 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         view.endEditing(true)
     }
     
-
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//
-//
-//            self.tableView?.reloadData()
-//            view.endEditing(true)
-//
-//        } else {
-//            inSearchMode = true
-//
-////            let lower = searchBar.text!.lowercased()
-//
-////            filteredPokemon = pokemon.filter({$0.name.range(of: lower) != nil})
-//            self.tableView?.reloadData()
-//        }
-//    }
-
-
     func spinner(shouldSpin status: Bool){
         if status == true{
             SVProgressHUD.show()
@@ -179,6 +157,16 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
 
 
         }
+    }
+    
+    func downloadImage(){
+        for i in 0..<coffee.count{
+            var index = coffee[i]
+            if let test = index["img"] as? String{
+                User.images.append(test)
+            }
+        }
+        
     }
     
      func login(completion: @escaping (_ error: NSError?) -> Void) {
