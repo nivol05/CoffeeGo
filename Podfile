@@ -27,5 +27,7 @@ target 'CofeeGo' do
 
 	pod 'GooglePlaces'
 
+	pod 'Cosmos', '~> 16.0'
+
 
 end

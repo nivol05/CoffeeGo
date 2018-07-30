@@ -19,8 +19,6 @@
 		EF36531621012C39005E00D3 /* CakeManu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36531521012C39005E00D3 /* CakeManu.swift */; };
 		EF36531F21061816005E00D3 /* DropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36531D21061816005E00D3 /* DropDownCell.swift */; };
 		EF36532021061816005E00D3 /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF36531E21061816005E00D3 /* DropDownCell.xib */; };
-		EF365328210A5962005E00D3 /* infoWindows.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF365327210A5962005E00D3 /* infoWindows.xib */; };
-		EF36532A210A5A10005E00D3 /* infoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF365329210A5A10005E00D3 /* infoWindow.swift */; };
 		EF71620F20EE66D1000C0C07 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71620E20EE66D1000C0C07 /* User.swift */; };
 		EF71621220EEA08B000C0C07 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621120EEA08A000C0C07 /* ServerManager.swift */; };
 		EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621420EEB90F000C0C07 /* ListVC.swift */; };
@@ -64,8 +62,6 @@
 		EF36531521012C39005E00D3 /* CakeManu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CakeManu.swift; sourceTree = "<group>"; };
 		EF36531D21061816005E00D3 /* DropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
 		EF36531E21061816005E00D3 /* DropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropDownCell.xib; sourceTree = "<group>"; };
-		EF365327210A5962005E00D3 /* infoWindows.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = infoWindows.xib; sourceTree = "<group>"; };
-		EF365329210A5A10005E00D3 /* infoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infoWindow.swift; sourceTree = "<group>"; };
 		EF71620E20EE66D1000C0C07 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF71621120EEA08A000C0C07 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		EF71621420EEB90F000C0C07 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
@@ -210,8 +206,6 @@
 				EFE8474A20B5ECC000449114 /* Constants.swift */,
 				EFFB2D1720D1A76B003A21C3 /* File.swift */,
 				EF71620E20EE66D1000C0C07 /* User.swift */,
-				EF365327210A5962005E00D3 /* infoWindows.xib */,
-				EF365329210A5A10005E00D3 /* infoWindow.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -347,7 +341,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF365328210A5962005E00D3 /* infoWindows.xib in Resources */,
 				EFD3AC5020B5BFA1008B0CE0 /* LaunchScreen.storyboard in Resources */,
 				EFD3AC4D20B5BFA1008B0CE0 /* Assets.xcassets in Resources */,
 				EF36532021061816005E00D3 /* DropDownCell.xib in Resources */,
@@ -405,6 +398,7 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/CarbonKit/CarbonKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ClusterKit/ClusterKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SeamlessSlideUpScrollView/SeamlessSlideUpScrollView.framework",
@@ -416,6 +410,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CarbonKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ClusterKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SeamlessSlideUpScrollView.framework",
@@ -436,7 +431,6 @@
 				EFE8474B20B5ECC000449114 /* Constants.swift in Sources */,
 				EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */,
 				EFC712FC20FD062E00121607 /* BottleWaterMenuList.swift in Sources */,
-				EF36532A210A5A10005E00D3 /* infoWindow.swift in Sources */,
 				EFE8474920B5EA6C00449114 /* ListCoffee.swift in Sources */,
 				EF36530C2100A4CF005E00D3 /* FavoriteListVC.swift in Sources */,
 				EFD3AC4820B5BF9E008B0CE0 /* ViewController.swift in Sources */,

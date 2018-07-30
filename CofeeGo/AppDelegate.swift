@@ -7,20 +7,25 @@
 //
 
 import UIKit
-//let kMapsAPIKey = "AIzaSyC-25GtNVS-4kiObXxAXaHdGby0yDhawLA"
+import GoogleMaps
+
+//
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    let kMapsAPIKey = "AIzaSyC-25GtNVS-4kiObXxAXaHdGby0yDhawLA"
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-//        if kMapsAPIKey.isEmpty {
-//            fatalError("Please provide an API Key using kMapsAPIKey")
-//        }
-//        GMSServices.provideAPIKey(kMapsAPIKey)
+//        GMSServices.provideAPIKey("AIzaSyC-25GtNVS-4kiObXxAXaHdGby0yDhawLA")
+        if kMapsAPIKey.isEmpty {
+            fatalError("Please provide an API Key using kMapsAPIKey")
+        }
+        GMSServices.provideAPIKey(kMapsAPIKey)
+        
         UIApplication.shared.statusBarStyle = .lightContent
         return true
     }

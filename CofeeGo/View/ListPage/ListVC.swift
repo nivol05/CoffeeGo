@@ -12,8 +12,8 @@ class ListVC: UIViewController {
  var user: User?
     override func viewDidLoad() {
         super.viewDidLoad()
-        ServerManager.getCoffeeList(url: LIST_COFFEE_URL, completion: { (error, user) in
-          
-        })
+//        ServerManager.getCoffeeList(url: LIST_COFFEE_URL, completion: { (error, user) in
+        
+//        })
     }
 }

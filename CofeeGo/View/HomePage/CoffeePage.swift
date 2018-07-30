@@ -125,6 +125,8 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
     func spinner(shouldSpin status: Bool){
         if status == true{
             SVProgressHUD.show()
+            SVProgressHUD.setBackgroundColor(UIColor.black)
+            
         } else {
             SVProgressHUD.dismiss()
             self.tableView.isHidden = false

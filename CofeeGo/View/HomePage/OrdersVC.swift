@@ -1,10 +1,3 @@
-//
-//  OrdersVC.swift
-//  CofeeGo
-//
-//  Created by Ni VoL on 15.07.2018.
-//  Copyright © 2018 Ni VoL. All rights reserved.
-//
 
 import UIKit
 import Alamofire

@@ -2,9 +2,10 @@
 import UIKit
 import MapKit
 import Alamofire
+import GoogleMaps
 import SeamlessSlideUpScrollView
 
-class MapCoffeeVC: UIViewController  , MKMapViewDelegate{
+class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate{
     
     var coffee : [[String: Any]] = [[String: Any]]()
     var LAT = Double()
@@ -23,10 +24,17 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate{
     @IBOutlet var tableView: SeamlessSlideUpTableView!
     @IBOutlet weak var bgBottomConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapView: GMSMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        GMSServices.provideAPIKey("AIzaSyC-25GtNVS-4kiObXxAXaHdGby0yDhawLA")
+        
+        let camera = GMSCameraPosition.camera(withLatitude: 50.44901331994515, longitude: 30.525069320831903, zoom: 13)
+        
+        mapView.camera = camera
+        mapView.delegate = self
+
         addCoffeeSpots()
         lineView.layer.cornerRadius = 4
         self.slideUpView.tableView = tableView
@@ -37,21 +45,8 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate{
         slideUpView.delegate = self
         slideUpView.topWindowHeight = screenWidth / 2
         print(slideUpView.topWindowHeight)
-        mapView.dequeueReusableAnnotationView(withIdentifier: "map")
+//        mapView.dequeueReusableAnnotationView(withIdentifier: "map")
     }
-    
-
-//    func mapView(_ mapView:MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
-//        if annotation is MKUserLocation{
-//            return nil
-//        }
-//        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "map")
-////        let anotation = MKAnnotationView(annotation: annotation, reuseIdentifier: "map")
-//        annotationView.pinTintColor = UIColor.black
-//        annotationView.canShowCallout = true
-//        return annotationView
-//    }
-    
     
     
     @IBAction func oggleSlideUpView(_ sender: AnyObject) {
@@ -85,16 +80,27 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate{
                     if let lng = pinList["lng"] as? String {
                         self.LNG = Double(lng)!
                     }
-                    
-                    let location = CLLocationCoordinate2DMake(self.LAT , self.LNG)
-                    self.mapView.setRegion(MKCoordinateRegionMakeWithDistance(location, 1500, 1500), animated: true)
-                    let pin = PinAnnotation(title: "\(self.LAT)" , subtitle: "\(self.LNG)" , coordinate: location)
-                    self.mapView.addAnnotation(pin)
-                    self.mapView.setCenter(location, animated: true)
-                    self.mapView.delegate = self
+                    let marker = GMSMarker()
+                    marker.icon = GMSMarker.markerImage(with: .black)
+                    marker.position = CLLocationCoordinate2D(latitude: self.LAT, longitude: self.LNG)
+                    marker.map = self.mapView
                 }
             }
         }
+    }
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+
+//        let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 17)
+//        self.mapView.camera = camera
+        self.mapView.delegate = self
+//
+//        if self.slideUpView.isHidden {
+//            self.slideUpView.show(expandFull: false)
+//            slideUpView.isHidden = false
+//
+//        }
+        
+        return true
     }
 }
 extension MapCoffeeVC : SeamlessSlideUpViewDelegate {
