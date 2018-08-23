@@ -9,16 +9,20 @@
 import UIKit
 
 class OrderList: UITableViewCell {
-
+    
+    @IBOutlet weak var BG: UIView!
+    @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var img: UIImageView!
+    @IBOutlet weak var sugarCountLbl: UILabel!
+    @IBOutlet weak var coffeePrice: UILabel!
+    @IBOutlet weak var priceOrderDone: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        BG.layer.cornerRadius = 12
+        BG.layer.masksToBounds = false
+        img.layer.cornerRadius = 12
+        img.layer.masksToBounds = true
     }
 
 }

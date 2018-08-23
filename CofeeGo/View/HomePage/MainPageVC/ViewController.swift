@@ -12,12 +12,15 @@ import Kingfisher
 import AlamofireImage
 import SwiftyJSON
 import SVProgressHUD
+import Cosmos
 
 class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate , UITableViewDataSource{
 
 
     @IBOutlet weak var searhBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    
+//    private var clusterManager: GMUClusterManager!
     
     var CC : CofeeCell!
     var CT : CommentTable!
@@ -36,47 +39,58 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
     var inSearchMode = false
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        //Active tableView
-        tableView.dataSource = self
-        tableView.delegate = self
-        //Active searching
-        searhBar.delegate = self
-        searhBar.returnKeyType = UIReturnKeyType.done
         
-        //Loading Page bar
-        spinner(shouldSpin: true)
-        
-        //Download coffeeList
-        Alamofire.request(LIST_COFFEE_URL).responseJSON { (response) in
+        if Connectivity.isConnectedToInternet() {
             
-            if let responseValue = response.result.value{
-                self.coffee = responseValue as! [[String : Any]]
-                self.downloadImage()
-                self.spinner(shouldSpin: false)
-                self.tableView?.reloadData()
+            print("Yes! internet is available.")
+            //Active tableView
+            tableView.dataSource = self
+            tableView.delegate = self
+            //Active searching
+            searhBar.delegate = self
+            searhBar.returnKeyType = UIReturnKeyType.done
+            
+            //Loading Page bar
+            spinner(shouldSpin: true)
+            
+            //Download coffeeList
+            Alamofire.request(LIST_COFFEE_URL).responseJSON { (response) in
+                
+                if let responseValue = response.result.value{
+                    self.coffee = responseValue as! [[String : Any]]
+                    self.downloadImage()
+                    self.spinner(shouldSpin: false)
+                    self.tableView?.reloadData()
+                }
+                
             }
+            login(completion: { (error) in})
+        } else {
+            print("nema")
+        
         }
+
         
         
     }
     
     //Table View
+
     //1
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    //2
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return coffee.count
     }
-    //3
+    //2
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cofeeCell" , for : indexPath) as? CofeeCell
             if coffee.count > 0 {
                 let coffeeList = coffee[indexPath.row]
                 var avatar_url: URL
+                
+                cell?.rateStars.rating = coffeeList["stars"] as! Double
                 
 //              Download data for name lbl
                 cell?.nameLbl?.text = (coffeeList["name"] as? String) ?? ""
@@ -105,13 +119,16 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         
         let Storyboard = UIStoryboard(name: "Main", bundle: nil)
         let cell = Storyboard.instantiateViewController(withIdentifier: "CommentPage") as! CoffeePage
-        
+
         let coffeeList = coffee[indexPath.row]
         
         cell.name = coffeeList["name"] as! String
+        User.name = coffeeList["name"] as! String
         cell.imgUrl = coffeeList["img"] as! String
         cell.logo = coffeeList["logo_img"] as! String
-        
+//        let stars = coffeeList["stars"] as! Double
+//        print(stars)
+        cell.st = coffeeList["stars"] as! Double
         cell.token = token
         
         self.navigationController?.pushViewController(cell, animated: true)

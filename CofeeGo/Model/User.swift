@@ -10,7 +10,7 @@ import Foundation
 class User {
 
     var logo : String!
-    var name : String!
+    static var name : String!
     var position : Double!
     
     static var images = [String]()

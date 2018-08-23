@@ -15,6 +15,7 @@ class ParalaxEffectCoffeeTableView: UITableView {
     
     
     override func layoutSubviews() {
+        
         super.layoutSubviews()
         
         guard let header = tableHeaderView else { return }
@@ -23,7 +24,6 @@ class ParalaxEffectCoffeeTableView: UITableView {
         /// adjustedContentInset fixed valie from the top
         let offsetY = -contentOffset.y// +
         height.constant = max(header.bounds.height, header.bounds.height + offsetY)
-        print(height)
         bottomConstraint.constant = offsetY >= 0 ? 0 : offsetY / 1.5
         header.clipsToBounds = offsetY <= 0
     }

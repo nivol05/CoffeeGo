@@ -40,6 +40,12 @@ class OtherMenuList: UIViewController , UITableViewDataSource,UITableViewDelegat
         cell?.CoffeeImg.kf.setImage(with: avatar_url)
         
         //Price
+        var price_text = ""
+        
+        let price = data["price"] as! Int
+        price_text += "\(price) grn"
+        
+        cell?.priceLbl.text = price_text
         
         return cell!
     }

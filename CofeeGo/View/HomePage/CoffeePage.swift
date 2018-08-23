@@ -4,12 +4,17 @@ import UIKit
 import Alamofire
 import AlamofireImage
 import SVProgressHUD
+import Cosmos
+import HCSStarRatingView
 
 class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
 
     var VC : ViewController!
     var MCVC : MapCoffeeVC!
     
+    @IBOutlet weak var btnReadMore: UIButton!
+    @IBOutlet weak var lblReviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var rateLbl: UILabel!
     @IBOutlet weak var infoLbl: UILabel!
     @IBOutlet weak var selectBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -17,11 +22,16 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
     @IBOutlet weak var coffeeImg: UIImageView!
     @IBOutlet weak var logoImg: UIImageView!
     
+    @IBOutlet weak var rateView: CosmosView!
+    
+    var isLabelAtMaxHeight = Bool()
     var name = String()
     var imgUrl = String()
     var logo = String()
     
     var test2 = Double()
+    var st = Double()
+    var alpha = CGFloat(0.0)
     
     var plis = Int()
     
@@ -34,10 +44,25 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
         spinner(shouldSpin: true)
         LoadContent()
         
+        
+        
+        self.tableView.contentInset.bottom = selectBtn.frame.height
+        
+//        rateView.value = CGFloat(st)
+        rateLbl.text = "\(st)"
+        rateView.rating = st
         //selectBtn.layer.cornerRadius = 7
         
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: alpha)
+        UIApplication.shared.statusBarView?.backgroundColor = color
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = color
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,10 +82,8 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
             cell?.commentLbl?.text = (commentList["comment"] as? String) ?? ""
             
             if let stars = commentList["stars"] as? Double {
-               self.test2 = stars
+                cell?.rateInComment.rating = stars
             }
-            
-            cell?.rateLbl?.text = ("Rate \(test2)")
             
             cell?.dataLbl?.text = (commentList["date"] as? String) ?? ""
             
@@ -78,9 +101,29 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
                     }
                 }
             }
+        } else {
+            print("NEMECOMENTOV")
         }
         
         return cell!
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        var offset = scrollView.contentOffset.y / 150
+        
+        if offset > 1 {
+            
+            offset = 1
+            alpha = offset
+            let colorWithOffset = UIColor(red: 1, green: 0.585, blue: 0, alpha: offset)
+            self.navigationController?.navigationBar.backgroundColor = colorWithOffset
+            UIApplication.shared.statusBarView?.backgroundColor = colorWithOffset
+        } else {
+            alpha = offset
+            let colorWithOffset = UIColor(red: 1, green: 0.585, blue: 0, alpha: offset)
+            self.navigationController?.navigationBar.backgroundColor = colorWithOffset
+            UIApplication.shared.statusBarView?.backgroundColor = colorWithOffset
+        }
     }
     
     @IBAction func selectCoffeeBtn(_ sender: Any) {
@@ -88,8 +131,11 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let cell = segue.destination as! MapCoffeeVC
-        cell.coffeeSpot = name
+////        let cell = segue.destination as! MapCoffeeVC
+//        print("TYT")
+//        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 0)
+//        UIApplication.shared.statusBarView?.backgroundColor = color
+//        self.navigationController?.navigationBar.backgroundColor = color
     }
     func LoadContent(){
         
@@ -125,12 +171,38 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
     func spinner(shouldSpin status: Bool){
         if status == true{
             SVProgressHUD.show()
-            SVProgressHUD.setBackgroundColor(UIColor.black)
+            
             
         } else {
             SVProgressHUD.dismiss()
             self.tableView.isHidden = false
         }
+    }
+    
+    func getLabelHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
+        let lbl = UILabel(frame: .zero)
+        lbl.frame.size.width = width
+        lbl.font = font
+        lbl.numberOfLines = 0
+        lbl.text = text
+        lbl.sizeToFit()
+        
+        return lbl.frame.size.height
+    }
+    
+    @IBAction func btnReadMore(_ sender: Any) {
+        if isLabelAtMaxHeight {
+            btnReadMore.setTitle("Read more", for: .normal)
+            isLabelAtMaxHeight = false
+            lblReviewHeight.constant = 93
+        }
+        else {
+            btnReadMore.setTitle("Read less", for: .normal)
+            isLabelAtMaxHeight = true
+            lblReviewHeight.constant = getLabelHeight(text: infoLbl.text!, width: view.bounds.width, font: infoLbl.font)
+            
+        }
+        
     }
     @IBAction func moreTextBtn(_ sender: Any) {
         print(infoLbl.numberOfLines)

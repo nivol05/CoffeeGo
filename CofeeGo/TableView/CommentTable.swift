@@ -7,11 +7,12 @@
 //
 
 import UIKit
-
+import Cosmos
 class CommentTable: UITableViewCell {
 
     @IBOutlet weak var userNameLbl: UILabel!
-    @IBOutlet weak var rateLbl: UILabel!
+    
+    @IBOutlet weak var rateInComment: CosmosView!
     @IBOutlet weak var commentLbl: UILabel!
     @IBOutlet weak var dataLbl: UILabel!
     @IBOutlet weak var personImg: UIImageView!
@@ -30,11 +31,11 @@ class CommentTable: UITableViewCell {
     
     func backgroungStyle(){
         
-        backGround.layer.cornerRadius = 12
+        backGround.layer.cornerRadius = 9
         backGround.layer.masksToBounds = false
-        backGround.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
-        backGround.layer.shadowOffset = CGSize(width: 0, height: 0)
-        backGround.layer.shadowOpacity = 0.5
+//        backGround.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
+//        backGround.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        backGround.layer.shadowOpacity = 0.5
         
     }
 }

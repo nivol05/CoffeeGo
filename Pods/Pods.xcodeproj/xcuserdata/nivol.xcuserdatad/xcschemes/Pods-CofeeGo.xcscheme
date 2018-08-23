@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "0940"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "528B911D602F850F4A0DF1F487248BFE"
+               BlueprintIdentifier = "C949C611538B0ED177DF6A47E0AE7AD2"
                BuildableName = "Pods_CofeeGo.framework"
                BlueprintName = "Pods-CofeeGo"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "528B911D602F850F4A0DF1F487248BFE"
+            BlueprintIdentifier = "C949C611538B0ED177DF6A47E0AE7AD2"
             BuildableName = "Pods_CofeeGo.framework"
             BlueprintName = "Pods-CofeeGo"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import Cosmos
 
 class CofeeCell: UITableViewCell {
 
@@ -19,6 +20,7 @@ class CofeeCell: UITableViewCell {
     @IBOutlet weak var CofeeImg: UIImageView!
     @IBOutlet weak var previewImg: UIImageView!
     @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var rateStars: CosmosView!
     @IBOutlet weak var backGround: UIView!
     
     override func awakeFromNib() {

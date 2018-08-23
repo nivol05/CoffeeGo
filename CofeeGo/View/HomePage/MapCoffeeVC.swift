@@ -5,7 +5,7 @@ import Alamofire
 import GoogleMaps
 import SeamlessSlideUpScrollView
 
-class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate{
+class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GMUClusterManagerDelegate{
     
     var coffee : [[String: Any]] = [[String: Any]]()
     var LAT = Double()
@@ -23,18 +23,32 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate{
     @IBOutlet weak var slideUpView: SeamlessSlideUpView!
     @IBOutlet var tableView: SeamlessSlideUpTableView!
     @IBOutlet weak var bgBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var BgList: UIView!
     
+    @IBOutlet weak var blurImage: UIImageView!
     @IBOutlet weak var mapView: GMSMapView!
+    private var clusterManager: GMUClusterManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         GMSServices.provideAPIKey("AIzaSyC-25GtNVS-4kiObXxAXaHdGby0yDhawLA")
         
+        
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView,
+                                                 clusterIconGenerator: iconGenerator)
+        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm,
+                                           renderer: renderer)
         let camera = GMSCameraPosition.camera(withLatitude: 50.44901331994515, longitude: 30.525069320831903, zoom: 13)
+        
         
         mapView.camera = camera
         mapView.delegate = self
-
+        clusterManager.setDelegate(self, mapDelegate: self)
+        
+        coffeeSpot = User.name
+        
         addCoffeeSpots()
         lineView.layer.cornerRadius = 4
         self.slideUpView.tableView = tableView
@@ -45,7 +59,17 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate{
         slideUpView.delegate = self
         slideUpView.topWindowHeight = screenWidth / 2
         print(slideUpView.topWindowHeight)
+
+        
 //        mapView.dequeueReusableAnnotationView(withIdentifier: "map")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 0)
+        UIApplication.shared.statusBarView?.backgroundColor = color
+        self.navigationController?.navigationBar.backgroundColor = color
+        
     }
     
     
@@ -69,36 +93,54 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate{
                 
                 self.coffee = responseValue as! [[String : Any]]
                 let countCoffee = self.coffee.count
-                
-                for i in 0...countCoffee - 1{
-                    
-                    var pinList = self.coffee[i]
-                    
-                    if let lat = pinList["lat"] as? String {
-                        self.LAT = Double(lat)!
+                if countCoffee > 0{
+                    for i in 0...countCoffee - 1{
+                        
+                        var pinList = self.coffee[i]
+                        
+                        if let lat = pinList["lat"] as? String {
+                            self.LAT = Double(lat)!
+                        }
+                        if let lng = pinList["lng"] as? String {
+                            self.LNG = Double(lng)!
+                        }
+                        
+                        
+                        let marker = GMSMarker()
+                        marker.icon = UIImage(named: "marker")
+                        
+                        let item = POIItem(position: CLLocationCoordinate2DMake(self.LAT, self.LNG), index: i, marker : marker)
+                        self.clusterManager.add(item)
+//                        let marker = GMSMarker()
+//                        marker.icon = GMSMarker.markerImage(with: .black)
+//                        marker.position = CLLocationCoordinate2D(latitude: self.LAT, longitude: self.LNG)
+//                        marker.map = self.mapView
                     }
-                    if let lng = pinList["lng"] as? String {
-                        self.LNG = Double(lng)!
-                    }
-                    let marker = GMSMarker()
-                    marker.icon = GMSMarker.markerImage(with: .black)
-                    marker.position = CLLocationCoordinate2D(latitude: self.LAT, longitude: self.LNG)
-                    marker.map = self.mapView
                 }
+
             }
         }
     }
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        
+        if let poiItem = marker.userData as? POIItem {
+            NSLog("Did tap marker for cluster item \(poiItem.index!)")
+            let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 17)
+            
+            let coffeeidList = coffee[poiItem.index!]
+            let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
+            cell.coffeeId = coffeeidList["id"] as! Int
+            self.navigationController?.pushViewController(cell, animated: true)
+            self.mapView.camera = camera
+            self.mapView.delegate = self
 
-//        let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 17)
-//        self.mapView.camera = camera
-        self.mapView.delegate = self
-//
-//        if self.slideUpView.isHidden {
-//            self.slideUpView.show(expandFull: false)
-//            slideUpView.isHidden = false
-//
-//        }
+        } else {
+            NSLog("Did tap a normal marker")
+            let newCamera = GMSCameraPosition.camera(withTarget: marker.position,
+                                                     zoom: mapView.camera.zoom + 1)
+            mapView.animate(to: newCamera)
+        }
         
         return true
     }
@@ -110,6 +152,10 @@ extension MapCoffeeVC : SeamlessSlideUpViewDelegate {
         tableView.reloadData()
         UIView.animate(withDuration: 0.2, animations: { [weak self] in self?.view.layoutIfNeeded() })
         self.button.setTitle("Скрыть список", for: UIControlState())
+        let blurEff = UIBlurEffect(style: UIBlurEffectStyle.light)
+        let bl = UIVisualEffectView(effect: blurEff)
+        bl.frame = blurImage.bounds
+        blurImage.addSubview(bl)
     }
 
     func slideUpViewDidAppear(_ slideUpView: SeamlessSlideUpView, height: CGFloat) {

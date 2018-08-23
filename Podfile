@@ -3,9 +3,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '9.0'
 
+
 use_frameworks!
 
-target 'CofeeGo' do
+target 'CofeeGo' do	
 
   	pod 'SVProgressHUD'
 
@@ -21,13 +22,11 @@ target 'CofeeGo' do
 
 	pod 'CarbonKit'
 
-	pod 'ClusterKit/MapKit'
-
-	pod 'GoogleMaps'
-
-	pod 'GooglePlaces'
+    pod 'GoogleMaps'
 
 	pod 'Cosmos', '~> 16.0'
+
+	pod 'HCSStarRatingView', '~> 1.5'
 
 
 end

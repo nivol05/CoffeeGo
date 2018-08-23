@@ -10,8 +10,12 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
     var menu : [[String: Any]] = [[String: Any]]()
     var productTypes : [[String: Any]] = [[String: Any]]()
     var tabs = [Int]()
+    
+    
+    
     var items : [[Any]] = [[Any]]()
     
+    @IBOutlet weak var line: UIView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var slideUpView: SeamlessSlideUpView!
     @IBOutlet var tableView: SeamlessSlideUpTableView!
@@ -25,11 +29,26 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
         super.viewDidLoad()
         downloadManuLists()
         
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        line = UIVisualEffectView(effect: blurEffect)
+        
+//        line.layer.cornerRadius = 4
+//        line.layer.masksToBounds = false
+        
+        OrderData.orderList.removeAll()
+        
         self.slideUpView.tableView = tableView
         tableView.dataSource = self
         tableView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 100)
+        UIApplication.shared.statusBarView?.backgroundColor = color
+        self.navigationController?.navigationBar.backgroundColor = color
+        
+    }
     
     func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAt index: UInt) -> UIViewController {
         guard let storyboard = storyboard else { return UIViewController() }
@@ -50,7 +69,7 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
         }
         
     }
-    
+
     func downloadManuLists(){
         Alamofire.request("\(ORDER_URL)\(coffeeId)").responseJSON { (response) in
             if let responseValue = response.result.value{
@@ -91,6 +110,8 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
 
     }
 
+
+    
     func setPager(){
         var tabIcon = [UIImage]()
         User.i.removeAll()
@@ -156,6 +177,7 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
         if self.slideUpView.isHidden {
             self.slideUpView.show(expandFull: false)
             slideUpView.isHidden = false
+            tableView.reloadData()
             self.button.setTitle("Скрыть заказ", for: UIControlState())
         } else {
             self.slideUpView.hide()
@@ -190,19 +212,28 @@ extension OrdersVC : SeamlessSlideUpViewDelegate {
         self.view.layoutIfNeeded()
     }
     
+    
 }
 extension OrdersVC : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return OrderData.orderList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        let spots = coffee[indexPath.row]
+        let spots = OrderData.orderList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderCell", for: indexPath) as! OrderList
+        
+        cell.nameLbl.text = spots.getName()
+        cell.img.image = spots.getImage()
+        cell.coffeePrice.text = spots.cup_size
+        cell.coffeePrice.text = spots.product_price
+//        cell.sugarCountLbl.text = "\(spots.getSugar())"
         
         return cell
     }
+    
+    
 }
 
 

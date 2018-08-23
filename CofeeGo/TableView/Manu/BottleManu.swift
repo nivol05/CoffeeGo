@@ -22,9 +22,10 @@ class BottleManu: UITableViewCell {
         CoffeeImg.layer.cornerRadius = 12
         BG.layer.masksToBounds = false
         CoffeeImg.layer.masksToBounds = true
-        BG.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
-        BG.layer.shadowOffset = CGSize(width: 0, height: 0)
-        BG.layer.shadowOpacity = 0.4
+    }
+    @IBAction func addElementBtn(_ sender: Any) {
+        let menuElement = OrderItem(product_price: priceLbl.text!, product_name: nameLbl.text!, imageUrl: CoffeeImg.image!)
+        OrderData.orderList.append(menuElement)
     }
 
 }
