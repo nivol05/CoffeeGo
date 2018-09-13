@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import Tamamushi
 
 //
 
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        TMGradientNavigationBar().setInitialBarGradientColor(direction: .vertical, startColor: .init(red: 1, green: 127/255, blue: 0, alpha: 1), endColor: .init(red: 1, green: 111/255, blue: 0, alpha: 1))
 //        GMSServices.provideAPIKey("AIzaSyC-25GtNVS-4kiObXxAXaHdGby0yDhawLA")
         if kMapsAPIKey.isEmpty {
             fatalError("Please provide an API Key using kMapsAPIKey")
@@ -52,9 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }
-extension UIApplication{
-    var statusBarView : UIView? {
-        return value(forKey: "statusBar") as? UIView
-    }
-}
+//extension UIApplication{
+//    var statusBarView : UIView? {
+//        return value(forKey: "statusBar") as? UIView
+//    }
+//}
 

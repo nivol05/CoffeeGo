@@ -8,45 +8,44 @@
 
 import UIKit
 import CarbonKit
+import Tamamushi
+import XLPagerTabStrip
 
-class MainVC : UIViewController , CarbonTabSwipeNavigationDelegate {
+class MainVC : ButtonBarPagerTabStripViewController {
 
-    @IBOutlet weak var rootView: UIView!
-    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        let tabSwipe = CarbonTabSwipeNavigation(items: ["  Все  ","Любимые"] , delegate: self)
-        
-        tabSwipe.setTabExtraWidth(UIScreen.main.bounds.size.width / 3)
-//        tabSwipe.carbonSegmentedControl?.getWidthForSegment(at: 40)
-        tabSwipe.setTabBarHeight(56)
-//        tabSwipe.setTabExtraWidth(150)
-//        tabSwipe.setSelectedColor(UIColor.black)
-        tabSwipe.setIndicatorColor(UIColor.orange)
-        tabSwipe.setIndicatorHeight(1)
-        tabSwipe.setSelectedColor(UIColor.orange, font: UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.ultraLight))
-        tabSwipe.insert(intoRootViewController: self, andTargetView: rootView)
-        tabSwipe.setNormalColor(UIColor.lightGray)
-        tabSwipe.setNormalColor(UIColor.gray, font: UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.ultraLight))
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 100)
-        UIApplication.shared.statusBarView?.backgroundColor = color
-        self.navigationController?.navigationBar.backgroundColor = color
-    }
-    
-    func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAt index: UInt) -> UIViewController {
-        guard let storyboard = storyboard else { return UIViewController() }
-        if index == 0 {
-            return storyboard.instantiateViewController(withIdentifier: "CoffeeList")
-        } else {
-            return storyboard.instantiateViewController(withIdentifier: "FavoritesList")
+        // change selected bar color
+        settings.style.buttonBarBackgroundColor = .init(red: 1, green: 120/255, blue: 0, alpha: 1)
+        settings.style.buttonBarItemBackgroundColor = .init(red: 1, green: 120/255, blue: 0, alpha: 1)
+        settings.style.selectedBarBackgroundColor = .white
+        settings.style.buttonBarItemFont = .systemFont(ofSize: 18, weight: UIFont.Weight.light)
+        settings.style.selectedBarHeight = 2.0
+        settings.style.buttonBarMinimumLineSpacing = 0
+        settings.style.buttonBarItemTitleColor = .black
+        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
+        settings.style.buttonBarLeftContentInset = 0
+        settings.style.buttonBarRightContentInset = 0
+        changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
+            guard changeCurrentIndex == true else { return }
+            oldCell?.label.textColor = .white
+            newCell?.label.textColor = UIColor.white
         }
+        super.viewDidLoad()
         
+//        TabSwipe()
+
+
     }
-    @IBAction func loginBtn(_ sender: Any) {
-        viewDidLoad()
+
+    
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoffeeList")
+        let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavoritesList")
+        return [child_1, child_2]
     }
+
+//    @IBAction func loginBtn(_ sender: Any) {
+//        viewDidLoad()
+//    }
 
 }

@@ -41,7 +41,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         if indexPath.row == button_tag {
             return 365
         } else {
-            return 140
+            return 130
         }
     }
     

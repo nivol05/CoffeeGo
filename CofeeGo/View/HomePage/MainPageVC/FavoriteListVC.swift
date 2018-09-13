@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class FavoriteListVC: UIViewController {
+class FavoriteListVC: UIViewController ,IndicatorInfoProvider{
 
     
 
@@ -16,5 +17,8 @@ class FavoriteListVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title : "Избранные")
     }
 }

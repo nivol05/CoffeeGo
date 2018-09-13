@@ -66,10 +66,10 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
     
     override func viewWillAppear(_ animated: Bool) {
         
-        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 0)
-        UIApplication.shared.statusBarView?.backgroundColor = color
-        self.navigationController?.navigationBar.backgroundColor = color
-        
+//        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 0)
+//        UIApplication.shared.statusBarView?.backgroundColor = color
+//        self.navigationController?.navigationBar.backgroundColor = color
+//        
     }
     
     
@@ -130,7 +130,7 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
             let coffeeidList = coffee[poiItem.index!]
             let Storyboard = UIStoryboard(name: "Main", bundle: nil)
             let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
-            cell.coffeeId = coffeeidList["id"] as! Int
+            OrdersVC.coffeeId = coffeeidList["id"] as! Int
             self.navigationController?.pushViewController(cell, animated: true)
             self.mapView.camera = camera
             self.mapView.delegate = self
@@ -196,7 +196,7 @@ extension MapCoffeeVC: UITableViewDataSource, UITableViewDelegate {
         let coffeeidList = coffee[indexPath.row]
         let Storyboard = UIStoryboard(name: "Main", bundle: nil)
         let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
-        cell.coffeeId = coffeeidList["id"] as! Int
+        OrdersVC.coffeeId = coffeeidList["id"] as! Int
         self.navigationController?.pushViewController(cell, animated: true)
     }
 }

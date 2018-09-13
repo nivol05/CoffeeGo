@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CCEB119B50C23CDD8061B666 /* Pods_CofeeGo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A0774F7C78982A450248FB7 /* Pods_CofeeGo.framework */; };
+		EF16477B2130546900520F4C /* AdditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16477A2130546900520F4C /* AdditionCell.swift */; };
 		EF36530420FD712F005E00D3 /* CoffeeManu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36530320FD712F005E00D3 /* CoffeeManu.swift */; };
 		EF3653072100A00B005E00D3 /* OrderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3653062100A00B005E00D3 /* OrderList.swift */; };
 		EF36530A2100A4B4005E00D3 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3653092100A4B4005E00D3 /* MainVC.swift */; };
@@ -27,6 +28,7 @@
 		EF71621C20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621B20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift */; };
 		EF799DF320C1590300EED722 /* CoffeePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF799DF220C1590200EED722 /* CoffeePage.swift */; };
 		EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF799DF520C15BAA00EED722 /* CommentTable.swift */; };
+		EF8465FE213077B500C84126 /* SyrupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8465FD213077B500C84126 /* SyrupCell.swift */; };
 		EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */; };
 		EFC712F220FBC6EA00121607 /* OrdersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F120FBC6EA00121607 /* OrdersVC.swift */; };
 		EFC712F620FD056C00121607 /* CoffeeMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F520FD056C00121607 /* CoffeeMenuList.swift */; };
@@ -70,6 +72,7 @@
 		1A0774F7C78982A450248FB7 /* Pods_CofeeGo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CofeeGo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54F80BC995ACCCB2B396D95C /* Pods-CofeeGo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CofeeGo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo.release.xcconfig"; sourceTree = "<group>"; };
 		ACE4F67825C3DFD0125A02C1 /* Pods-CofeeGo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CofeeGo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CofeeGo/Pods-CofeeGo.debug.xcconfig"; sourceTree = "<group>"; };
+		EF16477A2130546900520F4C /* AdditionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionCell.swift; sourceTree = "<group>"; };
 		EF36530320FD712F005E00D3 /* CoffeeManu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeManu.swift; sourceTree = "<group>"; };
 		EF3653062100A00B005E00D3 /* OrderList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderList.swift; sourceTree = "<group>"; };
 		EF3653092100A4B4005E00D3 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 		EF71621B20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParalaxEffectCoffeeTableView.swift; sourceTree = "<group>"; };
 		EF799DF220C1590200EED722 /* CoffeePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePage.swift; sourceTree = "<group>"; };
 		EF799DF520C15BAA00EED722 /* CommentTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTable.swift; sourceTree = "<group>"; };
+		EF8465FD213077B500C84126 /* SyrupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyrupCell.swift; sourceTree = "<group>"; };
 		EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapParelavEffect.swift; sourceTree = "<group>"; };
 		EFC712F120FBC6EA00121607 /* OrdersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVC.swift; sourceTree = "<group>"; };
 		EFC712F520FD056C00121607 /* CoffeeMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMenuList.swift; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 				EF799DF520C15BAA00EED722 /* CommentTable.swift */,
 				EF71621620F12A52000C0C07 /* CoffeeListOnMap.swift */,
 				EF3653062100A00B005E00D3 /* OrderList.swift */,
+				EF16477A2130546900520F4C /* AdditionCell.swift */,
+				EF8465FD213077B500C84126 /* SyrupCell.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -530,6 +536,8 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SeamlessSlideUpScrollView/SeamlessSlideUpScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Tamamushi/Tamamushi.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -542,6 +550,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SeamlessSlideUpScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tamamushi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -574,6 +584,7 @@
 				EF36531421012BF9005E00D3 /* OtherManu.swift in Sources */,
 				EF71621C20F26720000C0C07 /* ParalaxEffectCoffeeTableView.swift in Sources */,
 				EFD3AC4620B5BF9E008B0CE0 /* AppDelegate.swift in Sources */,
+				EF16477B2130546900520F4C /* AdditionCell.swift in Sources */,
 				EF71621220EEA08B000C0C07 /* ServerManager.swift in Sources */,
 				EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */,
 				EFC7130020FD068100121607 /* PieMenuList.swift in Sources */,
@@ -585,6 +596,7 @@
 				EFF8D5882115EE7400B655CE /* OrderData.swift in Sources */,
 				EF799DF320C1590300EED722 /* CoffeePage.swift in Sources */,
 				EF36530420FD712F005E00D3 /* CoffeeManu.swift in Sources */,
+				EF8465FE213077B500C84126 /* SyrupCell.swift in Sources */,
 				EFFB2D1A20D2C477003A21C3 /* MapCoffeeVC.swift in Sources */,
 				EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */,
 				EF71621720F12A52000C0C07 /* CoffeeListOnMap.swift in Sources */,

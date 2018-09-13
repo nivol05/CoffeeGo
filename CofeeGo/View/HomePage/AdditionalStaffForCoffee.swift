@@ -19,7 +19,6 @@ class AdditionalStaffForCoffee: UIViewController, CarbonTabSwipeNavigationDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
         rootView.clipsToBounds = true
         let tabSwipe = CarbonTabSwipeNavigation(items: [" Допы ","Сиропы"] , delegate: self)
         tabSwipe.setTabExtraWidth(rootView.frame.width / 3)

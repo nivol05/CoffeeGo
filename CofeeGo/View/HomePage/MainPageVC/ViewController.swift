@@ -13,8 +13,9 @@ import AlamofireImage
 import SwiftyJSON
 import SVProgressHUD
 import Cosmos
+import XLPagerTabStrip
 
-class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate , UITableViewDataSource{
+class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate , UITableViewDataSource,IndicatorInfoProvider{
 
 
     @IBOutlet weak var searhBar: UISearchBar!
@@ -74,6 +75,9 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
 
         
         
+    }
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title : "Все")
     }
     
     //Table View

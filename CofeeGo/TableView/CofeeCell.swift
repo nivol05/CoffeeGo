@@ -15,13 +15,13 @@ class CofeeCell: UITableViewCell {
     var LC : ListCoffee!
     var VC : ViewController!
     
-    @IBOutlet weak var widthCoffeeImg: NSLayoutConstraint!
+
     @IBOutlet weak var heightCoffeeImg: NSLayoutConstraint!
     @IBOutlet weak var CofeeImg: UIImageView!
     @IBOutlet weak var previewImg: UIImageView!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var rateStars: CosmosView!
-    @IBOutlet weak var backGround: UIView!
+//    @IBOutlet weak var backGround: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,11 +39,11 @@ class CofeeCell: UITableViewCell {
     }
     
     func backgroungStyle(){
-        backGround.layer.cornerRadius = 12
-        backGround.layer.masksToBounds = false
-        backGround.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
-        backGround.layer.shadowOffset = CGSize(width: 0, height: 0)
-        backGround.layer.shadowOpacity = 0.8
+//        backGround.layer.cornerRadius = 12
+//        backGround.layer.masksToBounds = false
+//        backGround.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
+//        backGround.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        backGround.layer.shadowOpacity = 0.8
         
     }
 

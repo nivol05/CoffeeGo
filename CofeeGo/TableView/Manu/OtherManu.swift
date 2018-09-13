@@ -18,9 +18,8 @@ class OtherManu: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        BG.layer.cornerRadius = 12
         CoffeeImg.layer.cornerRadius = 12
-        BG.layer.masksToBounds = false
+        
         CoffeeImg.layer.masksToBounds = true
     }
     @IBAction func addElementBtn(_ sender: Any) {

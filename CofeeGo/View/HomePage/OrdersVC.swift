@@ -23,7 +23,7 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
     
     @IBOutlet weak var qwe : UIView!
     
-    var coffeeId = Int()
+    static var coffeeId = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +44,9 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 100)
-        UIApplication.shared.statusBarView?.backgroundColor = color
-        self.navigationController?.navigationBar.backgroundColor = color
+//        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 100)
+//        UIApplication.shared.statusBarView?.backgroundColor = color
+//        self.navigationController?.navigationBar.backgroundColor = color
         
     }
     
@@ -71,7 +71,7 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
     }
 
     func downloadManuLists(){
-        Alamofire.request("\(ORDER_URL)\(coffeeId)").responseJSON { (response) in
+        Alamofire.request("\(ORDER_URL)\(OrdersVC.coffeeId)").responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.menu = responseValue as! [[String : Any]]
                 self.downloadProductTypes()

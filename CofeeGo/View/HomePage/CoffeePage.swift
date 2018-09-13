@@ -6,6 +6,7 @@ import AlamofireImage
 import SVProgressHUD
 import Cosmos
 import HCSStarRatingView
+import Tamamushi
 
 class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
 
@@ -44,7 +45,7 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
         spinner(shouldSpin: true)
         LoadContent()
         
-        
+        TMGradientNavigationBar().setGradientColorOnNavigationBar(bar: (self.navigationController?.navigationBar)!, direction: .vertical, typeName: "Facebook Messenger")
         
         self.tableView.contentInset.bottom = selectBtn.frame.height
         
@@ -58,11 +59,11 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: alpha)
-        UIApplication.shared.statusBarView?.backgroundColor = color
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.backgroundColor = color
+//        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: alpha)
+//        UIApplication.shared.statusBarView?.backgroundColor = color
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.backgroundColor = color
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,7 +83,7 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
             cell?.commentLbl?.text = (commentList["comment"] as? String) ?? ""
             
             if let stars = commentList["stars"] as? Double {
-                cell?.rateInComment.rating = stars
+//                cell?.rateInComment.rating = stars
             }
             
             cell?.dataLbl?.text = (commentList["date"] as? String) ?? ""
@@ -109,23 +110,27 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var offset = scrollView.contentOffset.y / 150
+//        var offset = scrollView.contentOffset.y
         
-        if offset > 1 {
+//        if offset < -1 {
+//            coffeeImg.contentMode = .scaleAspectFit
             
-            offset = 1
-            alpha = offset
-            let colorWithOffset = UIColor(red: 1, green: 0.585, blue: 0, alpha: offset)
-            self.navigationController?.navigationBar.backgroundColor = colorWithOffset
-            UIApplication.shared.statusBarView?.backgroundColor = colorWithOffset
-        } else {
-            alpha = offset
-            let colorWithOffset = UIColor(red: 1, green: 0.585, blue: 0, alpha: offset)
-            self.navigationController?.navigationBar.backgroundColor = colorWithOffset
-            UIApplication.shared.statusBarView?.backgroundColor = colorWithOffset
-        }
+            
+//
+//            offset = 1
+//            alpha = offset
+//            let colorWithOffset = UIColor(red: 1, green: 0.585, blue: 0, alpha: offset)
+//            self.navigationController?.navigationBar.backgroundColor = colorWithOffset
+//            UIApplication.shared.statusBarView?.backgroundColor = colorWithOffset
+//        } else {
+//            coffeeImg.contentMode = .scaleToFill
+//            alpha = offset
+//            let colorWithOffset = UIColor(red: 1, green: 0.585, blue: 0, alpha: offset)
+//            self.navigationController?.navigationBar.backgroundColor = colorWithOffset
+//            UIApplication.shared.statusBarView?.backgroundColor = colorWithOffset
+//        }
     }
-    
+
     @IBAction func selectCoffeeBtn(_ sender: Any) {
 //        performSegue(withIdentifier: "CoffeeToMap", sender: self)
     }

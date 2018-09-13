@@ -60,17 +60,17 @@ class DropDownCell: UITableViewCell {
         super.awakeFromNib()
         
         
-        style(view: BGSmallCup, ratio: 12, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
-        style(view: BGMidleCuo, ratio: 12, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
-        style(view: BGBigCup, ratio: 12, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
-        style(view: mainBG, ratio: 12, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
-        style(view: smallCupBtn, ratio: 12, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
-        style(view: middleCupBtn, ratio: 12, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
-        style(view: bigCubBtn, ratio: 12, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
-        style(view: addToOrderBtn, ratio: 9, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
-        style(view: additionsBtn, ratio: 6, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: true)
+        style(view: BGSmallCup, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
+        style(view: BGMidleCuo, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
+        style(view: BGBigCup, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
+        style(view: mainBG, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
+        style(view: smallCupBtn, ratio: 5, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
+        style(view: middleCupBtn, ratio: 5, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
+        style(view: bigCubBtn, ratio: 5, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
+        style(view: addToOrderBtn, ratio: 5, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
+        style(view: additionsBtn, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: true)
         
-        CoffeeImg.layer.cornerRadius = 12
+        CoffeeImg.layer.cornerRadius = 5
         CoffeeImg.layer.masksToBounds = true
     }
     

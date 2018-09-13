@@ -22,11 +22,16 @@ target 'CofeeGo' do
 
 	pod 'CarbonKit'
 
-    pod 'GoogleMaps'
+    	pod 'GoogleMaps'
 
 	pod 'Cosmos', '~> 16.0'
 
 	pod 'HCSStarRatingView', '~> 1.5'
+	
+	pod 'XLPagerTabStrip', '~> 8.0'
 
+	pod 'Tamamushi'
+	
+	pod 'Firebase/Messaging'
 
 end

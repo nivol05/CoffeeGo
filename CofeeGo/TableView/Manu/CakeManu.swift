@@ -18,9 +18,7 @@ class CakeManu: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        BG.layer.cornerRadius = 12
         CoffeeImg.layer.cornerRadius = 12
-        BG.layer.masksToBounds = false
         CoffeeImg.layer.masksToBounds = true
 //        BG.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
 //        BG.layer.shadowOffset = CGSize(width: 0, height: 0)
