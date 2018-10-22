@@ -18,7 +18,7 @@ import XLPagerTabStrip
 class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate , UITableViewDataSource,IndicatorInfoProvider{
 
 
-    @IBOutlet weak var searhBar: UISearchBar!
+//    @IBOutlet weak var searhBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
 //    private var clusterManager: GMUClusterManager!
@@ -34,7 +34,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
     
     var test = 0
     var coffee: [[String: Any]] = [[String: Any]]()
-    var token = String()
+
     var name = String()
 
     var inSearchMode = false
@@ -50,27 +50,35 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
             tableView.dataSource = self
             tableView.delegate = self
             //Active searching
-            searhBar.delegate = self
-            searhBar.returnKeyType = UIReturnKeyType.done
+//            searhBar.delegate = self
+//            searhBar.returnKeyType = UIReturnKeyType.done
             
             //Loading Page bar
             spinner(shouldSpin: true)
             
             //Download coffeeList
-            Alamofire.request(LIST_COFFEE_URL).responseJSON { (response) in
+            getCoffeeNets().responseJSON { (response) in
                 
-                if let responseValue = response.result.value{
-                    self.coffee = responseValue as! [[String : Any]]
+                switch response.result {
+                case .success(let value):
+                
+                    self.coffee = value as! [[String : Any]]
                     self.downloadImage()
                     self.spinner(shouldSpin: false)
                     self.tableView?.reloadData()
+                    
+                    break
+                case .failure(let error):
+                    print(error)
+                    break
                 }
+                
+                
                 
             }
             login(completion: { (error) in})
         } else {
             print("nema")
-        
         }
 
         
@@ -119,55 +127,58 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
             }
         return cell!
     }
+    
+//    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cofeeCell" , for : indexPath) as! CofeeCell
+//        cell.CofeeImg.kf.cancelDownloadTask()
+//    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let Storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let cell = Storyboard.instantiateViewController(withIdentifier: "CommentPage") as! CoffeePage
+        let cell = Storyboard.instantiateViewController(withIdentifier: "CommentPage") as! PageCoffee
 
         let coffeeList = coffee[indexPath.row]
         
-        cell.name = coffeeList["name"] as! String
-        User.name = coffeeList["name"] as! String
+        User.name = coffeeList["name"] as? String
         cell.imgUrl = coffeeList["img"] as! String
         cell.logo = coffeeList["logo_img"] as! String
-//        let stars = coffeeList["stars"] as! Double
-//        print(stars)
+        cell.descrip = coffeeList["description_full"] as? String
         cell.st = coffeeList["stars"] as! Double
-        cell.token = token
+        PageCoffee.coffeeId = "\(coffeeList["id"]!)"
         
         self.navigationController?.pushViewController(cell, animated: true)
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        self.tableView.isHidden = true
-        spinner(shouldSpin: true)
-        
-        if searchBar.text == nil || searchBar.text == ""{
-            inSearchMode = false
-            
-            Alamofire.request(LIST_COFFEE_URL).responseJSON { (response) in
-                if let responseValue = response.result.value{
-                    self.coffee = responseValue as! [[String : Any]]
-                    self.spinner(shouldSpin: false)
-                    self.tableView?.reloadData()
-
-                }
-            }
-            
-        } else {
-            
-            Alamofire.request("http://138.68.79.98/api/customers/coffee_nets/?search=\(searchBar.text!)").responseJSON { (response) in
-                
-                if let responseValue = response.result.value{
-                    self.coffee = responseValue as! [[String : Any]]
-                    self.spinner(shouldSpin: false)
-                    self.tableView?.reloadData()
-                }
-            }
-        }
-        view.endEditing(true)
-    }
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        
+//        self.tableView.isHidden = true
+//        spinner(shouldSpin: true)
+//        
+//        if searchBar.text == nil || searchBar.text == ""{
+//            inSearchMode = false
+//            
+//            Alamofire.request(LIST_COFFEE_URL).responseJSON { (response) in
+//                if let responseValue = response.result.value{
+//                    self.coffee = responseValue as! [[String : Any]]
+//                    self.spinner(shouldSpin: false)
+//                    self.tableView?.reloadData()
+//
+//                }
+//            }
+//            
+//        } else {
+//            
+//            Alamofire.request("http://138.68.79.98/api/customers/coffee_nets/?search=\(searchBar.text!)").responseJSON { (response) in
+//                
+//                if let responseValue = response.result.value{
+//                    self.coffee = responseValue as! [[String : Any]]
+//                    self.spinner(shouldSpin: false)
+//                    self.tableView?.reloadData()
+//                }
+//            }
+//        }
+//        view.endEditing(true)
+//    }
     
     func spinner(shouldSpin status: Bool){
         if status == true{
@@ -192,30 +203,24 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
     
      func login(completion: @escaping (_ error: NSError?) -> Void) {
         
-        let path = "/api/customers/api-token-auth/"
-        let url = "\(BASE_URL)\(path)"
-        let params: [String: Any] = [
-            "username": "retrofit",
-            "password": "111111111"
-        ]
-        
-        
-        Alamofire.request(url, method: .post , parameters: params, encoding: URLEncoding(), headers: nil).responseJSON { (response) in
+        getToken(username: "retrofit", pass: "111111111").responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
                 let jsonData = JSON(value)
                 
-                self.token = "Token \(jsonData["token"].string!)"
-                
-                print(self.token)
+                token = "Token \(jsonData["token"].string!)"
+                header = [
+                    "Authorization": token
+                ]
                 break
                 
             case .failure(let error):
-                completion(error as NSError)
+                print(error)
                 break
             }
         }
+        
     }
     
     @IBAction func loginBtn(_ sender: Any) {

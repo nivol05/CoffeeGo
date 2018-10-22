@@ -14,7 +14,8 @@ class SendwitchMenuList: UIViewController , UITableViewDataSource,UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        test = User.i[3] as! [[String : Any]]
+        let database = Database()
+        test = database.getProducts(type: 1)
         print(test.count)
         tableView.delegate = self
         tableView.dataSource = self
@@ -29,6 +30,7 @@ class SendwitchMenuList: UIViewController , UITableViewDataSource,UITableViewDel
         var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "SendwitchManu" , for : indexPath) as? SendwichManu
         
+        cell?.productElem = data
         //Name
         cell?.nameLbl.text = data["name"] as? String
         

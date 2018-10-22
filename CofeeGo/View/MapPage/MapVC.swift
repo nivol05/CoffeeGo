@@ -46,7 +46,7 @@ GMSMapViewDelegate{
         clusterManager.setDelegate(self, mapDelegate: self)
 
         
-        Alamofire.request("http://138.68.79.98/api/customers/coffee_spots/").responseJSON { (response) in
+        getCoffeeSpots().responseJSON { (response) in
             if let responseValue = response.result.value{
 
                 self.coffee = responseValue as! [[String : Any]]
@@ -76,7 +76,7 @@ GMSMapViewDelegate{
             }
         }
         
-        Alamofire.request(LIST_COFFEE_URL).responseJSON { (response) in
+        getCoffeeNets().responseJSON { (response) in
             
             if let responseValue = response.result.value{
                 self.coffeeDots = responseValue as! [[String : Any]]

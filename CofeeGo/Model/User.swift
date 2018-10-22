@@ -19,5 +19,6 @@ class User {
     
     static var i : [[Any]] = [[Any]]()
     
+    static var token = String()
 
 }

@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class CakeMenuList: UIViewController , UITableViewDataSource,UITableViewDelegate {
+class CakeMenuList: UIViewController , UITableViewDataSource,UITableViewDelegate, IndicatorInfoProvider {
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(image: UIImage(named: "Deserts"))
+    }
 
     @IBOutlet weak var tableView: UITableView!
     var test : [[String: Any]] = [[String: Any]]()
@@ -16,8 +21,8 @@ class CakeMenuList: UIViewController , UITableViewDataSource,UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        test = User.i[1] as! [[String : Any]]
-        print(test.count)
+        let database = Database()
+        test = database.getProducts(type: 2)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -31,6 +36,7 @@ class CakeMenuList: UIViewController , UITableViewDataSource,UITableViewDelegate
         var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "cakeManu" , for : indexPath) as? CakeManu
         
+        cell?.productElem = data
         //Name
         cell?.nameLbl.text = data["name"] as? String
         

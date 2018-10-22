@@ -15,12 +15,15 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     @IBOutlet weak var emptySyrypView: UIView!
     
     var syrup : [[String: Any]] = [[String: Any]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        OrderData.tempSyrups = OrderData.currSyrups
+        print("SYRUPS \(OrderData.tempSyrups)")
         
         tableView.isHidden = true
 
-        Alamofire.request("http://138.68.79.98/api/customers/syrups/?id=\(OrdersVC.coffeeId)").responseJSON { (response) in
+        getSyrupsForSpot(spotId: "\(OrdersVC.coffeeId)").responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.syrup = responseValue as! [[String : Any]]
                 if self.syrup.count > 0 {
@@ -44,14 +47,63 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let additionalIndex = syrup[indexPath.row]
+        let syrupElem = syrup[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "syrupCell" , for : indexPath) as? SyrupCell
-        print(additionalIndex["name"] ?? "SykaBlat")
-        cell?.syrupNameLbl.text = additionalIndex["name"] as? String
+        let cell = tableView.dequeueReusableCell(withIdentifier: "syrupCell" , for : indexPath) as! SyrupCell
+        var isSelected = false
         
+        for i in 0..<OrderData.tempSyrups.count{
+            let value = OrderData.tempSyrups[i]
+            if "\(value["name"]!)" == "\(syrupElem["name"]!)"{
+                cell.checkMark.isHidden = false
+                isSelected = true
+                break
+            }
+        }
+            if !isSelected{
+                cell.checkMark.isHidden = true
+            }
+        cell.syrupNameLbl.text = syrupElem["name"] as? String
         
-        return cell!
+        return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "syrupCell" , for : indexPath) as! SyrupCell
+        
+        let syrupElem = syrup[indexPath.row]
+
+        if  cell.checkMark.isHidden == true{
+
+            cell.checkMark.isHidden = false
+            OrderData.tempSyrups.append(syrupElem)
+            
+        } else {
+            cell.checkMark.isHidden = true
+            var pos = 0
+            for i in 0..<OrderData.tempSyrups.count{
+                let value = OrderData.tempSyrups[i]
+                if "\(value["name"]!)" == "\(syrupElem["name"]!)"{
+                    pos = i
+                    break
+                }
+            }
+            
+            OrderData.tempSyrups.remove(at: pos)
+        }
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//
+//        if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
+//            if cell.accessoryType == .checkmark {
+//                cell.accessoryType = .none
+//            } else {
+//                cell.accessoryType = .checkmark
+//            }
+//        }
+//    }
 
 }

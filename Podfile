@@ -33,5 +33,15 @@ target 'CofeeGo' do
 	pod 'Tamamushi'
 	
 	pod 'Firebase/Messaging'
+	
+	pod 'SQLite.swift', '~> 0.11.5'
+
+	pod 'ReadMoreTextView'
+
+	pod 'SimplePDF'
+
+	pod "ExpandableLabel"
+
+	pod 'PureLayout', '~> 2.0.5'
 
 end

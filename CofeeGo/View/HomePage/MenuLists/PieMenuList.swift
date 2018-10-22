@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class PieMenuList: UIViewController  , UITableViewDataSource,UITableViewDelegate{
+class PieMenuList: UIViewController  , UITableViewDataSource,UITableViewDelegate, IndicatorInfoProvider {
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(image: UIImage(named: "Sendwich"))
+    }
+
     @IBOutlet weak var tableView: UITableView!
     var test : [[String: Any]] = [[String: Any]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        test = User.i[4] as! [[String : Any]]
-        print(test.count)
+        let database = Database()
+        test = database.getProducts(type: 10)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -29,6 +35,7 @@ class PieMenuList: UIViewController  , UITableViewDataSource,UITableViewDelegate
         var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "PieManu" , for : indexPath) as? PieManu
         
+        cell?.productElem = data
         //Name
         cell?.nameLbl.text = data["name"] as? String
         

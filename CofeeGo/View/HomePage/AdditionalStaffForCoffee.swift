@@ -20,7 +20,7 @@ class AdditionalStaffForCoffee: UIViewController, CarbonTabSwipeNavigationDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         rootView.clipsToBounds = true
-        let tabSwipe = CarbonTabSwipeNavigation(items: [" Допы ","Сиропы"] , delegate: self)
+        let tabSwipe = CarbonTabSwipeNavigation(items: [" Допы ","Сиропы", "Специи"] , delegate: self)
         tabSwipe.setTabExtraWidth(rootView.frame.width / 3)
         tabSwipe.setTabBarHeight(56)
         tabSwipe.setSelectedColor(UIColor.black)
@@ -38,13 +38,18 @@ class AdditionalStaffForCoffee: UIViewController, CarbonTabSwipeNavigationDelega
         guard let storyboard = storyboard else { return UIViewController() }
         if index == 0 {
             return storyboard.instantiateViewController(withIdentifier: "additionalView")
-        } else {
+        } else if index == 1 {
             return storyboard.instantiateViewController(withIdentifier: "syrupsView")
+        } else{
+            return storyboard.instantiateViewController(withIdentifier: "speciesView")
         }
     }
 
 
     @IBAction func confirmBtn(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+        OrderData.currSyrups = OrderData.tempSyrups
+        OrderData.currSpecies = OrderData.tempSpecies
+        OrderData.currAdditionals = OrderData.tempAdditionals
     }
 }

@@ -8,30 +8,34 @@
 
 import UIKit
 import Kingfisher
+import XLPagerTabStrip
 
-class OtherMenuList: UIViewController , UITableViewDataSource,UITableViewDelegate {
-
+class OtherMenuList: UIViewController , UITableViewDataSource,UITableViewDelegate, IndicatorInfoProvider {
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(image: UIImage(named: "Other"))
+    }
     @IBOutlet weak var tableView: UITableView!
-    var test : [[String: Any]] = [[String: Any]]()
+    var products : [[String: Any]] = [[String: Any]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        test = User.i[5] as! [[String : Any]]
-        print(test.count)
+        let database = Database()
+        products = database.getProducts(type: 11)
         tableView.delegate = self
         tableView.dataSource = self
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return test.count
+        return products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = test[indexPath.row]
+        let data = products[indexPath.row]
         var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "OtherManu" , for : indexPath) as? OtherManu
         
+        cell?.productElem = data
         //Name
         cell?.nameLbl.text = data["name"] as? String
         

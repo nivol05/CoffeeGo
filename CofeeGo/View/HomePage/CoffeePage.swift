@@ -7,12 +7,15 @@ import SVProgressHUD
 import Cosmos
 import HCSStarRatingView
 import Tamamushi
+import ReadMoreTextView
 
 class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
 
     var VC : ViewController!
     var MCVC : MapCoffeeVC!
     
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var textView: ReadMoreTextView!
     @IBOutlet weak var btnReadMore: UIButton!
     @IBOutlet weak var lblReviewHeight: NSLayoutConstraint!
     @IBOutlet weak var rateLbl: UILabel!
@@ -34,9 +37,9 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
     var st = Double()
     var alpha = CGFloat(0.0)
     
-    var plis = Int()
+    var mText = true
     
-    var token = String()
+    var plis = Int()
     
     var comments: [[String: Any]] = [[String: Any]]()
     var users : [[String: Any]] = [[String: Any]]()
@@ -45,7 +48,13 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
         spinner(shouldSpin: true)
         LoadContent()
         
-        TMGradientNavigationBar().setGradientColorOnNavigationBar(bar: (self.navigationController?.navigationBar)!, direction: .vertical, typeName: "Facebook Messenger")
+//        textView.text = "Lorem http://ipsum.com dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."
+//        
+////        textView.shouldTrim = true
+////        textView.maximumNumberOfLines = 4
+//        textView.attributedReadMoreText = NSAttributedString(string: "... Read more")
+//        textView.attributedReadLessText = NSAttributedString(string: " Read less")
+//        
         
         self.tableView.contentInset.bottom = selectBtn.frame.height
         
@@ -57,7 +66,7 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
 //        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: alpha)
 //        UIApplication.shared.statusBarView?.backgroundColor = color
@@ -82,13 +91,13 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
             
             cell?.commentLbl?.text = (commentList["comment"] as? String) ?? ""
             
-            if let stars = commentList["stars"] as? Double {
+//            if let stars = commentList["stars"] as? Double {
 //                cell?.rateInComment.rating = stars
-            }
+//            }
             
             cell?.dataLbl?.text = (commentList["date"] as? String) ?? ""
             
-            Alamofire.request(USER_URL).responseJSON { (response) in
+            getAllUsers().responseJSON { (response) in
                 if let responseValue = response.result.value{
                     self.users = responseValue as! [[String : Any]]
                     self.plis = self.users.count
@@ -158,13 +167,7 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
             }
         })
         
-        let commentUrl = "\(COMMENTS_URL)\(name)"
-        
-        let params : HTTPHeaders = [
-            "Authorization": token
-        ]
-        
-        Alamofire.request(commentUrl, method: .get , parameters: nil, encoding: URLEncoding(), headers : params).responseJSON { (response) in
+        getCommentsForNet(company: name).responseJSON { (response) in
             
             if let responseValue = response.result.value{
                 self.comments = responseValue as! [[String : Any]]
@@ -209,9 +212,22 @@ class CoffeePage: UIViewController, UITableViewDataSource,UITableViewDelegate {
         }
         
     }
+    
     @IBAction func moreTextBtn(_ sender: Any) {
-        print(infoLbl.numberOfLines)
-        infoLbl.numberOfLines = 0
-        print(infoLbl.numberOfLines)
+        
+            if self.mText{
+                infoLbl.numberOfLines = 0
+
+
+
+                self.mText = false
+            } else {
+                infoLbl.numberOfLines = 3
+
+                self.mText = true
+            }
+        }
+    
+        
     }
-}
+

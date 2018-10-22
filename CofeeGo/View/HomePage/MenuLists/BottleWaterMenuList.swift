@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class BottleWaterMenuList: UIViewController  , UITableViewDataSource,UITableViewDelegate{
+class BottleWaterMenuList: UIViewController  , UITableViewDataSource,UITableViewDelegate, IndicatorInfoProvider {
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(image: UIImage(named: "Drinks"))
+    }
     @IBOutlet weak var tableView: UITableView!
     var test : [[String: Any]] = [[String: Any]]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        test = User.i[2] as! [[String : Any]]
-        print(test.count)
+        let database = Database()
+        test = database.getProducts(type: 9)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -29,6 +33,7 @@ class BottleWaterMenuList: UIViewController  , UITableViewDataSource,UITableView
         var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "BottleManu" , for : indexPath) as? BottleManu
         
+        cell?.productElem = data
         //Name
         cell?.nameLbl.text = data["name"] as? String
         

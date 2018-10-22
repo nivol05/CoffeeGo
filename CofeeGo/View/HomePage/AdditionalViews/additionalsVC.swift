@@ -20,7 +20,7 @@ class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSourc
         super.viewDidLoad()
         
         tableView.isHidden = true
-        Alamofire.request("http://138.68.79.98/api/customers/additionals/?id=\(OrdersVC.coffeeId)").responseJSON { (response) in
+        getAdditionalsForSpot(spotId: "\(OrdersVC.coffeeId)").responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.additional = responseValue as! [[String : Any]]
                 if self.additional.count > 0{
@@ -44,16 +44,54 @@ class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let additionalIndex = additional[indexPath.row]
+        let addElem = additional[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "additionCell" , for : indexPath) as? AdditionCell
-        print(additionalIndex["name"] ?? "SykaBlat")
-        cell?.additionalLbl.text = additionalIndex["name"] as? String
+        let cell = tableView.dequeueReusableCell(withIdentifier: "additionCell" , for : indexPath) as! AdditionCell
+        cell.additionalLbl.text = addElem["name"] as? String
 
+        for i in 0..<OrderData.tempAdditionals.count{
+            let value = OrderData.tempAdditionals[i]
+            var isSelected = false
+            if "\(value["name"]!)" == "\(addElem["name"]!)"{
+                cell.checkMark.isHidden = false
+                isSelected = true
+                break
+            }
+            if !isSelected{
+                cell.checkMark.isHidden = true
+            }
+        }
         
         
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        return cell!
+        let addElem = additional[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "additionCell" , for : indexPath) as! AdditionCell
+        
+         if  cell.checkMark.isHidden == true{
+            
+            cell.checkMark.isHidden = false
+            OrderData.tempAdditionals.append(addElem)
+            
+        } else {
+           cell.checkMark.isHidden = true
+            var pos = 0
+            for i in 0..<OrderData.tempAdditionals.count{
+                let value = OrderData.tempAdditionals[i]
+                if "\(value["name"]!)" == "\(addElem["name"]!)"{
+                    pos = i
+                    break
+                }
+            }
+            
+            OrderData.tempAdditionals.remove(at: pos)
+            
+        }
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
 }

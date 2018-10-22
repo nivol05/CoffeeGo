@@ -8,8 +8,14 @@
 
 import UIKit
 import Kingfisher
+import XLPagerTabStrip
 
-class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDelegate {
+class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDelegate, IndicatorInfoProvider {
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(image: UIImage(named: "coffeTabIcon"))
+    }
+    
 
     var t_count:Int = 0
     var lastCell: DropDownCell = DropDownCell()
@@ -18,12 +24,13 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
     @IBOutlet weak var tableView: UITableView!
     
     
-    var test : [[String: Any]] = [[String: Any]]()
+    var products : [[String: Any]] = [[String: Any]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        test = User.i[0] as! [[String : Any]]
-        print(test)
+        let database = Database()
+        products = database.getProducts(type: 1)
+//        print("ON \(CoffeeMenuList.test)")
         self.tableView.contentInset.bottom = 50
 //        tableView = UITableView(frame: view.frame)
 //        tableView.layer.frame.size.height = view.frame.height * 1.5
@@ -32,22 +39,30 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
 
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.allowsSelection = false
-//        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        
+        
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        if indexPath.row == button_tag {
-            return 365
-        } else {
-            return 130
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        
+//        if indexPath.row == button_tag {
+//            return 365
+//        } else {
+//            return 130
+//        }
+//    }
     
     
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CoffeeManu" , for : indexPath) as! DropDownCell
+        cell.CoffeeImg.kf.cancelDownloadTask()
 
         if indexPath.row == button_tag {
             print("last cell is seen!!")
@@ -90,7 +105,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return test.count
+        return products.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -98,7 +113,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = test[indexPath.row]
+        let data = products[indexPath.row]
         var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoffeeManu" , for : indexPath) as! DropDownCell
 //        print(data)
@@ -108,6 +123,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         
         //CoffeeImage
         avatar_url = URL(string: data["img"] as! String)!
+        
         cell.CoffeeImg.kf.setImage(with: avatar_url)
         
         var price_text = ""
@@ -148,10 +164,12 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
             price_text += "\(b_cup) grn"
             cell.bigCupPrice.text = "\(b_cup) grn"
             
+            cell.helperView.isHidden = true
             onlyPrice = false
         } else {
             cell.BGBigCup.isHidden = true
             cell.bigCupPrice.isHidden = true
+            cell.helperView.isHidden = false
         }
         //
         //            // Set the only price
@@ -162,9 +180,15 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
             cell.middleCupPrice.text = "\(price) grn"
             cell.widthModdleBtn.constant = 110
             cell.heightMiddleBtn.constant = 120
+            cell.helperView.isHidden = true
+            
+            cell.capView.isHidden = true
+        } else {
+            cell.capView.isHidden = false
         }
 
-        cell.coffeePrice = cell.middleCupPrice.text!
+        cell.productElem = data
+        cell.coffeePrice = data["price"] as? Int
         cell.priceLbl.text = price_text
         
         cell.open.addTarget(self, action: #selector(cellOpened(sender:)), for: .touchUpInside)
@@ -197,8 +221,10 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         let previousCellTag = button_tag
         
         if lastCell.cellExists {
+            print("Close1")
+            
             self.lastCell.animate(duration: 0.3, c: {
-                self.view.layoutIfNeeded()
+                self.view.layoutMarginsDidChange()
             })
             
             if sender.tag == button_tag {
@@ -209,16 +235,21 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         
         if sender.tag != previousCellTag {
             button_tag = sender.tag
-            
+            print("Close2")
             lastCell = tableView.cellForRow(at: IndexPath(row: button_tag, section: 0)) as! DropDownCell
 //            
 //            lastCell.stuffView.isHidden = false
 //            lastCell.stuffView.alpha = 1
             self.lastCell.animate(duration: 0.3, c: {
-                self.view.layoutIfNeeded()
+                self.view.layoutMarginsDidChange()
             })
             
         }
+        
+        OrderData.currAdditionals.removeAll()
+        OrderData.currSpecies.removeAll()
+        OrderData.currSyrups.removeAll()
+        
         self.tableView.endUpdates()
     }
 

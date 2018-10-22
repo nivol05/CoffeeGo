@@ -1,0 +1,33 @@
+//
+//  BottleManu.swift
+//  CofeeGo
+//
+//  Created by Ni VoL on 19.07.2018.
+//  Copyright © 2018 Ni VoL. All rights reserved.
+//
+
+import UIKit
+
+class BottleManu: UITableViewCell {
+
+    @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var BG: UIView!
+    @IBOutlet weak var priceLbl: UILabel!
+    @IBOutlet weak var CoffeeImg: UIImageView!
+    var productElem = [String : Any]()
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        CoffeeImg.layer.cornerRadius = 12
+        CoffeeImg.layer.masksToBounds = true
+    }
+    @IBAction func addElementBtn(_ sender: Any) {
+        let menuElement = OrderItem(product_price: productElem["price"] as! Int,
+                                       product_name: productElem["name"] as! String,
+                                       product_id : productElem["id"] as! Int,
+                                       imageUrl: CoffeeImg.image!)
+        menuElement.cup_size = "default"
+        OrderData.orderList.append(menuElement)
+    }
+
+}

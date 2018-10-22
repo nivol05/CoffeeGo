@@ -2,38 +2,53 @@
 import UIKit
 import Alamofire
 import AlamofireImage
-import CarbonKit
+//import CarbonKit
 import SeamlessSlideUpScrollView
+import XLPagerTabStrip
 
-class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
+class OrdersVC: ButtonBarPagerTabStripViewController {
 
-    var menu : [[String: Any]] = [[String: Any]]()
-    var productTypes : [[String: Any]] = [[String: Any]]()
+//    var menu : [[String: Any]] = [[String: Any]]()
     var tabs = [Int]()
-    
-    
+  
     
     var items : [[Any]] = [[Any]]()
     
+    @IBOutlet weak var MakeOrderBtn: UIButton!
     @IBOutlet weak var line: UIView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var slideUpView: SeamlessSlideUpView!
     @IBOutlet var tableView: SeamlessSlideUpTableView!
     @IBOutlet weak var bgBottomConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var qwe : UIView!
+//    @IBOutlet weak var qwe : UIView!
     
     static var coffeeId = Int()
     
     override func viewDidLoad() {
+        
+        
+        
+        settings.style.buttonBarBackgroundColor = .init(red: 1, green: 120/255, blue: 0, alpha: 1)
+        settings.style.buttonBarItemBackgroundColor = .init(red: 1, green: 120/255, blue: 0, alpha: 1)
+        settings.style.selectedBarBackgroundColor = .white
+        settings.style.buttonBarItemFont = .systemFont(ofSize: 18, weight: UIFont.Weight.light)
+        settings.style.selectedBarHeight = 2.0
+        settings.style.buttonBarMinimumLineSpacing = 0
+        settings.style.buttonBarItemTitleColor = .black
+        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
+        settings.style.buttonBarLeftContentInset = 0
+        settings.style.buttonBarRightContentInset = 0
+        changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
+            guard changeCurrentIndex == true else { return }
+            oldCell?.label.textColor = .white
+            newCell?.label.textColor = UIColor.white
+        }
+        
         super.viewDidLoad()
-        downloadManuLists()
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-        line = UIVisualEffectView(effect: blurEffect)
-        
-//        line.layer.cornerRadius = 4
-//        line.layer.masksToBounds = false
+        self.navigationController?.navigationItem.backBarButtonItem?.isEnabled = false
+        cornerRatio(view: MakeOrderBtn, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: true)
         
         OrderData.orderList.removeAll()
         
@@ -50,127 +65,31 @@ class OrdersVC: UIViewController , CarbonTabSwipeNavigationDelegate {
         
     }
     
-    func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAt index: UInt) -> UIViewController {
-        guard let storyboard = storyboard else { return UIViewController() }
-        if index == 0 {
-            return storyboard.instantiateViewController(withIdentifier: "Coffee")
-        } else if index == 1 {
-            return storyboard.instantiateViewController(withIdentifier: "Cake")
-        } else if index == 2 {
-            return storyboard.instantiateViewController(withIdentifier: "BottleWater")
-        } else if index == 3 {
-            return storyboard.instantiateViewController(withIdentifier: "Sandwich")
-        } else if index == 4 {
-            return storyboard.instantiateViewController(withIdentifier: "Pie")
-        } else if index == 5 {
-            return storyboard.instantiateViewController(withIdentifier: "Other")
-        } else{
-            return UIViewController()
-        }
-        
-    }
 
-    func downloadManuLists(){
-        Alamofire.request("\(ORDER_URL)\(OrdersVC.coffeeId)").responseJSON { (response) in
-            if let responseValue = response.result.value{
-                self.menu = responseValue as! [[String : Any]]
-                self.downloadProductTypes()
-            }
-            
-        }
-    }
-    func downloadProductTypes(){
-        Alamofire.request(PRODUCT_TYPES).responseJSON { (response) in
-            if let responseValue = response.result.value{
-                self.productTypes = responseValue as! [[String : Any]]
-                self.setTabs()
-            }
-        }
-    }
-    
-    func setTabs(){
-        
-        for i in 0..<menu.count{
-            var here = false
-            let potom = self.menu[i]["product_type"] as? Int
-            for j in 0..<tabs.count{
-                if potom == tabs[j]{
-                    here = true
-
-                    break
-                }
-            }
-            if !here{
-                tabs.append(potom!)
-            }
-        }
-        tabs.sort()
-        print(tabs.count)
-        setPager()
-
-    }
-
-
-    
-    func setPager(){
-        var tabIcon = [UIImage]()
-        User.i.removeAll()
-        
-        for i in 0..<tabs.count{
-            
-            if tabs[i] == 1 {
-                User.i.append(getItems(type: 1))
-                tabIcon.append(UIImage(named: "coffeTabIcon")!)
-                
-            } else if tabs[i] == 2 {
-                User.i.append(getItems(type: 2))
-                tabIcon.append(UIImage(named: "Deserts")!)
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        var storyboard = [UIViewController]()
+        for i in tabs{
+            if i == 1{
                 
                 
-            } else if tabs[i] == 3 {
-                User.i.append(getItems(type: 3))
-                tabIcon.append(UIImage(named: "Drinks")!)
-            } else if tabs[i] == 4 {
-                User.i.append(getItems(type: 4))
-                tabIcon.append(UIImage(named: "Sendwich")!)
-            } else if tabs[i] == 7 {
-                User.i.append(getItems(type: 7))
-                tabIcon.append(UIImage(named: "Bakery")!)
-            } else {
-                User.i.append(getItems(type: 8))
-                tabIcon.append(UIImage(named: "Other")!)
+                storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Coffee"))
+            } else if i == 2{
+                storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Cake"))
+            } else if i == 9{
+                storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BottleWater"))
+            } else if i == 10{
+                
+                storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Pie"))
+                
+            } else if i == 11{
+                storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Other"))
             }
-
         }
         
-      
-        
-        let tabSwipe = CarbonTabSwipeNavigation(items: tabIcon , delegate: self)
-        
-        tabSwipe.setTabExtraWidth(30)
-        tabSwipe.setTabBarHeight(56)
-        tabSwipe.setSelectedColor(UIColor.black)
-        tabSwipe.setIndicatorColor(UIColor.orange)
-        tabSwipe.insert(intoRootViewController: self, andTargetView: qwe)
-        tabSwipe.setNormalColor(UIColor.lightGray)
-
-        
-        
+        print(storyboard)
+        return storyboard
     }
     
-    func getItems(type : Int) -> [Any]{
-        var mas : [Any] = [Any]()
-        var c = 0
-        for i in 0..<self.menu.count{
-            let potom = self.menu[i]["product_type"] as? Int
-            if potom == type{
-                mas.append(self.menu[i])
-                c += 1
-                CakeMenuList.kostil = i
-            }
-        }
-        return mas
-    }
     
     @IBAction func oggleSlideUpView(_ sender: AnyObject) {
         
@@ -221,13 +140,25 @@ extension OrdersVC : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let spots = OrderData.orderList[indexPath.row]
+        let orderItem = OrderData.orderList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderCell", for: indexPath) as! OrderList
         
-        cell.nameLbl.text = spots.getName()
-        cell.img.image = spots.getImage()
-        cell.coffeePrice.text = spots.cup_size
-        cell.coffeePrice.text = spots.product_price
+        cell.nameLbl.text = orderItem.product_name
+        cell.img.image = orderItem.imageUrl
+        cell.coffeePrice.text = orderItem.cup_size
+        cell.priceOrderDone.text = "\(orderItem.getProductPrice()) грн"
+        
+        var syrupsText = String()
+        for i in 0..<orderItem.syrups.count{
+            let value = orderItem.syrups[i]
+            
+            syrupsText.append(value["name"] as! String)
+            
+            if i != orderItem.syrups.count - 1{
+                syrupsText.append(", ")
+            }
+        }
+        cell.additionalLbl.text = syrupsText
 //        cell.sugarCountLbl.text = "\(spots.getSugar())"
         
         return cell

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DD81FBFD3638EB2FA86BB9DEC116E707"
+               BlueprintIdentifier = "95BA5757E555300EB665762A77C3004B"
                BlueprintName = "SeamlessSlideUpScrollView"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "SeamlessSlideUpScrollView.framework">

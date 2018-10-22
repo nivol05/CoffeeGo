@@ -4,6 +4,7 @@ import MapKit
 import Alamofire
 import GoogleMaps
 import SeamlessSlideUpScrollView
+import Kingfisher
 
 class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GMUClusterManagerDelegate{
     
@@ -12,6 +13,9 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
     var LNG = Double()
     var coffeeAdress = [String]()
     var coffeeSpot = String()
+    var menu : [[String: Any]] = [[String: Any]]()
+    var productTypes : [[String: Any]] = [[String: Any]]()
+    var tabs : [Int]!
     
     var pos = Double()
     
@@ -65,12 +69,11 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("her")
+        ImageCache.default.clearMemoryCache()
         
-//        let color = UIColor(red: 1, green: 0.585, blue: 0, alpha: 0)
-//        UIApplication.shared.statusBarView?.backgroundColor = color
-//        self.navigationController?.navigationBar.backgroundColor = color
-//        
     }
+
     
     
     @IBAction func oggleSlideUpView(_ sender: AnyObject) {
@@ -86,7 +89,7 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
     }
     
     func addCoffeeSpots(){
-        Alamofire.request("http://138.68.79.98/api/customers/coffee_spots/?name=\(coffeeSpot)").responseJSON { (response) in
+        getCoffeeSpotsForNet(company: coffeeSpot).responseJSON { (response) in
             
             print("http://138.68.79.98/api/customers/coffee_spots/?name=\(self.coffeeSpot)")
             if let responseValue = response.result.value{
@@ -126,14 +129,11 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         if let poiItem = marker.userData as? POIItem {
             NSLog("Did tap marker for cluster item \(poiItem.index!)")
             let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 17)
-            
-            let coffeeidList = coffee[poiItem.index!]
-            let Storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
-            OrdersVC.coffeeId = coffeeidList["id"] as! Int
-            self.navigationController?.pushViewController(cell, animated: true)
             self.mapView.camera = camera
             self.mapView.delegate = self
+            
+             let coffeeidList = coffee[poiItem.index!]
+            self.downloadManuLists(coffeeidList: coffeeidList)
 
         } else {
             NSLog("Did tap a normal marker")
@@ -144,7 +144,69 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         
         return true
     }
+    
+    func downloadManuLists(coffeeidList : [String : Any]){
+        getProductsForSpot(spotId: "\(coffeeidList["id"]!)").responseJSON { (response) in
+            if let responseValue = response.result.value{
+                self.menu = responseValue as! [[String : Any]]
+                self.downloadProductTypes(coffeeidList: coffeeidList)
+            }
+            
+        }
+    }
+    func downloadProductTypes(coffeeidList : [String : Any]){
+        getAllProductTypes().responseJSON { (response) in
+            if let responseValue = response.result.value{
+                self.productTypes = responseValue as! [[String : Any]]
+                self.setTabs(coffeeidList: coffeeidList)
+            }
+        }
+    }
+    
+    func setTabs(coffeeidList : [String : Any]){
+        tabs = []
+        
+        for i in 0..<menu.count{
+            var here = false
+            let potom = self.menu[i]["product_type"] as? Int
+            for j in 0..<tabs.count{
+                if potom == tabs[j]{
+                    here = true
+                    
+                    break
+                }
+            }
+            if !here{
+                tabs.append(potom!)
+            }
+        }
+        tabs.sort()
+        print(tabs.count)
+        markerCLICK(coffeeidList: coffeeidList)
+        
+    }
+    
+    func markerCLICK(coffeeidList : [String : Any]){
+        
+        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
+        
+        cell.tabs = self.tabs
+        
+        let database = Database()
+        database.deleteProduct()
+        database.setProducts(products: menu)
+        
+        
+
+        OrdersVC.coffeeId = coffeeidList["id"] as! Int
+        self.navigationController?.pushViewController(cell, animated: true)
+        
+    }
 }
+
+
+
 extension MapCoffeeVC : SeamlessSlideUpViewDelegate {
 
     func slideUpViewWillAppear(_ slideUpView: SeamlessSlideUpView, height: CGFloat) {
