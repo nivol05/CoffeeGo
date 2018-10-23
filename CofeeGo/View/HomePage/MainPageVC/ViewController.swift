@@ -63,6 +63,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
                 case .success(let value):
                 
                     self.coffee = value as! [[String : Any]]
+                    print("SUKABLET \(CoffeeNetElement(mas: self.coffee[0]).stars)")
                     self.downloadImage()
                     self.spinner(shouldSpin: false)
                     self.tableView?.reloadData()

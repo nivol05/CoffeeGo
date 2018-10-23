@@ -45,6 +45,7 @@
 		EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF799DF520C15BAA00EED722 /* CommentTable.swift */; };
 		EF8465FE213077B500C84126 /* SyrupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8465FD213077B500C84126 /* SyrupCell.swift */; };
 		EF8BEE36214C195700438FB6 /* ZFRippleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BEE35214C195700438FB6 /* ZFRippleButton.swift */; };
+		EFAE4D40217E7D68007F8EF4 /* CoffeeNetElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAE4D3F217E7D68007F8EF4 /* CoffeeNetElement.swift */; };
 		EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */; };
 		EFC712F220FBC6EA00121607 /* OrdersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F120FBC6EA00121607 /* OrdersVC.swift */; };
 		EFC712F620FD056C00121607 /* CoffeeMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F520FD056C00121607 /* CoffeeMenuList.swift */; };
@@ -141,6 +142,7 @@
 		EF799DF520C15BAA00EED722 /* CommentTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTable.swift; sourceTree = "<group>"; };
 		EF8465FD213077B500C84126 /* SyrupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyrupCell.swift; sourceTree = "<group>"; };
 		EF8BEE35214C195700438FB6 /* ZFRippleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZFRippleButton.swift; sourceTree = "<group>"; };
+		EFAE4D3F217E7D68007F8EF4 /* CoffeeNetElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeNetElement.swift; sourceTree = "<group>"; };
 		EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapParelavEffect.swift; sourceTree = "<group>"; };
 		EFC712F120FBC6EA00121607 /* OrdersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVC.swift; sourceTree = "<group>"; };
 		EFC712F520FD056C00121607 /* CoffeeMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMenuList.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				EFF8D5872115EE7400B655CE /* OrderData.swift */,
 				EF14A9E5215D47B3002C0A5F /* Database.swift */,
 				EFD3F5432166B05E00193B76 /* Network.swift */,
+				EFAE4D3F217E7D68007F8EF4 /* CoffeeNetElement.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				EF4AF8A1216BE1DF0083B07A /* CommentsCell.swift in Sources */,
 				EFEA59A7212EDC6300265BF3 /* syrupsVC.swift in Sources */,
 				EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */,
+				EFAE4D40217E7D68007F8EF4 /* CoffeeNetElement.swift in Sources */,
 				EF498DE62174F67B008231C1 /* speciesCell.swift in Sources */,
 				EFD3F5442166B05E00193B76 /* Network.swift in Sources */,
 				EF14A9DB215BE321002C0A5F /* GMUDefaultClusterRenderer.m in Sources */,
