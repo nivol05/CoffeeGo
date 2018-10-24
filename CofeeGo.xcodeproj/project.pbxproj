@@ -45,6 +45,7 @@
 		EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF799DF520C15BAA00EED722 /* CommentTable.swift */; };
 		EF8465FE213077B500C84126 /* SyrupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8465FD213077B500C84126 /* SyrupCell.swift */; };
 		EF8BEE36214C195700438FB6 /* ZFRippleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BEE35214C195700438FB6 /* ZFRippleButton.swift */; };
+		EFA75FC82181332900E84242 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA75FC72181332900E84242 /* Elements.swift */; };
 		EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */; };
 		EFC712F220FBC6EA00121607 /* OrdersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F120FBC6EA00121607 /* OrdersVC.swift */; };
 		EFC712F620FD056C00121607 /* CoffeeMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F520FD056C00121607 /* CoffeeMenuList.swift */; };
@@ -141,6 +142,7 @@
 		EF799DF520C15BAA00EED722 /* CommentTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTable.swift; sourceTree = "<group>"; };
 		EF8465FD213077B500C84126 /* SyrupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyrupCell.swift; sourceTree = "<group>"; };
 		EF8BEE35214C195700438FB6 /* ZFRippleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZFRippleButton.swift; sourceTree = "<group>"; };
+		EFA75FC72181332900E84242 /* Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elements.swift; sourceTree = "<group>"; };
 		EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapParelavEffect.swift; sourceTree = "<group>"; };
 		EFC712F120FBC6EA00121607 /* OrdersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVC.swift; sourceTree = "<group>"; };
 		EFC712F520FD056C00121607 /* CoffeeMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMenuList.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				EFF8D5872115EE7400B655CE /* OrderData.swift */,
 				EF14A9E5215D47B3002C0A5F /* Database.swift */,
 				EFD3F5432166B05E00193B76 /* Network.swift */,
+				EFA75FC72181332900E84242 /* Elements.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				EF36531221012BEB005E00D3 /* SendwichManu.swift in Sources */,
 				EF4AF8A3216CC8F30083B07A /* Interface.swift in Sources */,
 				EF8BEE36214C195700438FB6 /* ZFRippleButton.swift in Sources */,
+				EFA75FC82181332900E84242 /* Elements.swift in Sources */,
 				EF14A9C3215BE30D002C0A5F /* GMUStaticCluster.m in Sources */,
 				EFE31B382172376600F3E343 /* postOrderVC.swift in Sources */,
 				EF36531421012BF9005E00D3 /* OtherManu.swift in Sources */,
