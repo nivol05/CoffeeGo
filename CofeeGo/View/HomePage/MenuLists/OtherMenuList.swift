@@ -16,12 +16,12 @@ class OtherMenuList: UIViewController , UITableViewDataSource,UITableViewDelegat
         return IndicatorInfo(image: UIImage(named: "Other"))
     }
     @IBOutlet weak var tableView: UITableView!
-    var products : [[String: Any]] = [[String: Any]]()
+    var products : [ElementProduct]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let database = Database()
-        products = database.getProducts(type: 11)
+//        let database = Database()
+        products = getProductsByType(type: 11)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -37,17 +37,17 @@ class OtherMenuList: UIViewController , UITableViewDataSource,UITableViewDelegat
         
         cell?.productElem = data
         //Name
-        cell?.nameLbl.text = data["name"] as? String
+        cell?.nameLbl.text = data.name
         
         //CoffeeImage
-        avatar_url = URL(string: data["img"] as! String)!
+        avatar_url = URL(string: data.img)!
         cell?.CoffeeImg.kf.setImage(with: avatar_url)
         
         //Price
         var price_text = ""
         
-        let price = data["price"] as! Int
-        price_text += "\(price) grn"
+        let price = data.price
+        price_text += "\(price!) grn"
         
         cell?.priceLbl.text = price_text
         

@@ -12,3 +12,15 @@ var current_coffee_net : ElementCoffeeNet!
 var current_coffee_spot : ElementCoffeeSpot!
 var current_coffee_user : ElementUser!
 
+var allCoffeeNets : [ElementCoffeeNet]!
+var allSpotProducts : [ElementProduct]!
+
+func getProductsByType(type: Int) -> [ElementProduct]{
+    var prods = [ElementProduct]()
+    for x in allSpotProducts{
+        if x.product_type == type{
+            prods.append(x)
+        }
+    }
+    return prods
+}

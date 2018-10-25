@@ -13,8 +13,8 @@ class PieManu: UITableViewCell {
     @IBOutlet weak var BG: UIView!
     @IBOutlet weak var priceLbl: UILabel!
     @IBOutlet weak var CoffeeImg: UIImageView!
-    var productElem = [String : Any]()
-    
+    var productElem : ElementProduct!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -24,9 +24,9 @@ class PieManu: UITableViewCell {
 
     }
     @IBAction func addElementBtn(_ sender: Any) {
-        let menuElement = OrderItem(product_price: productElem["price"] as! Int,
-                                    product_name: productElem["name"] as! String,
-                                    product_id : productElem["id"] as! Int,
+        let menuElement = OrderItem(product_price: productElem.price,
+                                    product_name: productElem.name,
+                                    product_id : productElem.id,
                                     imageUrl: CoffeeImg.image!)
         OrderData.orderList.append(menuElement)
     }

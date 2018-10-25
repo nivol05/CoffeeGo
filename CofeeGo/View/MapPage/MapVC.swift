@@ -11,8 +11,7 @@ GMSMapViewDelegate{
     @IBOutlet weak var mapView: GMSMapView!
     private var clusterManager: GMUClusterManager!
     
-    var coffee : [[String: Any]] = [[String: Any]]()
-    var coffeeDots : [[String: Any]] = [[String: Any]]()
+    var coffeeSpots : [[String: Any]] = [[String: Any]]()
     
     @IBOutlet weak var coffeeLogo: UIImageView!
     var test = Double()
@@ -49,13 +48,13 @@ GMSMapViewDelegate{
         getCoffeeSpots().responseJSON { (response) in
             if let responseValue = response.result.value{
 
-                self.coffee = responseValue as! [[String : Any]]
-                let countCoffee = self.coffee.count
+                self.coffeeSpots = responseValue as! [[String : Any]]
+                let countCoffee = self.coffeeSpots.count
                 print(countCoffee)
 
                 for i in 0...countCoffee - 1{
 
-                    var pinList = self.coffee[i]
+                    var pinList = self.coffeeSpots[i]
 
                     if let lat = pinList["lat"] as? String {
                         print(Double(lat) ?? 0.0)
@@ -76,36 +75,18 @@ GMSMapViewDelegate{
             }
         }
         
-        getCoffeeNets().responseJSON { (response) in
-            
-            if let responseValue = response.result.value{
-                self.coffeeDots = responseValue as! [[String : Any]]
-            }
-        }
-        
         clusterManager.cluster()
 
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
 
-
-
         if let poiItem = marker.userData as? POIItem {
-            NSLog("Did tap marker for cluster item \(poiItem.index)")
-            let coffeePlace = coffeeDots[poiItem.index]
-            let avatar_url : URL
-            let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 17)
-            self.mapView.animate(to: camera)
-            self.mapView.delegate = self
-            if self.slideUpView.isHidden {
-                self.slideUpView.show(expandFull: false)
-                slideUpView.isHidden = false
-                
-                avatar_url = URL(string: coffeePlace["logo_img"] as! String)!
-                coffeeLogo.kf.setImage(with: avatar_url)
-                
-                
+            let spot = ElementCoffeeSpot(mas: coffeeSpots[poiItem.index])
+            if allCoffeeNets == nil{
+                getAllCoffeeNets(spot: spot, marker: marker)
+            } else {
+                markerClick(spot: spot, marker: marker, coffeeNetIndex: getCoffeeNetIndex(spot: spot, marker: marker))
             }
         } else {
             NSLog("Did tap a normal marker")
@@ -126,6 +107,51 @@ GMSMapViewDelegate{
         mapView.moveCamera(update)
     }
 
+    func getCoffeeNetIndex(spot: ElementCoffeeSpot, marker: GMSMarker) -> Int{
+        var index = 0
+        
+        for x in 0..<allCoffeeNets.count{
+            let elem = allCoffeeNets[x]
+            if elem.id == spot.company{
+                index = x
+                break
+            }
+        }
+        return index
+    }
+    
+    func markerClick(spot: ElementCoffeeSpot, marker: GMSMarker, coffeeNetIndex: Int){
+        let avatar_url : URL
+        let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 17)
+        self.mapView.animate(to: camera)
+        self.mapView.delegate = self
+        
+        let company = allCoffeeNets[coffeeNetIndex]
+        
+        if self.slideUpView.isHidden {
+            self.slideUpView.show(expandFull: false)
+            slideUpView.isHidden = false
+            
+            avatar_url = URL(string: company.logo_img)!
+            coffeeLogo.kf.setImage(with: avatar_url)
+            
+        }
+    }
+    
+    func getAllCoffeeNets(spot: ElementCoffeeSpot, marker: GMSMarker){
+        getCoffeeNets().responseJSON { (response) in
+            
+            switch response.result {
+            case .success(let value):
+                allCoffeeNets = setElementCoffeeNetList(list: value as! [[String : Any]])
+                self.markerClick(spot: spot, marker: marker, coffeeNetIndex: self.getCoffeeNetIndex(spot: spot, marker: marker))
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+    }
 }
 extension MapVC : SeamlessSlideUpViewDelegate {
     

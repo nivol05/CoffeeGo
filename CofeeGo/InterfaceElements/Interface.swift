@@ -17,11 +17,11 @@ import UIKit
 ////    backGround.layer.shadowOpacity = 0.8
 //
 //}
-func cornerRatio(view : UIView, ratio : CGFloat, color : CGColor, shadow : Bool){
+func cornerRatio(view : UIView, ratio : CGFloat, shadow : Bool){
     view.layer.cornerRadius = ratio
     view.layer.masksToBounds = false
     if shadow{
-        view.layer.shadowColor = color
+        view.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.layer.shadowOpacity = 0.4
     }

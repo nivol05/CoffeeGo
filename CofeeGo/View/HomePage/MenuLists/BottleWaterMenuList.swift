@@ -15,37 +15,37 @@ class BottleWaterMenuList: UIViewController  , UITableViewDataSource,UITableView
         return IndicatorInfo(image: UIImage(named: "Drinks"))
     }
     @IBOutlet weak var tableView: UITableView!
-    var test : [[String: Any]] = [[String: Any]]()
+    var products : [ElementProduct]!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let database = Database()
-        test = database.getProducts(type: 9)
+//        let database = Database()
+        products = getProductsByType(type: 9)
         tableView.delegate = self
         tableView.dataSource = self
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return test.count
+        return products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = test[indexPath.row]
+        let data = products[indexPath.row]
         var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "BottleManu" , for : indexPath) as? BottleManu
         
         cell?.productElem = data
         //Name
-        cell?.nameLbl.text = data["name"] as? String
+        cell?.nameLbl.text = data.name
         
         //CoffeeImage
-        avatar_url = URL(string: data["img"] as! String)!
+        avatar_url = URL(string: data.img)!
         cell?.CoffeeImg.kf.setImage(with: avatar_url)
         
         //Price
         var price_text = ""
         
-        let price = data["price"] as! Int
-        price_text += "\(price) grn"
+        let price = data.price
+        price_text += "\(price!) grn"
         
         cell?.priceLbl.text = price_text
         

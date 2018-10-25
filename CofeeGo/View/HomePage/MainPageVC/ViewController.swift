@@ -32,8 +32,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
     let imageCache = NSCache<NSString, UIImage>()
     
     var test = 0
-    var coffee: [[String: Any]] = [[String: Any]]()
-
+    
     var name = String()
 
     var inSearchMode = false
@@ -42,8 +41,6 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         
         super.viewDidLoad()
         
-        let zapoop = ElementComment(mas: [String : Any]())
-        print("zaloop \(zapoop)")
         if Connectivity.isConnectedToInternet() {
             
             print("Yes! internet is available.")
@@ -63,7 +60,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
                 switch response.result {
                 case .success(let value):
                 
-                    self.coffee = value as! [[String : Any]]
+                    allCoffeeNets = setElementCoffeeNetList(list: value as! [[String : Any]])
                     self.spinner(shouldSpin: false)
                     self.tableView?.reloadData()
                     
@@ -72,9 +69,6 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
                     print(error)
                     break
                 }
-                
-                
-                
             }
             login(completion: { (error) in})
         } else {
@@ -92,14 +86,17 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
 
     //1
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return coffee.count
+        if allCoffeeNets == nil{
+            return 0
+        }
+        return allCoffeeNets.count
     }
     //2
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cofeeCell" , for : indexPath) as? CofeeCell
-            if coffee.count > 0 {
-                let coffeeElem = ElementCoffeeNet(mas: coffee[indexPath.row])
+            if allCoffeeNets.count > 0 {
+                let coffeeElem = allCoffeeNets[indexPath.row]
                 var avatar_url: URL
                 
                 cell?.rateStars.rating = coffeeElem.stars
@@ -138,7 +135,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         let cell = Storyboard.instantiateViewController(withIdentifier: "CommentPage") as! PageCoffee
 
         
-        current_coffee_net = ElementCoffeeNet(mas: coffee[indexPath.row])
+        current_coffee_net = allCoffeeNets[indexPath.row]
         
         self.navigationController?.pushViewController(cell, animated: true)
     }
@@ -216,7 +213,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
             switch response.result {
             case .success(let value):
                 let users = value as! [[String : Any]]
-                
+                current_coffee_user = ElementUser(mas: users[0])
                 break
                 
             case .failure(let error):

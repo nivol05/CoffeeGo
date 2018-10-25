@@ -15,7 +15,7 @@ class OtherManu: UITableViewCell {
     @IBOutlet weak var priceLbl: UILabel!
     @IBOutlet weak var CoffeeImg: UIImageView!
     
-    var productElem = [String : Any]()
+    var productElem : ElementProduct!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,10 +25,11 @@ class OtherManu: UITableViewCell {
         CoffeeImg.layer.masksToBounds = true
     }
     @IBAction func addElementBtn(_ sender: Any) {
-        let menuElement = OrderItem(product_price: productElem["price"] as! Int,
-                                    product_name: productElem["name"] as! String,
-                                    product_id : productElem["id"] as! Int,
+        let menuElement = OrderItem(product_price: productElem.price,
+                                    product_name: productElem.name,
+                                    product_id : productElem.id,
                                     imageUrl: CoffeeImg.image!)
+        menuElement.cup_size = "default"
         OrderData.orderList.append(menuElement)
     }
 }

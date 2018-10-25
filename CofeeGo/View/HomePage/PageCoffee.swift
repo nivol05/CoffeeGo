@@ -28,8 +28,8 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     @IBOutlet weak var imagePager: UIScrollView!
     
     var mText = true
-    var comments : [[String: Any]] = [[String: Any]]()
-    var users : [[String: Any]] = [[String: Any]]()
+    var comments = [ElementComment]()
+    var users = [ElementUser]()
     var images : [[String: Any]] = [[String: Any]]()
     var allRates : Int = 0 // CHANGED
     
@@ -40,11 +40,11 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
         super.viewDidLoad()
         LoadContent()
         
-        rateLbl.text = "\(String(describing: current_coffee_net.stars))"
+        rateLbl.text! = "\(current_coffee_net.stars!)"
         rateStarView.rating = current_coffee_net.stars
         collection.dataSource = self
         collection.delegate = self
-        cornerRatio(view: logoImg, ratio: 55, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
+        cornerRatio(view: logoImg, ratio: 55, shadow: false)
         logoImg.layer.masksToBounds = true
     }
     
@@ -59,24 +59,24 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
         let cell = collection.dequeueReusableCell(withReuseIdentifier: "Comments", for: indexPath) as! CommentsCell
         
         if comments.count > 0{
-            let commentList = comments[indexPath.row]
+            let commentElem = comments[indexPath.row]
 //            cornerRatio(view: cell.BGView)
             cell.BGView.layer.cornerRadius = 5
             cell.BGView.clipsToBounds = true
 //            cell.corner()
             
-            cell.commentLbl.text = (commentList["comment"] as? String) ?? ""
+            cell.commentLbl.text = commentElem.comment
             
             //            if let stars = commentList["stars"] as? Double {
             //                cell?.rateInComment.rating = stars
             //            }
             
-            cell.dateLbl?.text = (commentList["date"] as? String) ?? ""
+            cell.dateLbl?.text = commentElem.date
             
             for i in 0..<self.users.count{
                 let user = self.users[i]
-                if user["id"] as? Int == commentList["user"] as? Int{
-                    cell.userNameLbl.text = "\(String(describing: user["first_name"]!))  \(String(describing: user["last_name"]!))"
+                if user.id == commentElem.user{
+                    cell.userNameLbl.text = "\(user.first_name!)"
                     break
                 }
             }
@@ -104,7 +104,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
         getCommentsForNet(company: current_coffee_net.name).responseJSON { (response) in
             
             if let responseValue = response.result.value{
-                self.getFilledComments(comments: responseValue as! [[String : Any]])
+                self.getFilledComments(comments: setElementCommentList(list: responseValue as! [[String : Any]]))
               
             }
 //            if self.comments.count == 0{
@@ -162,8 +162,6 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
         if self.mText{
             infoLbl.numberOfLines = 0
             
-            
-            
             self.mText = false
         } else {
             infoLbl.numberOfLines = 3
@@ -173,9 +171,9 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
 
     }
     // CHANGED
-    func getFilledComments(comments: [[String : Any]]){
+    func getFilledComments(comments: [ElementComment]){
         for x in comments{
-            if x["comment"] as! String != ""{
+            if x.comment != ""{
                 self.comments.append(x)
             }
         }
@@ -189,7 +187,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     func getCommentUsers(){
         getAllUsers().responseJSON { (response) in
             if let responseValue = response.result.value{
-                self.users = responseValue as! [[String : Any]]
+                self.users = setElementUserList(list: responseValue as! [[String : Any]])
                 self.collection?.reloadData()
             }
         }
@@ -198,7 +196,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     // CHANGED
     func isCommentedByUser(){
         // NEED USER ID AND COMPANY ID
-                getUserCommentForNet(userId: "\(current_coffee_user.id)", companyId: "\(current_coffee_net.id)").responseJSON { (response) in
+                getUserCommentForNet(userId: "\(current_coffee_user.id!)", companyId: "\(current_coffee_net.id!)").responseJSON { (response) in
                     if let responseValue = response.result.value{
                         let userComments = responseValue as! [[String : Any]]
                         if userComments.count == 0{

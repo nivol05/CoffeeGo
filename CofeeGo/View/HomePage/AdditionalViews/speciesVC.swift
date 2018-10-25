@@ -19,7 +19,7 @@ class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
         
         tableView.isHidden = true
-        getSpeciesForSpot(spotId: "\(OrdersVC.coffeeId)").responseJSON { (response) in
+        getSpeciesForSpot(spotId: "\(current_coffee_spot.id!)").responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.species = responseValue as! [[String : Any]]
                 if self.species.count > 0{

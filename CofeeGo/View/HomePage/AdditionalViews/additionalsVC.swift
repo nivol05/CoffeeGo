@@ -20,7 +20,7 @@ class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSourc
         super.viewDidLoad()
         
         tableView.isHidden = true
-        getAdditionalsForSpot(spotId: "\(OrdersVC.coffeeId)").responseJSON { (response) in
+        getAdditionalsForSpot(spotId: "\(current_coffee_spot.id!)").responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.additional = responseValue as! [[String : Any]]
                 if self.additional.count > 0{

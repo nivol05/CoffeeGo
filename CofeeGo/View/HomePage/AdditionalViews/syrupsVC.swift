@@ -23,7 +23,7 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         
         tableView.isHidden = true
 
-        getSyrupsForSpot(spotId: "\(OrdersVC.coffeeId)").responseJSON { (response) in
+        getSyrupsForSpot(spotId: "\(current_coffee_spot.id!)").responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.syrup = responseValue as! [[String : Any]]
                 if self.syrup.count > 0 {

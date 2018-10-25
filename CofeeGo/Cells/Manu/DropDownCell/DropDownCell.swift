@@ -57,7 +57,7 @@ class DropDownCell: UITableViewCell {
     var middleCupEnter = true
     var bigCupEnter = false
     
-    var productElem = [String : Any]()
+    var productElem : ElementProduct!
     
     let enterColor = UIColor(red: 1, green: 0.48, blue: 0, alpha: 1)
     let emptyColor = UIColor(white: 0.75, alpha: 1)
@@ -116,7 +116,7 @@ class DropDownCell: UITableViewCell {
         BGMidleCuo.backgroundColor = emptyColor
         BGBigCup.backgroundColor = emptyColor
         cupSize = "l"
-        coffeePrice = productElem["l_cup"] as? Int
+        coffeePrice = productElem.l_cup
         
     }
     @IBAction func midleCupBtn(_ sender: Any) {
@@ -124,14 +124,14 @@ class DropDownCell: UITableViewCell {
         BGMidleCuo.backgroundColor = enterColor
         BGBigCup.backgroundColor = emptyColor
         cupSize = "m"
-        coffeePrice = productElem["m_cup"] as? Int
+        coffeePrice = productElem.m_cup
     }
     @IBAction func bigCupBtn(_ sender: Any) {
         BGSmallCup.backgroundColor = emptyColor
         BGMidleCuo.backgroundColor = emptyColor
         BGBigCup.backgroundColor = enterColor
         cupSize = "b"
-        coffeePrice = productElem["b_cup"] as? Int
+        coffeePrice = productElem.b_cup
     }
     
     @IBAction func aditionalStaff(_ sender: Any) {
@@ -142,7 +142,7 @@ class DropDownCell: UITableViewCell {
     @IBAction func addToOrderList(_ sender: Any) {
         let orderItem = OrderItem(product_price: coffeePrice,
                                   product_name: nameLbl.text!,
-                                  product_id: productElem["id"] as! Int,
+                                  product_id: productElem.id,
                                   imageUrl: CoffeeImg.image!,
                                   cup_size : cupSize)
         orderItem.sugar = sugarCount

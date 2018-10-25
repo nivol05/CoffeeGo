@@ -107,7 +107,7 @@ class postOrderVC: UIViewController {
     
     
     @IBAction func confirmOrder(_ sender: Any) {
-        let id = Int(OrdersVC.coffeeId)
+        let id = current_coffee_spot.id
         print("Post")
         currentTime = toMins(time: getTimeNow())
         let orderTime = Int(timePicker.text!)!
@@ -118,9 +118,9 @@ class postOrderVC: UIViewController {
             
             if timeInRange(time: pickedTime, startRange: current_coffee_spot.time_start, endRange: current_coffee_spot.time_finish){
                 if compareMins(first: currentTime, second: toMins(time: pickedTime)) == -1 {
-                    postOrder(spot_id: id, date: getCurrentDate(), orderTime: pickedTime)
+                    postOrder(spot_id: id!, date: getCurrentDate(), orderTime: pickedTime)
                 } else {
-                    postOrder(spot_id: id, date: getTomorrowDate(), orderTime: pickedTime)
+                    postOrder(spot_id: id!, date: getTomorrowDate(), orderTime: pickedTime)
                 }
                 dismiss(animated: true, completion: nil)
             } else {

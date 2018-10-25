@@ -8,6 +8,62 @@
 
 import Foundation
 
+func setElementCoffeeNetList(list: [[String : Any]]) -> [ElementCoffeeNet]{
+    var ret = [ElementCoffeeNet]()
+    for x in list{
+        ret.append(ElementCoffeeNet(mas: x))
+    }
+    return ret
+}
+
+func setElementCoffeeSpotList(list: [[String : Any]]) -> [ElementCoffeeSpot]{
+    var ret = [ElementCoffeeSpot]()
+    for x in list{
+        ret.append(ElementCoffeeSpot(mas: x))
+    }
+    return ret
+}
+
+func setElementProductList(list: [[String : Any]]) -> [ElementProduct]{
+    var ret = [ElementProduct]()
+    for x in list{
+        ret.append(ElementProduct(mas: x))
+    }
+    return ret
+}
+
+func setElementUserList(list: [[String : Any]]) -> [ElementUser]{
+    var ret = [ElementUser]()
+    for x in list{
+        ret.append(ElementUser(mas: x))
+    }
+    return ret
+}
+
+func setElementOrderList(list: [[String : Any]]) -> [ElementOrder]{
+    var ret = [ElementOrder]()
+    for x in list{
+        ret.append(ElementOrder(mas: x))
+    }
+    return ret
+}
+
+func setElementOrderItemList(list: [[String : Any]]) -> [ElementOrderItem]{
+    var ret = [ElementOrderItem]()
+    for x in list{
+        ret.append(ElementOrderItem(mas: x))
+    }
+    return ret
+}
+
+func setElementCommentList(list: [[String : Any]]) -> [ElementComment]{
+    var ret = [ElementComment]()
+    for x in list{
+        ret.append(ElementComment(mas: x))
+    }
+    return ret
+}
+
 class ElementCoffeeNet{
     var id : Int!
     var name : String!

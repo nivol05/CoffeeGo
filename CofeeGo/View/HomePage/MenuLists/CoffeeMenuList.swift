@@ -24,12 +24,12 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
     @IBOutlet weak var tableView: UITableView!
     
     
-    var products : [[String: Any]] = [[String: Any]]()
+    var products : [ElementProduct]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let database = Database()
-        products = database.getProducts(type: 1)
+//        let database = Database()
+        products = getProductsByType(type: 1)
 //        print("ON \(CoffeeMenuList.test)")
         self.tableView.contentInset.bottom = 50
 //        tableView = UITableView(frame: view.frame)
@@ -67,15 +67,15 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         if indexPath.row == button_tag {
             print("last cell is seen!!")
 //            self.tableView.beginUpdates()
-            
+
             let previousCellTag = button_tag
-            
+
             if lastCell.cellExists {
                 print("per")
                 self.lastCell.animate(duration: 0.3, c: {
                     self.view.layoutIfNeeded()
                 })
-                
+
                 if indexPath.row == button_tag {
                     print("vtor")
                     button_tag = -1
@@ -83,20 +83,20 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
                 }
 
             }
-            
+
             if indexPath.row != previousCellTag {
                 button_tag = indexPath.row
                 print("tre")
-                
-                
+
+
                 lastCell = tableView.cellForRow(at: IndexPath(row: button_tag, section: 0)) as! DropDownCell
 
                 self.lastCell.animate(duration: 0.3, c: {
                     self.view.layoutIfNeeded()
                 })
-                
+
             }
-            
+
             self.tableView.endUpdates()
             self.tableView.beginUpdates()
         }
@@ -108,10 +108,6 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         return products.count
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = products[indexPath.row]
         var avatar_url: URL
@@ -119,10 +115,10 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
 //        print(data)
         
         //Name
-        cell.nameLbl.text = data["name"] as? String
+        cell.nameLbl.text = data.name
         
         //CoffeeImage
-        avatar_url = URL(string: data["img"] as! String)!
+        avatar_url = URL(string: data.img)!
         
         cell.CoffeeImg.kf.setImage(with: avatar_url)
         
@@ -130,7 +126,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         var onlyPrice : Bool = true
         //
         //            // Checking for small cup
-        let l_cup = data["l_cup"] as! Int
+        let l_cup = data.l_cup!
         if l_cup != 0 {
             
             cell.BGSmallCup.isHidden = false
@@ -145,17 +141,15 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         }
         //
         //            // Checking for medium cip
-        let m_cup = data["m_cup"] as! Int
+        let m_cup = data.m_cup!
         if m_cup != 0 {
             price_text += "\(m_cup) grn / "
             cell.middleCupPrice.text = "\(m_cup) grn"
-            cell.widthModdleBtn.constant = 90
-            cell.heightMiddleBtn.constant = 95
             onlyPrice = false
         }
         //
         //            // Checking for big cup
-        let b_cup = data["b_cup"] as! Int
+        let b_cup = data.b_cup!
         if b_cup != 0 {
             
             cell.BGBigCup.isHidden = false
@@ -173,13 +167,11 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         }
         //
         //            // Set the only price
-        let price = data["price"] as! Int
+        let price = data.price!
         
         if onlyPrice{
             price_text += "\(price) grn"
             cell.middleCupPrice.text = "\(price) grn"
-            cell.widthModdleBtn.constant = 110
-            cell.heightMiddleBtn.constant = 120
             cell.helperView.isHidden = true
             
             cell.capView.isHidden = true
@@ -188,7 +180,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         }
 
         cell.productElem = data
-        cell.coffeePrice = data["price"] as? Int
+        cell.coffeePrice = data.price
         cell.priceLbl.text = price_text
         
         cell.open.addTarget(self, action: #selector(cellOpened(sender:)), for: .touchUpInside)

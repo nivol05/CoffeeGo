@@ -8,11 +8,11 @@ import Kingfisher
 
 class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GMUClusterManagerDelegate{
     
-    var coffee : [[String: Any]] = [[String: Any]]()
+    var coffee = [ElementCoffeeSpot]()
     var LAT = Double()
     var LNG = Double()
     var coffeeAdress = [String]()
-    var menu : [[String: Any]] = [[String: Any]]()
+    var menu = [ElementProduct]()
     var productTypes : [[String: Any]] = [[String: Any]]()
     var tabs : [Int]!
     
@@ -52,15 +52,6 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         
         
         addCoffeeSpots()
-        lineView.layer.cornerRadius = 4
-        self.slideUpView.tableView = tableView
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        let screenWidth = UIScreen.main.bounds.size.height
-        slideUpView.delegate = self
-        slideUpView.topWindowHeight = screenWidth / 2
-        print(slideUpView.topWindowHeight)
 
         
 //        mapView.dequeueReusableAnnotationView(withIdentifier: "map")
@@ -91,25 +82,19 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
             
             if let responseValue = response.result.value{
                 
-                self.coffee = responseValue as! [[String : Any]]
-                let countCoffee = self.coffee.count
-                if countCoffee > 0{
-                    for i in 0...countCoffee - 1{
+                self.coffee = setElementCoffeeSpotList(list: responseValue as! [[String : Any]])
+                if self.coffee.count > 0{
+                    for i in 0..<self.coffee.count{
                         
-                        var pinList = self.coffee[i]
+                        let spot = self.coffee[i]
                         
-                        if let lat = pinList["lat"] as? String {
-                            self.LAT = Double(lat)!
-                        }
-                        if let lng = pinList["lng"] as? String {
-                            self.LNG = Double(lng)!
-                        }
-                        
+                        let lat = Double(spot.lat)!
+                        let lng = Double(spot.lng)!
                         
                         let marker = GMSMarker()
                         marker.icon = UIImage(named: "marker")
                         
-                        let item = POIItem(position: CLLocationCoordinate2DMake(self.LAT, self.LNG), index: i, marker : marker)
+                        let item = POIItem(position: CLLocationCoordinate2DMake(lat, lng), index: i, marker : marker)
                         self.clusterManager.add(item)
 //                        let marker = GMSMarker()
 //                        marker.icon = GMSMarker.markerImage(with: .black)
@@ -142,16 +127,16 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         return true
     }
     
-    func downloadManuLists(coffeeidList : [String : Any]){
-        getProductsForSpot(spotId: "\(coffeeidList["id"]!)").responseJSON { (response) in
+    func downloadManuLists(coffeeidList : ElementCoffeeSpot){
+        getProductsForSpot(spotId: "\(coffeeidList.id!)").responseJSON { (response) in
             if let responseValue = response.result.value{
-                self.menu = responseValue as! [[String : Any]]
+                self.menu = setElementProductList(list: responseValue as! [[String : Any]])
                 self.downloadProductTypes(coffeeidList: coffeeidList)
             }
             
         }
     }
-    func downloadProductTypes(coffeeidList : [String : Any]){
+    func downloadProductTypes(coffeeidList : ElementCoffeeSpot){
         getAllProductTypes().responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.productTypes = responseValue as! [[String : Any]]
@@ -160,12 +145,12 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         }
     }
     
-    func setTabs(coffeeidList : [String : Any]){
+    func setTabs(coffeeidList : ElementCoffeeSpot){
         tabs = []
         
         for i in 0..<menu.count{
             var here = false
-            let potom = self.menu[i]["product_type"] as? Int
+            let potom = self.menu[i].product_type
             for j in 0..<tabs.count{
                 if potom == tabs[j]{
                     here = true
@@ -183,79 +168,21 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         
     }
     
-    func markerCLICK(coffeeidList : [String : Any]){
+    func markerCLICK(coffeeidList : ElementCoffeeSpot){
         
         let Storyboard = UIStoryboard(name: "Main", bundle: nil)
         let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
         
         cell.tabs = self.tabs
         
-        let database = Database()
-        database.deleteProduct()
-        database.setProducts(products: menu)
+//        let database = Database()
+//        database.deleteProduct()
+//        database.setProducts(products: menu)
+        allSpotProducts = menu
         
-        
+        current_coffee_spot = coffeeidList
 
-        OrdersVC.coffeeId = coffeeidList["id"] as! Int
         self.navigationController?.pushViewController(cell, animated: true)
         
-    }
-}
-
-
-
-extension MapCoffeeVC : SeamlessSlideUpViewDelegate {
-
-    func slideUpViewWillAppear(_ slideUpView: SeamlessSlideUpView, height: CGFloat) {
-        self.bgBottomConstraint.constant = height
-        tableView.reloadData()
-        UIView.animate(withDuration: 0.2, animations: { [weak self] in self?.view.layoutIfNeeded() })
-        self.button.setTitle("Скрыть список", for: UIControlState())
-        let blurEff = UIBlurEffect(style: UIBlurEffectStyle.light)
-        let bl = UIVisualEffectView(effect: blurEff)
-        bl.frame = blurImage.bounds
-        blurImage.addSubview(bl)
-    }
-
-    func slideUpViewDidAppear(_ slideUpView: SeamlessSlideUpView, height: CGFloat) {
-    }
-
-    func slideUpViewWillDisappear(_ slideUpView: SeamlessSlideUpView) {
-        self.bgBottomConstraint.constant = 0
-        UIView.animate(withDuration: 0.2, animations: { [weak self] in self?.view.layoutIfNeeded() })
-        self.button.setTitle("Показать список", for: UIControlState())
-    }
-
-    func slideUpViewDidDisappear(_ slideUpView: SeamlessSlideUpView) {
-    }
-
-    func slideUpViewDidDrag(_ slideUpView: SeamlessSlideUpView, height: CGFloat) {
-        self.bgBottomConstraint.constant = min(height, self.slideUpView.bounds.height - self.slideUpView.topWindowHeight)
-        self.view.layoutIfNeeded()
-    }
-
-}
-extension MapCoffeeVC: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return coffee.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let spots = coffee[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CoffeeListOnMap
-        
-        cell.adreesCoffee.text = spots["address"] as? String
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let coffeeidList = coffee[indexPath.row]
-        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
-        OrdersVC.coffeeId = coffeeidList["id"] as! Int
-        self.navigationController?.pushViewController(cell, animated: true)
     }
 }

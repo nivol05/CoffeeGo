@@ -8,7 +8,6 @@ import XLPagerTabStrip
 
 class OrdersVC: ButtonBarPagerTabStripViewController {
 
-//    var menu : [[String: Any]] = [[String: Any]]()
     var tabs = [Int]()
   
     
@@ -23,7 +22,6 @@ class OrdersVC: ButtonBarPagerTabStripViewController {
     
 //    @IBOutlet weak var qwe : UIView!
     
-    static var coffeeId = Int()
     
     override func viewDidLoad() {
         
@@ -48,7 +46,7 @@ class OrdersVC: ButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         self.navigationController?.navigationItem.backBarButtonItem?.isEnabled = false
-        cornerRatio(view: MakeOrderBtn, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: true)
+        cornerRatio(view: MakeOrderBtn, ratio: 5, shadow: true)
         
         OrderData.orderList.removeAll()
         
@@ -70,17 +68,13 @@ class OrdersVC: ButtonBarPagerTabStripViewController {
         var storyboard = [UIViewController]()
         for i in tabs{
             if i == 1{
-                
-                
                 storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Coffee"))
             } else if i == 2{
                 storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Cake"))
             } else if i == 9{
                 storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BottleWater"))
             } else if i == 10{
-                
                 storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Pie"))
-                
             } else if i == 11{
                 storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Other"))
             }
