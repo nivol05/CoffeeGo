@@ -12,7 +12,6 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
     var LAT = Double()
     var LNG = Double()
     var coffeeAdress = [String]()
-    var coffeeSpot = String()
     var menu : [[String: Any]] = [[String: Any]]()
     var productTypes : [[String: Any]] = [[String: Any]]()
     var tabs : [Int]!
@@ -51,7 +50,6 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         mapView.delegate = self
         clusterManager.setDelegate(self, mapDelegate: self)
         
-        coffeeSpot = User.name
         
         addCoffeeSpots()
         lineView.layer.cornerRadius = 4
@@ -89,9 +87,8 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
     }
     
     func addCoffeeSpots(){
-        getCoffeeSpotsForNet(company: coffeeSpot).responseJSON { (response) in
+        getCoffeeSpotsForNet(company: current_coffee_net.name).responseJSON { (response) in
             
-            print("http://138.68.79.98/api/customers/coffee_spots/?name=\(self.coffeeSpot)")
             if let responseValue = response.result.value{
                 
                 self.coffee = responseValue as! [[String : Any]]

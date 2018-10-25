@@ -30,7 +30,6 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
     var listCoff = [ListCoffee]()
     
     let imageCache = NSCache<NSString, UIImage>()
-    var dataSource : Array<User>?
     
     var test = 0
     var coffee: [[String: Any]] = [[String: Any]]()
@@ -43,6 +42,8 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         
         super.viewDidLoad()
         
+        let zapoop = ElementComment(mas: [String : Any]())
+        print("zaloop \(zapoop)")
         if Connectivity.isConnectedToInternet() {
             
             print("Yes! internet is available.")
@@ -63,7 +64,6 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
                 case .success(let value):
                 
                     self.coffee = value as! [[String : Any]]
-                    self.downloadImage()
                     self.spinner(shouldSpin: false)
                     self.tableView?.reloadData()
                     
@@ -99,26 +99,26 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cofeeCell" , for : indexPath) as? CofeeCell
             if coffee.count > 0 {
-                let coffeeList = coffee[indexPath.row]
+                let coffeeElem = ElementCoffeeNet(mas: coffee[indexPath.row])
                 var avatar_url: URL
                 
-                cell?.rateStars.rating = coffeeList["stars"] as! Double
+                cell?.rateStars.rating = coffeeElem.stars
                 
 //              Download data for name lbl
-                cell?.nameLbl?.text = (coffeeList["name"] as? String) ?? ""
+                cell?.nameLbl?.text = coffeeElem.name_other
                 
 //              Make Coffee image
-                avatar_url = URL(string: User.images[indexPath.row])!
+                avatar_url = URL(string: coffeeElem.img)!
                 cell?.CofeeImg.kf.setImage(with: avatar_url)
 
                 //Download logo
-                if let logoImg = coffeeList["logo_img"] as? String{
-                    Alamofire.request(logoImg).responseImage(completionHandler: {(response) in
+                if coffeeElem.logo_img != ""{
+                    Alamofire.request(coffeeElem.logo_img).responseImage(completionHandler: {(response) in
 
                         if let image = response.result.value{
                             let circularImage = image.af_imageRoundedIntoCircle()
                             DispatchQueue.main.async {
-                                self.imageCache.setObject(circularImage, forKey: NSString(string : logoImg))
+                                self.imageCache.setObject(circularImage, forKey: NSString(string : coffeeElem.logo_img))
                                 cell?.previewImg.image = circularImage
                             }
                         }
@@ -137,14 +137,8 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         let Storyboard = UIStoryboard(name: "Main", bundle: nil)
         let cell = Storyboard.instantiateViewController(withIdentifier: "CommentPage") as! PageCoffee
 
-        let coffeeList = coffee[indexPath.row]
         
-        User.name = coffeeList["name"] as? String
-        cell.imgUrl = coffeeList["img"] as! String
-        cell.logo = coffeeList["logo_img"] as! String
-        cell.descrip = coffeeList["description_full"] as? String
-        cell.st = coffeeList["stars"] as! Double
-        PageCoffee.coffeeId = "\(coffeeList["id"]!)"
+        current_coffee_net = ElementCoffeeNet(mas: coffee[indexPath.row])
         
         self.navigationController?.pushViewController(cell, animated: true)
     }
@@ -191,15 +185,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         }
     }
     
-    func downloadImage(){
-        for i in 0..<coffee.count{
-            var index = coffee[i]
-            if let test = index["img"] as? String{
-                User.images.append(test)
-            }
-        }
-        
-    }
+
     
      func login(completion: @escaping (_ error: NSError?) -> Void) {
         
@@ -213,6 +199,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
                 header = [
                     "Authorization": token
                 ]
+                self.getCurrentUser()
                 break
                 
             case .failure(let error):
@@ -221,6 +208,22 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
             }
         }
         
+    }
+    
+    func getCurrentUser(){
+        getUser(username: "retrofit").responseJSON{ (response) in
+            
+            switch response.result {
+            case .success(let value):
+                let users = value as! [[String : Any]]
+                
+                break
+                
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
     }
     
     @IBAction func loginBtn(_ sender: Any) {

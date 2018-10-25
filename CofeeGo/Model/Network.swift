@@ -32,7 +32,7 @@ let SPECIES_URL = "\(BASE_URL)/api/customers/species/"
 let ADDITIONALS_URL = "\(BASE_URL)/api/customers/additionals/"
 
 var header : HTTPHeaders = [
-    "Authorization": User.token
+    "Authorization": ""
 ]
 
 func getToken(username : String, pass : String) -> DataRequest{

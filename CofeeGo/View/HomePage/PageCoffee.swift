@@ -27,29 +27,21 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     @IBOutlet weak var stacView: UIStackView!
     @IBOutlet weak var imagePager: UIScrollView!
     
-    var userCount = Int()
     var mText = true
     var comments : [[String: Any]] = [[String: Any]]()
-    var descrip : String?
     var users : [[String: Any]] = [[String: Any]]()
     var images : [[String: Any]] = [[String: Any]]()
-    static var coffeeId = String()
+    var allRates : Int = 0 // CHANGED
     
     var imageArray = [UIImage]()
-    
-//    var name = String()
-    var imgUrl = String()
-    var logo = String()
-    
-//    var test2 = Double()
-    var st = Double()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         LoadContent()
         
-        rateLbl.text = "\(st)"
-        rateStarView.rating = st
+        rateLbl.text = "\(String(describing: current_coffee_net.stars))"
+        rateStarView.rating = current_coffee_net.stars
         collection.dataSource = self
         collection.delegate = self
         cornerRatio(view: logoImg, ratio: 55, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
@@ -57,6 +49,9 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if comments.count > 5{ // CHANGED
+            return 5
+        }
         return comments.count
     }
     
@@ -78,18 +73,11 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
             
             cell.dateLbl?.text = (commentList["date"] as? String) ?? ""
             
-            getAllUsers().responseJSON { (response) in
-                if let responseValue = response.result.value{
-                    self.users = responseValue as! [[String : Any]]
-                    self.userCount = self.users.count
-                    
-                    for i in 0...self.userCount{
-                        let user = self.users[i]
-                        if user["id"] as? Int == commentList["user"] as? Int{
-                            cell.userNameLbl.text = "\(String(describing: user["first_name"]!))  \(String(describing: user["last_name"]!))"
-                            break
-                        }
-                    }
+            for i in 0..<self.users.count{
+                let user = self.users[i]
+                if user["id"] as? Int == commentList["user"] as? Int{
+                    cell.userNameLbl.text = "\(String(describing: user["first_name"]!))  \(String(describing: user["last_name"]!))"
+                    break
                 }
             }
         }
@@ -98,34 +86,33 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     
     func LoadContent(){
         
-        nameLbl.text = User.name
-        infoLbl.text = descrip
+        nameLbl.text = current_coffee_net.name_other
+        infoLbl.text = current_coffee_net.description_full
         
-        Alamofire.request(logo).responseImage(completionHandler: {(response) in
+        Alamofire.request(current_coffee_net.logo_img).responseImage(completionHandler: {(response) in
             if let image = response.result.value{
                 self.logoImg.image = image
             }
         })
         
-        Alamofire.request(imgUrl).responseImage(completionHandler: {(response) in
+        Alamofire.request(current_coffee_net.img).responseImage(completionHandler: {(response) in
             if let image = response.result.value{
                 self.coffeeImg.image = image
             }
         })
         
-        getCommentsForNet(company: User.name).responseJSON { (response) in
+        getCommentsForNet(company: current_coffee_net.name).responseJSON { (response) in
             
             if let responseValue = response.result.value{
-                self.comments = responseValue as! [[String : Any]]
-                print("HUI")
-                self.collection?.reloadData()
+                self.getFilledComments(comments: responseValue as! [[String : Any]])
+              
             }
 //            if self.comments.count == 0{
 //                self.BGCommentEllement.isHidden = true
 //            }
         }
         
-        getPhotosForNet(companyId: PageCoffee.coffeeId).responseJSON{ (response) in
+        getPhotosForNet(companyId: "\(current_coffee_net.id!)").responseJSON{ (response) in
     
             if let responseValue = response.result.value{
                 self.images = responseValue as! [[String : Any]]
@@ -185,5 +172,41 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
         }
 
     }
+    // CHANGED
+    func getFilledComments(comments: [[String : Any]]){
+        for x in comments{
+            if x["comment"] as! String != ""{
+                self.comments.append(x)
+            }
+        }
+        self.allRates = comments.count
+        if self.comments.count > 0{
+            getCommentUsers()
+        }
+    }
     
+    // CHANGED
+    func getCommentUsers(){
+        getAllUsers().responseJSON { (response) in
+            if let responseValue = response.result.value{
+                self.users = responseValue as! [[String : Any]]
+                self.collection?.reloadData()
+            }
+        }
+    }
+    
+    // CHANGED
+    func isCommentedByUser(){
+        // NEED USER ID AND COMPANY ID
+                getUserCommentForNet(userId: "\(current_coffee_user.id)", companyId: "\(current_coffee_net.id)").responseJSON { (response) in
+                    if let responseValue = response.result.value{
+                        let userComments = responseValue as! [[String : Any]]
+                        if userComments.count == 0{
+                            // make new comment
+                        } else {
+                            // change previous comment
+                        }
+                    }
+                }
+    }
 }

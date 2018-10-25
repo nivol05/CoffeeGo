@@ -36,7 +36,6 @@
 		EF498DE62174F67B008231C1 /* speciesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF498DE52174F67B008231C1 /* speciesCell.swift */; };
 		EF4AF8A1216BE1DF0083B07A /* CommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4AF8A0216BE1DF0083B07A /* CommentsCell.swift */; };
 		EF4AF8A3216CC8F30083B07A /* Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4AF8A2216CC8F30083B07A /* Interface.swift */; };
-		EF71620F20EE66D1000C0C07 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71620E20EE66D1000C0C07 /* User.swift */; };
 		EF71621220EEA08B000C0C07 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621120EEA08A000C0C07 /* ServerManager.swift */; };
 		EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621420EEB90F000C0C07 /* ListVC.swift */; };
 		EF71621720F12A52000C0C07 /* CoffeeListOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71621620F12A52000C0C07 /* CoffeeListOnMap.swift */; };
@@ -46,6 +45,8 @@
 		EF8465FE213077B500C84126 /* SyrupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8465FD213077B500C84126 /* SyrupCell.swift */; };
 		EF8BEE36214C195700438FB6 /* ZFRippleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BEE35214C195700438FB6 /* ZFRippleButton.swift */; };
 		EFA75FC82181332900E84242 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA75FC72181332900E84242 /* Elements.swift */; };
+		EFA75FCA2181363800E84242 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA75FC92181363800E84242 /* Calendar.swift */; };
+		EFA75FCC2181375900E84242 /* CurrentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA75FCB2181375900E84242 /* CurrentData.swift */; };
 		EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */; };
 		EFC712F220FBC6EA00121607 /* OrdersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F120FBC6EA00121607 /* OrdersVC.swift */; };
 		EFC712F620FD056C00121607 /* CoffeeMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F520FD056C00121607 /* CoffeeMenuList.swift */; };
@@ -133,7 +134,6 @@
 		EF498DE52174F67B008231C1 /* speciesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speciesCell.swift; sourceTree = "<group>"; };
 		EF4AF8A0216BE1DF0083B07A /* CommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
 		EF4AF8A2216CC8F30083B07A /* Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interface.swift; sourceTree = "<group>"; };
-		EF71620E20EE66D1000C0C07 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF71621120EEA08A000C0C07 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		EF71621420EEB90F000C0C07 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		EF71621620F12A52000C0C07 /* CoffeeListOnMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeListOnMap.swift; sourceTree = "<group>"; };
@@ -143,6 +143,8 @@
 		EF8465FD213077B500C84126 /* SyrupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyrupCell.swift; sourceTree = "<group>"; };
 		EF8BEE35214C195700438FB6 /* ZFRippleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZFRippleButton.swift; sourceTree = "<group>"; };
 		EFA75FC72181332900E84242 /* Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elements.swift; sourceTree = "<group>"; };
+		EFA75FC92181363800E84242 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		EFA75FCB2181375900E84242 /* CurrentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentData.swift; sourceTree = "<group>"; };
 		EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapParelavEffect.swift; sourceTree = "<group>"; };
 		EFC712F120FBC6EA00121607 /* OrdersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVC.swift; sourceTree = "<group>"; };
 		EFC712F520FD056C00121607 /* CoffeeMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMenuList.swift; sourceTree = "<group>"; };
@@ -304,12 +306,13 @@
 				EFE8474820B5EA6C00449114 /* ListCoffee.swift */,
 				EFE8474A20B5ECC000449114 /* Constants.swift */,
 				EFFB2D1720D1A76B003A21C3 /* File.swift */,
-				EF71620E20EE66D1000C0C07 /* User.swift */,
 				EFF8D5852115D9DF00B655CE /* OrderItem.swift */,
 				EFF8D5872115EE7400B655CE /* OrderData.swift */,
 				EF14A9E5215D47B3002C0A5F /* Database.swift */,
 				EFD3F5432166B05E00193B76 /* Network.swift */,
 				EFA75FC72181332900E84242 /* Elements.swift */,
+				EFA75FC92181363800E84242 /* Calendar.swift */,
+				EFA75FCB2181375900E84242 /* CurrentData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				EFD3F5442166B05E00193B76 /* Network.swift in Sources */,
 				EF14A9DB215BE321002C0A5F /* GMUDefaultClusterRenderer.m in Sources */,
 				EFF8D5862115D9DF00B655CE /* OrderItem.swift in Sources */,
+				EFA75FCA2181363800E84242 /* Calendar.swift in Sources */,
 				EFC712FC20FD062E00121607 /* BottleWaterMenuList.swift in Sources */,
 				EFE8474920B5EA6C00449114 /* ListCoffee.swift in Sources */,
 				EF36530C2100A4CF005E00D3 /* FavoriteListVC.swift in Sources */,
@@ -641,6 +645,7 @@
 				EF36531221012BEB005E00D3 /* SendwichManu.swift in Sources */,
 				EF4AF8A3216CC8F30083B07A /* Interface.swift in Sources */,
 				EF8BEE36214C195700438FB6 /* ZFRippleButton.swift in Sources */,
+				EFA75FCC2181375900E84242 /* CurrentData.swift in Sources */,
 				EFA75FC82181332900E84242 /* Elements.swift in Sources */,
 				EF14A9C3215BE30D002C0A5F /* GMUStaticCluster.m in Sources */,
 				EFE31B382172376600F3E343 /* postOrderVC.swift in Sources */,
@@ -686,7 +691,6 @@
 				EF36531021012BD5005E00D3 /* BottleManu.swift in Sources */,
 				EFEA599E211F257900265BF3 /* rateVC.swift in Sources */,
 				EFE8474720B5E55000449114 /* CofeeCell.swift in Sources */,
-				EF71620F20EE66D1000C0C07 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

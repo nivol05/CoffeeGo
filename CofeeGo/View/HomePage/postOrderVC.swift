@@ -11,11 +11,14 @@ import SwiftyJSON
 
 class postOrderVC: UIViewController {
     
+    var currentTime : Int!
     var postedId : Int!
-
+    @IBOutlet weak var timePicker: UITextField!
+    @IBOutlet weak var commentView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        currentTime = toMins(time: getTimeNow())
         // Do any additional setup after loading the view.
     }
     
@@ -23,14 +26,14 @@ class postOrderVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func postOrder(spot_id: Int, full_price: Int, date: String, comment: String, orderTime: String){
+    func postOrder(spot_id: Int, date: String, orderTime: String){
     
         let orderToPost : [String : Any] = [
         "coffee_spot": spot_id,
-       "full_price":  full_price,
+       "full_price":  OrderData.getAllPrice(),
         "date": date,
-        "user":  31 ,// TODO: USER ID,
-        "comment": comment,
+        "user":  current_coffee_user.id,
+        "comment": commentView.text!,
         "order_time": orderTime,
         "status": 1,
         "canceled_barista_message": ""
@@ -68,7 +71,7 @@ class postOrderVC: UIViewController {
         orderItemPost["order"] = self.postedId;
         
         orderItemPost["cup_size"] = item.cup_size
-        orderItemPost["item_price"] = item.getProductPrice()
+        orderItemPost["item_price"] = item.product_price
         
         orderItemPost["product"] = item.product_id
 
@@ -79,6 +82,8 @@ class postOrderVC: UIViewController {
         orderItemPost["syrups"] = item.getSyrupsString()
         
         orderItemPost["additionals"] = item.getAdditionalsString()
+        
+        orderItemPost["additionals_price"] = (item.getProductPrice() - item.product_price) // CHANGED
         
         CofeeGo.postOrderItem(orderItemRes: orderItemPost).responseJSON { (response) in
             if response.result.value != nil{
@@ -104,8 +109,24 @@ class postOrderVC: UIViewController {
     @IBAction func confirmOrder(_ sender: Any) {
         let id = Int(OrdersVC.coffeeId)
         print("Post")
-        postOrder(spot_id: id, full_price: OrderData.getAllPrice(), date: "2018-10-15", comment: "", orderTime: "23 : 40")
-        dismiss(animated: true, completion: nil)
+        currentTime = toMins(time: getTimeNow())
+        let orderTime = Int(timePicker.text!)!
+        if timePicker.text! == "" || orderTime < 5{
+            // MAKE WARNING NOT LESS THAN 5
+        } else{
+            let pickedTime = getTime(minutes: currentTime + orderTime)
+            
+            if timeInRange(time: pickedTime, startRange: current_coffee_spot.time_start, endRange: current_coffee_spot.time_finish){
+                if compareMins(first: currentTime, second: toMins(time: pickedTime)) == -1 {
+                    postOrder(spot_id: id, date: getCurrentDate(), orderTime: pickedTime)
+                } else {
+                    postOrder(spot_id: id, date: getTomorrowDate(), orderTime: pickedTime)
+                }
+                dismiss(animated: true, completion: nil)
+            } else {
+                // MAKE WARNING COFFEE WORK TIME FROM START TO END
+            }
+        }
     }
     
 }
