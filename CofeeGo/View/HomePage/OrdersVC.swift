@@ -9,6 +9,7 @@ import XLPagerTabStrip
 class OrdersVC: ButtonBarPagerTabStripViewController {
 
     var tabs = [Int]()
+    var activeSpot = false
   
     
     var items : [[Any]] = [[Any]]()
@@ -139,14 +140,15 @@ extension OrdersVC : UITableViewDataSource, UITableViewDelegate {
         
         cell.nameLbl.text = orderItem.product_name
         cell.img.image = orderItem.imageUrl
-        cell.coffeePrice.text = orderItem.cup_size
-        cell.priceOrderDone.text = "\(orderItem.getProductPrice()) грн"
+        cell.coffeePrice.text = "\(orderItem.product_price!) грн"
+        cell.priceOrderDone.text = "Всего: \(orderItem.getProductPrice()) грн"
         
-        var syrupsText = String()
+        var syrupsText = "Сиропы: "
         for i in 0..<orderItem.syrups.count{
             let value = orderItem.syrups[i]
             
             syrupsText.append(value["name"] as! String)
+            syrupsText.append("( +\(value["price"] as! Int) грн)")
             
             if i != orderItem.syrups.count - 1{
                 syrupsText.append(", ")

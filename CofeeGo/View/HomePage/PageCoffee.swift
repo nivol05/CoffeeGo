@@ -17,6 +17,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var rateLbl: UILabel!
     
+    @IBOutlet weak var commentLbl: UILabel!
     @IBOutlet weak var rateStarView: CosmosView!
     @IBOutlet weak var BGCommentEllement: UIView!
     @IBOutlet weak var coffeeImg: UIImageView!
@@ -66,6 +67,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
 //            cell.corner()
             
             cell.commentLbl.text = commentElem.comment
+            cell.rateInComments.rating = commentElem.stars
             
             //            if let stars = commentList["stars"] as? Double {
             //                cell?.rateInComment.rating = stars
@@ -170,6 +172,17 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
         }
 
     }
+    
+    @IBAction func addNewComment(_ sender: Any) {
+        
+    }
+    
+    @IBAction func watchAllComments(_ sender: Any) {
+        isOrderInProcess()
+    }
+    
+    
+    
     // CHANGED
     func getFilledComments(comments: [ElementComment]){
         for x in comments{
@@ -178,6 +191,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
             }
         }
         self.allRates = comments.count
+        commentLbl.text = "Комментарии (\(self.comments.count))"
         if self.comments.count > 0{
             getCommentUsers()
         }
@@ -196,15 +210,29 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     // CHANGED
     func isCommentedByUser(){
         // NEED USER ID AND COMPANY ID
-                getUserCommentForNet(userId: "\(current_coffee_user.id!)", companyId: "\(current_coffee_net.id!)").responseJSON { (response) in
-                    if let responseValue = response.result.value{
-                        let userComments = responseValue as! [[String : Any]]
-                        if userComments.count == 0{
-                            // make new comment
-                        } else {
-                            // change previous comment
-                        }
-                    }
+        getUserCommentForNet(userId: "\(current_coffee_user.id!)", companyId: "\(current_coffee_net.id!)").responseJSON { (response) in
+            if let responseValue = response.result.value{
+                let userComments = responseValue as! [[String : Any]]
+                if userComments.count == 0{
+                    // make new comment
+                } else {
+                    // change previous comment
                 }
+            }
+        }
+    }
+    
+    func isOrderInProcess(){
+        getActiveUserOrders(userId: "\(current_coffee_user.id!)").responseJSON { (response) in
+            if let responseValue = response.result.value{
+                let orders = responseValue as! [[String : Any]]
+                if orders.count == 0{
+                    // make new comment
+                    print("USER CAN ORDER")
+                } else{
+                    print("USER HAS ORDERS")
+                }
+            }
+        }
     }
 }

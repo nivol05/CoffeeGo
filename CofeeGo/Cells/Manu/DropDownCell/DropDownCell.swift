@@ -149,12 +149,17 @@ class DropDownCell: UITableViewCell {
         orderItem.syrups = OrderData.currSyrups
         orderItem.species = OrderData.currSpecies
         orderItem.additionals = OrderData.currAdditionals
-        OrderData.orderList.append(orderItem)
+        if OrderData.lessThanLimit(limit: current_coffee_spot.max_order_limit, orderItem: orderItem){
+            OrderData.orderList.append(orderItem)
+        } else {
+            // HIGHER THAN LIMIT
+            print("HIGHER THAN LIMIT")
+        }
         
     }
     
     @IBAction func moreSugerBtn(_ sender: Any) {
-        if sugarCount < 9{
+        if sugarCount < 10{
             sugarCount += 0.5
             sugarTextField.text = "\(sugarCount)"
         }

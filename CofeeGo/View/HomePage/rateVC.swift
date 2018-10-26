@@ -18,6 +18,7 @@ class rateVC: UIViewController {
     @IBOutlet weak var BG1: UIView!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var cancelBtn: UIButton!
+    @IBOutlet weak var confirmBtn: UIButton!
     
     var commentedElem : ElementComment!
     var coffeeNetId : Int = 0
@@ -36,6 +37,8 @@ class rateVC: UIViewController {
         mainBg.layer.cornerRadius = 12
         BG1.layer.cornerRadius = 12
         BG2.layer.masksToBounds = false
+        cancelBtn.layer.cornerRadius = 12
+        confirmBtn.layer.cornerRadius = 12
     }
     @IBAction func confirmBtn(_ sender: Any) {
         if commentedElem.date != nil{

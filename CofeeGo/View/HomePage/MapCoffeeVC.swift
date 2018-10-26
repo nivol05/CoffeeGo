@@ -9,14 +9,10 @@ import Kingfisher
 class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GMUClusterManagerDelegate{
     
     var coffee = [ElementCoffeeSpot]()
-    var LAT = Double()
-    var LNG = Double()
-    var coffeeAdress = [String]()
     var menu = [ElementProduct]()
     var productTypes : [[String: Any]] = [[String: Any]]()
     var tabs : [Int]!
-    
-    var pos = Double()
+    var activeSpot = false
     
     var CP : CoffeePage!
     var VC : ViewController!
@@ -94,7 +90,7 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
                         let marker = GMSMarker()
                         marker.icon = UIImage(named: "marker")
                         
-                        let item = POIItem(position: CLLocationCoordinate2DMake(lat, lng), index: i, marker : marker)
+                        let item = POIItem(position: CLLocationCoordinate2DMake(lat, lng), index: i, marker : marker, active: spot.is_active)
                         self.clusterManager.add(item)
 //                        let marker = GMSMarker()
 //                        marker.icon = GMSMarker.markerImage(with: .black)
@@ -114,8 +110,9 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
             self.mapView.camera = camera
             self.mapView.delegate = self
             
-             let coffeeidList = coffee[poiItem.index!]
-            self.downloadManuLists(coffeeidList: coffeeidList)
+             let spot = coffee[poiItem.index!]
+            activeSpot = spot.is_active
+            self.downloadManuLists(spot: spot)
 
         } else {
             NSLog("Did tap a normal marker")
@@ -127,25 +124,25 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         return true
     }
     
-    func downloadManuLists(coffeeidList : ElementCoffeeSpot){
-        getProductsForSpot(spotId: "\(coffeeidList.id!)").responseJSON { (response) in
+    func downloadManuLists(spot : ElementCoffeeSpot){
+        getProductsForSpot(spotId: "\(spot.id!)").responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.menu = setElementProductList(list: responseValue as! [[String : Any]])
-                self.downloadProductTypes(coffeeidList: coffeeidList)
+                self.downloadProductTypes(spot: spot)
             }
             
         }
     }
-    func downloadProductTypes(coffeeidList : ElementCoffeeSpot){
+    func downloadProductTypes(spot : ElementCoffeeSpot){
         getAllProductTypes().responseJSON { (response) in
             if let responseValue = response.result.value{
                 self.productTypes = responseValue as! [[String : Any]]
-                self.setTabs(coffeeidList: coffeeidList)
+                self.setTabs(spot: spot)
             }
         }
     }
     
-    func setTabs(coffeeidList : ElementCoffeeSpot){
+    func setTabs(spot : ElementCoffeeSpot){
         tabs = []
         
         for i in 0..<menu.count{
@@ -164,25 +161,27 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         }
         tabs.sort()
         print(tabs.count)
-        markerCLICK(coffeeidList: coffeeidList)
+        markerCLICK(spot: spot)
         
     }
     
-    func markerCLICK(coffeeidList : ElementCoffeeSpot){
+    func markerCLICK(spot : ElementCoffeeSpot){
         
         let Storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
+        let controller = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
         
-        cell.tabs = self.tabs
+        controller.tabs = self.tabs
+        controller.activeSpot = self.activeSpot
         
 //        let database = Database()
 //        database.deleteProduct()
 //        database.setProducts(products: menu)
         allSpotProducts = menu
         
-        current_coffee_spot = coffeeidList
+        current_coffee_spot = spot
 
-        self.navigationController?.pushViewController(cell, animated: true)
+        
+        self.navigationController?.pushViewController(controller, animated: true)
         
     }
 }

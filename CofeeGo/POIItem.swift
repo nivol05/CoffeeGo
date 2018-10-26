@@ -12,12 +12,14 @@ import GoogleMaps
 
 class POIItem: NSObject, GMUClusterItem {
     var position: CLLocationCoordinate2D
-    var index : Int!
+    var index: Int!
+    var acrive: Bool!
     var marker = GMSMarker()
     
-    init(position: CLLocationCoordinate2D, index : Int , marker : GMSMarker ) {
+    init(position: CLLocationCoordinate2D, index: Int , marker: GMSMarker, active: Bool) {
         self.position = position
         self.index = index
         self.marker = marker
+        self.acrive = active
     }
 }

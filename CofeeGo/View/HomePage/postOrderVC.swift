@@ -15,10 +15,12 @@ class postOrderVC: UIViewController {
     var postedId : Int!
     @IBOutlet weak var timePicker: UITextField!
     @IBOutlet weak var commentView: UITextView!
+    @IBOutlet weak var orderTimeLbl: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentTime = toMins(time: getTimeNow())
+        timePicker.text = "50"
         // Do any additional setup after loading the view.
     }
     
@@ -90,7 +92,6 @@ class postOrderVC: UIViewController {
                 print("Post succes")
                 if pos != OrderData.orderList.count - 1{
                     self.postOrderItem(pos: pos + 1)
-                   
 
                 } else {
                     self.finishOrder()
@@ -110,11 +111,12 @@ class postOrderVC: UIViewController {
         let id = current_coffee_spot.id
         print("Post")
         currentTime = toMins(time: getTimeNow())
+        print("Post \(getTime(minutes: currentTime!))")
         let orderTime = Int(timePicker.text!)!
         if timePicker.text! == "" || orderTime < 5{
             // MAKE WARNING NOT LESS THAN 5
         } else{
-            let pickedTime = getTime(minutes: currentTime + orderTime)
+            let pickedTime = getTime(minutes: (currentTime + orderTime))
             
             if timeInRange(time: pickedTime, startRange: current_coffee_spot.time_start, endRange: current_coffee_spot.time_finish){
                 if compareMins(first: currentTime, second: toMins(time: pickedTime)) == -1 {

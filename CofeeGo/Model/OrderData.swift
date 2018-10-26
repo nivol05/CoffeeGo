@@ -20,9 +20,9 @@ class OrderData{
     static var tempAdditionals = [[String : Any]]()
     static var currAdditionals = [[String : Any]]()
     
-    static func lessThanLimit(limit : Int, orderItem : OrderItem) -> Bool{
+    static func lessThanLimit(limit : String, orderItem : OrderItem) -> Bool{
         let nextPrice = getAllPrice() + orderItem.product_price
-        return nextPrice < limit;
+        return nextPrice < Int(limit)!;
     }
     
     static func getAllPrice() -> Int{

@@ -18,8 +18,11 @@ class ListCell: UITableViewCell {
     @IBOutlet weak var statusLbl: UILabel!
     
     @IBOutlet weak var dateBgView: UIView!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var timeBgView: UIView!
     @IBOutlet weak var priceBgView: UIView!
+    @IBOutlet weak var priceLbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

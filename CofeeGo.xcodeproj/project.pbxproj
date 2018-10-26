@@ -48,6 +48,7 @@
 		EFA75FCA2181363800E84242 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA75FC92181363800E84242 /* Calendar.swift */; };
 		EFA75FCC2181375900E84242 /* CurrentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA75FCB2181375900E84242 /* CurrentData.swift */; };
 		EFA75FD021823A1200E84242 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA75FCF21823A1200E84242 /* ListCell.swift */; };
+		EFA75FD22182834400E84242 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA75FD12182834400E84242 /* Extensions.swift */; };
 		EFC3925020F27DA600A3896A /* MapParelavEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */; };
 		EFC712F220FBC6EA00121607 /* OrdersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F120FBC6EA00121607 /* OrdersVC.swift */; };
 		EFC712F620FD056C00121607 /* CoffeeMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC712F520FD056C00121607 /* CoffeeMenuList.swift */; };
@@ -147,6 +148,7 @@
 		EFA75FC92181363800E84242 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		EFA75FCB2181375900E84242 /* CurrentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentData.swift; sourceTree = "<group>"; };
 		EFA75FCF21823A1200E84242 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		EFA75FD12182834400E84242 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EFC3924F20F27DA600A3896A /* MapParelavEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapParelavEffect.swift; sourceTree = "<group>"; };
 		EFC712F120FBC6EA00121607 /* OrdersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVC.swift; sourceTree = "<group>"; };
 		EFC712F520FD056C00121607 /* CoffeeMenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMenuList.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				EFA75FC72181332900E84242 /* Elements.swift */,
 				EFA75FC92181363800E84242 /* Calendar.swift */,
 				EFA75FCB2181375900E84242 /* CurrentData.swift */,
+				EFA75FD12182834400E84242 /* Extensions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				EFFB2D1A20D2C477003A21C3 /* MapCoffeeVC.swift in Sources */,
 				EF14A9DA215BE321002C0A5F /* GMUDefaultClusterIconGenerator.m in Sources */,
 				EFA75FD021823A1200E84242 /* ListCell.swift in Sources */,
+				EFA75FD22182834400E84242 /* Extensions.swift in Sources */,
 				EFD3F53E2165443A00193B76 /* PageCoffee.swift in Sources */,
 				EF799DF620C15BAA00EED722 /* CommentTable.swift in Sources */,
 				EF14A9E3215BE32D002C0A5F /* GQTPointQuadTree.m in Sources */,

@@ -28,6 +28,11 @@ class SendwichManu: UITableViewCell {
                                     product_name: productElem["name"] as! String,
                                     product_id : productElem["id"] as! Int,
                                     imageUrl: CoffeeImg.image!)
-        OrderData.orderList.append(menuElement)
+        if OrderData.lessThanLimit(limit: current_coffee_spot.max_order_limit, orderItem: menuElement){
+            OrderData.orderList.append(menuElement)
+        } else {
+            // HIGHER THAN LIMIT
+            print("HIGHER THAN LIMIT")
+        }
     }
 }

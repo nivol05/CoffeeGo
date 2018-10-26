@@ -30,6 +30,11 @@ class OtherManu: UITableViewCell {
                                     product_id : productElem.id,
                                     imageUrl: CoffeeImg.image!)
         menuElement.cup_size = "default"
-        OrderData.orderList.append(menuElement)
+        if OrderData.lessThanLimit(limit: current_coffee_spot.max_order_limit, orderItem: menuElement){
+            OrderData.orderList.append(menuElement)
+        } else {
+            // HIGHER THAN LIMIT
+            print("HIGHER THAN LIMIT")
+        }
     }
 }

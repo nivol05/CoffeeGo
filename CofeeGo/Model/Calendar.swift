@@ -10,7 +10,7 @@ extension Date {
 func getCurrentDate() -> String{
     let today = Date()
     let formatter = DateFormatter()
-    formatter.dateFormat = "dd.MM.yyyy"
+    formatter.dateFormat = "yyyy-MM-dd"
     return formatter.string(from: today)
 }
 
@@ -25,7 +25,7 @@ func getTomorrowDate() -> String{
     let tomorrow = Date().tomorrow!
     let formatter = DateFormatter()
     
-    formatter.dateFormat = "dd.MM.yyyy"
+    formatter.dateFormat = "yyyy-MM-dd"
     return formatter.string(from: tomorrow)
 }
 
@@ -66,6 +66,6 @@ func getTime(minutes: Int) -> String{
     if mins < 10 {
         orderTime.append("0")
     }
-    orderTime.append("\(hour)")
+    orderTime.append("\(mins)")
     return orderTime
 }

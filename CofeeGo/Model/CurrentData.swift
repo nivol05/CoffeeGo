@@ -14,6 +14,7 @@ var current_coffee_user : ElementUser!
 
 var allCoffeeNets : [ElementCoffeeNet]!
 var allSpotProducts : [ElementProduct]!
+var allCoffeeSpots : [ElementCoffeeSpot]!
 
 func getProductsByType(type: Int) -> [ElementProduct]{
     var prods = [ElementProduct]()
