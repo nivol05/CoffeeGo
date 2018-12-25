@@ -5,33 +5,47 @@ import AlamofireImage
 //import CarbonKit
 import SeamlessSlideUpScrollView
 import XLPagerTabStrip
+import Kingfisher
 
-class OrdersVC: ButtonBarPagerTabStripViewController {
+import CTSlidingUpPanel
+
+class OrdersVC: ButtonBarPagerTabStripViewController,CTBottomSlideDelegate{
+    
+    var bottomController:CTBottomSlideController?;
 
     var tabs = [Int]()
-    var activeSpot = false
-  
-    
-    var items : [[Any]] = [[Any]]()
-    
+
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var coffeeImg: UIImageView!
     @IBOutlet weak var MakeOrderBtn: UIButton!
     @IBOutlet weak var line: UIView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var slideUpView: SeamlessSlideUpView!
-    @IBOutlet var tableView: SeamlessSlideUpTableView!
     @IBOutlet weak var bgBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var companyNameLbl: UILabel!
+    @IBOutlet weak var spotAddressLbl: UILabel!
+    @IBOutlet weak var companyLogoImg: UIImageView!
     
-//    @IBOutlet weak var qwe : UIView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var parrent : UIView!
     
+    
+    let cellReuseIdentifier = "cell"
     
     override func viewDidLoad() {
+        bottomBar()
+    
+        super.viewDidLoad()
         
-        
-        
+        sliderView()
+    }
+    
+    func bottomBar(){
         settings.style.buttonBarBackgroundColor = .init(red: 1, green: 120/255, blue: 0, alpha: 1)
         settings.style.buttonBarItemBackgroundColor = .init(red: 1, green: 120/255, blue: 0, alpha: 1)
         settings.style.selectedBarBackgroundColor = .white
-        settings.style.buttonBarItemFont = .systemFont(ofSize: 18, weight: UIFont.Weight.light)
         settings.style.selectedBarHeight = 2.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = .black
@@ -43,18 +57,68 @@ class OrdersVC: ButtonBarPagerTabStripViewController {
             oldCell?.label.textColor = .white
             newCell?.label.textColor = UIColor.white
         }
+    }
+    
+    func sliderView(){
+        OrderData.orderList.removeAll()
         
-        super.viewDidLoad()
+        bottomController = CTBottomSlideController(parent: view, bottomView: bottomView, tabController: self.tabBarController!, navController: self.navigationController, visibleHeight: 20)
+        
+        bottomController?.delegate = self;
+        bottomController?.set(table: OrderData.controller.tableView)
+        
+        OrderData.controller.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
         self.navigationController?.navigationItem.backBarButtonItem?.isEnabled = false
         cornerRatio(view: MakeOrderBtn, ratio: 5, shadow: true)
+        cornerRatio(view: coffeeImg, ratio: 40/2, shadow: false)
+        cornerRatio(view: bottomView, ratio: 20, shadow: false)
         
-        OrderData.orderList.removeAll()
+        let avatar_url = URL(string: current_coffee_net.logo_img)!
         
-        self.slideUpView.tableView = tableView
-        tableView.dataSource = self
-        tableView.delegate = self
+        coffeeImg.kf.setImage(with: avatar_url)
+        companyNameLbl.text = current_coffee_net.name_other
+        spotAddressLbl.text = current_coffee_spot.address
+        OrderData.controller.limitLbl.text = "Лимит: \(current_coffee_spot.max_order_limit!) грн"
+        OrderData.controller.sumLbl.text = "Сумма: \(0) грн"
     }
+    
+    @objc func toggleAction(sender:UIButton){
+        bottomController?.expandPanel()
+    }
+    
+    
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        bottomController?.viewWillTransition(to: size, with: coordinator)
+//    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func didPanelCollapse()
+    {
+        print("Collapsed");
+    }
+    func didPanelExpand(){
+        print("Expanded")
+    }
+    func didPanelAnchor(){
+        print("Anchored")
+//      OrderData.controller.tableView.reloadData()
+        
+    }
+    
+    func didPanelMove(panelOffset: CGFloat)
+        
+    {
+//        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let cell = Storyboard.instantiateViewController(withIdentifier: "OrderList") as! OrderListVC
+        cornerRatio(view: bottomView, ratio: 15 - (panelOffset * 15), shadow: false)
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -63,10 +127,11 @@ class OrdersVC: ButtonBarPagerTabStripViewController {
 //        self.navigationController?.navigationBar.backgroundColor = color
         
     }
-    
 
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         var storyboard = [UIViewController]()
+        
+        
         for i in tabs{
             if i == 1{
                 storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Coffee"))
@@ -78,10 +143,11 @@ class OrdersVC: ButtonBarPagerTabStripViewController {
                 storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Pie"))
             } else if i == 11{
                 storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Other"))
+            } else if i == 12{
+                storyboard.append(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HotDrink"))
             }
         }
         
-        print(storyboard)
         return storyboard
     }
     
@@ -92,76 +158,13 @@ class OrdersVC: ButtonBarPagerTabStripViewController {
             self.slideUpView.show(expandFull: false)
             slideUpView.isHidden = false
             tableView.reloadData()
-            self.button.setTitle("Скрыть заказ", for: UIControlState())
         } else {
             self.slideUpView.hide()
-            self.button.setTitle("Показать заказ", for: UIControlState())
         }
     }
+        
+    @IBAction func togglePanel(_ sender: Any) {
+        bottomController?.expandPanel()
+    }
 }
-
-extension OrdersVC : SeamlessSlideUpViewDelegate {
-    
-    func slideUpViewWillAppear(_ slideUpView: SeamlessSlideUpView, height: CGFloat) {
-        self.bgBottomConstraint.constant = height
-        tableView.reloadData()
-        UIView.animate(withDuration: 0.2, animations: { [weak self] in self?.view.layoutIfNeeded() })
-        self.button.setTitle("Скрыть заказ", for: UIControlState())
-    }
-    
-    func slideUpViewDidAppear(_ slideUpView: SeamlessSlideUpView, height: CGFloat) {
-    }
-    
-    func slideUpViewWillDisappear(_ slideUpView: SeamlessSlideUpView) {
-        self.bgBottomConstraint.constant = 0
-        UIView.animate(withDuration: 0.2, animations: { [weak self] in self?.view.layoutIfNeeded() })
-        self.button.setTitle("Показать заказ", for: UIControlState())
-    }
-    
-    func slideUpViewDidDisappear(_ slideUpView: SeamlessSlideUpView) {
-    }
-    
-    func slideUpViewDidDrag(_ slideUpView: SeamlessSlideUpView, height: CGFloat) {
-        self.bgBottomConstraint.constant = min(height, self.slideUpView.bounds.height - self.slideUpView.topWindowHeight)
-        self.view.layoutIfNeeded()
-    }
-    
-    
-}
-extension OrdersVC : UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return OrderData.orderList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let orderItem = OrderData.orderList[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "OrderCell", for: indexPath) as! OrderList
-        
-        cell.nameLbl.text = orderItem.product_name
-        cell.img.image = orderItem.imageUrl
-        cell.coffeePrice.text = "\(orderItem.product_price!) грн"
-        cell.priceOrderDone.text = "Всего: \(orderItem.getProductPrice()) грн"
-        
-        var syrupsText = "Сиропы: "
-        for i in 0..<orderItem.syrups.count{
-            let value = orderItem.syrups[i]
-            
-            syrupsText.append(value["name"] as! String)
-            syrupsText.append("( +\(value["price"] as! Int) грн)")
-            
-            if i != orderItem.syrups.count - 1{
-                syrupsText.append(", ")
-            }
-        }
-        cell.additionalLbl.text = syrupsText
-//        cell.sugarCountLbl.text = "\(spots.getSugar())"
-        
-        return cell
-    }
-    
-    
-}
-
-
 

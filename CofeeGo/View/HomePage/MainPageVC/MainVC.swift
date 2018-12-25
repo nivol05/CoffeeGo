@@ -10,6 +10,7 @@ import UIKit
 import CarbonKit
 import Tamamushi
 import XLPagerTabStrip
+import SwiftMessages
 
 class MainVC : ButtonBarPagerTabStripViewController {
 
@@ -32,11 +33,22 @@ class MainVC : ButtonBarPagerTabStripViewController {
         }
         super.viewDidLoad()
         
-//        TabSwipe()
+        
+//        let navigationController = navigationController,
+//        let flareGradientImage = CAGradientLayer.primaryGradient(on: (navigationController?.navigationBar)!)
+//        else {
+//            print("Error creating gradient color!")
+//            return
+//        }
+        
+//        navigationController?.navigationBar.barTintColor = UIColor(patternImage: flareGradientImage!)
 
+//        navigationController?.navigationBar.applyNavigationGradient(colors: [UIColor.red , UIColor.yellow])
+//        TabSwipe()
+//        hidesBottomBarWhenPushed = false
 
     }
-
+    
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CoffeeList")
@@ -49,3 +61,30 @@ class MainVC : ButtonBarPagerTabStripViewController {
 //    }
 
 }
+
+//extension CAGradientLayer {
+//
+//    class func primaryGradient(on view: UIView) -> UIImage? {
+//        let gradient = CAGradientLayer()
+//        let flareRed = UIColor(displayP3Red: 241.0/255.0, green: 39.0/255.0, blue: 17.0/255.0, alpha: 1.0)
+//        let flareOrange = UIColor(displayP3Red: 245.0/255.0, green: 175.0/255.0, blue: 25.0/255.0, alpha: 1.0)
+//        var bounds = view.bounds
+//        bounds.size.height += UIApplication.shared.statusBarFrame.size.height
+//        gradient.frame = bounds
+//        gradient.colors = [flareRed.cgColor, flareOrange.cgColor]
+//        gradient.startPoint = CGPoint(x: 1, y: 1)
+//        gradient.endPoint = CGPoint(x: 1, y: 0)
+//        return gradient.createGradientImage(on: view)
+//    }
+//
+//    private func createGradientImage(on view: UIView) -> UIImage? {
+//        var gradientImage: UIImage?
+//        UIGraphicsBeginImageContext(view.frame.size)
+//        if let context = UIGraphicsGetCurrentContext() {
+//            render(in: context)
+//            gradientImage = UIGraphicsGetImageFromCurrentImageContext()?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
+//        }
+//        UIGraphicsEndImageContext()
+//        return gradientImage
+//    }
+//}

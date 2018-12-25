@@ -20,9 +20,9 @@ target 'CofeeGo' do
 	
 	pod 'SeamlessSlideUpScrollView'
 
-	pod 'CarbonKit'
+    pod 'CarbonKit'
 
-    	pod 'GoogleMaps'
+    pod 'GoogleMaps'
 
 	pod 'Cosmos', '~> 16.0'
 
@@ -33,6 +33,8 @@ target 'CofeeGo' do
 	pod 'Tamamushi'
 	
 	pod 'Firebase/Messaging'
+
+	pod 'Firebase/Core'
 	
 	pod 'SQLite.swift', '~> 0.11.5'
 
@@ -43,5 +45,15 @@ target 'CofeeGo' do
 	pod "ExpandableLabel"
 
 	pod 'PureLayout', '~> 2.0.5'
+
+	pod "CTSlidingUpPanel", '~> 1.0.4'
+
+	pod 'PopupDialog', '~> 0.8.1'
+
+	pod 'Toast-Swift', '~> 3.0.0'
+
+	pod 'NVActivityIndicatorView'
+    
+    pod 'SwiftMessages'
 
 end

@@ -20,6 +20,7 @@ class PieMenuList: UIViewController  , UITableViewDataSource,UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.contentInset.bottom = 70
 //        let database = Database()
         products = getProductsByType(type: 10)
         tableView.delegate = self
@@ -32,7 +33,6 @@ class PieMenuList: UIViewController  , UITableViewDataSource,UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = products[indexPath.row]
-        var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "PieManu" , for : indexPath) as? PieManu
         
         cell?.productElem = data
@@ -40,14 +40,23 @@ class PieMenuList: UIViewController  , UITableViewDataSource,UITableViewDelegate
         cell?.nameLbl.text = data.name
         
         //CoffeeImage
-        avatar_url = URL(string: data.img)!
-        cell?.CoffeeImg.kf.setImage(with: avatar_url)
+        if data.img != nil{
+            cell?.CoffeeImg.kf.setImage(with: URL(string: data.img)!)
+        } else {
+            cell?.CoffeeImg.image = #imageLiteral(resourceName: "coffee-cup")
+        }
+        
+        if data.active{
+            cell?.missingItemLbl.isHidden = true
+        } else{
+            cell?.missingItemLbl.isHidden = false
+        }
         
         //Price
         var price_text = ""
         
         let price = data.price
-        price_text += "\(price!) grn"
+        price_text += "\(price!) грн"
         
         cell?.priceLbl.text = price_text
         

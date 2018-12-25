@@ -19,10 +19,31 @@ import UIKit
 //}
 func cornerRatio(view : UIView, ratio : CGFloat, shadow : Bool){
     view.layer.cornerRadius = ratio
-    view.layer.masksToBounds = false
+    
+    view.layer.masksToBounds = true
     if shadow{
-        view.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.layer.shadowOpacity = 0.4
+        view.layer.masksToBounds = false
+    }
+}
+
+func fadeView(view : UIView, delay: TimeInterval, isHiden: Bool) {
+    
+    let animationDuration = 0.25
+    
+    // Fade in the view
+    UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+//        view.alpha = 1
+    }) { (Bool) -> Void in
+        
+        // After the animation completes, fade out the view after a delay
+        
+        UIView.animate(withDuration: animationDuration, delay: delay, options: .curveEaseOut, animations: { () -> Void in
+            if isHiden{
+                view.alpha = 0
+            } else {
+                view.alpha = 1
+            }
+        },
+                       completion: nil)
     }
 }

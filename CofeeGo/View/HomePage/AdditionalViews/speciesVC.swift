@@ -7,22 +7,34 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource {
 
+class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource,IndicatorInfoProvider {
+
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title : "Специи")
+    }
    
     @IBOutlet weak var emptyAdditionalsView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     var species : [[String: Any]] = [[String: Any]]()
+    var selects : [Bool] = [Bool]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.isHidden = true
+        OrderData.tempSpecies = OrderData.currSpecies
+        OrderData.countSpecies = OrderData.tempSpecies.count
+        
+//        tableView.isHidden = true
         getSpeciesForSpot(spotId: "\(current_coffee_spot.id!)").responseJSON { (response) in
-            if let responseValue = response.result.value{
-                self.species = responseValue as! [[String : Any]]
+            switch response.result {
+            case .success(let value):
+                self.species = value as! [[String : Any]]
                 if self.species.count > 0{
+                    self.selects = [Bool](repeating: false, count: self.species.count)
                     self.emptyAdditionalsView.isHidden = true
                     self.tableView.isHidden = false
                     self.tableView.delegate = self
@@ -33,6 +45,11 @@ class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource {
                     self.emptyAdditionalsView.isHidden = false
                     print("nema")
                 }
+                break
+            case .failure(let error):
+                self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                print(error)
+                break
             }
         }
         
@@ -47,18 +64,21 @@ class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "speciesCell" , for : indexPath) as! speciesCell
         cell.speciesNameLbl.text = addElem["name"] as? String
-        
+        var isSelected = false
+
         for i in 0..<OrderData.tempSpecies.count{
             let value = OrderData.tempSpecies[i]
-            var isSelected = false
-            if value == "\(addElem["name"]!)"{
+            if "\(value["name"]!)" == "\(addElem["name"]!)"{
                 cell.checkMark.isHidden = false
+                selects[indexPath.row] = false
                 isSelected = true
                 break
             }
-            if !isSelected{
-                cell.checkMark.isHidden = true
-            }
+            
+        }
+        if !isSelected{
+            cell.checkMark.isHidden = true
+            selects[indexPath.row] = true
         }
         
         
@@ -69,18 +89,28 @@ class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource {
         
         let addElem = species[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "speciesCell" , for : indexPath) as! speciesCell
         
-        if  cell.checkMark.isHidden == true{
+        if  selects[indexPath.row]{
             
-            cell.checkMark.isHidden = false
-            OrderData.tempSpecies.append(addElem["name"] as! String)
+//            selects[indexPath.row] = false
+            if OrderData.countSpecies < 3{
+             
+                OrderData.tempSpecies.append(addElem)
+                OrderData.countSpecies += 1
+            }
             
         } else {
-            cell.checkMark.isHidden = true
-            
-            OrderData.tempSpecies.removeAll { $0 == addElem["name"] as! String}
-            
+//            selects[indexPath.row] = true
+            var pos = 0
+            for i in 0..<OrderData.tempSpecies.count{
+                let value = OrderData.tempSpecies[i]
+                if "\(value["name"]!)" == "\(addElem["name"]!)"{
+                    pos = i
+                    break
+                }
+            }
+            OrderData.countSpecies -= 1
+            OrderData.tempSpecies.remove(at: pos)
         }
         tableView.reloadRows(at: [indexPath], with: .none)
     }

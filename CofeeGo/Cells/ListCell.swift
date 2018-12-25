@@ -17,6 +17,12 @@ class ListCell: UITableViewCell {
     @IBOutlet weak var addressLbl: UILabel!
     @IBOutlet weak var statusLbl: UILabel!
     
+    @IBOutlet weak var heihgtLogoImage: NSLayoutConstraint!
+    
+    @IBOutlet weak var mainBgForDate: UIView!
+    @IBOutlet weak var mainBgForTime: UIView!
+    @IBOutlet weak var mainBgForPrice: UIView!
+    
     @IBOutlet weak var dateBgView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
@@ -24,11 +30,21 @@ class ListCell: UITableViewCell {
     @IBOutlet weak var priceBgView: UIView!
     @IBOutlet weak var priceLbl: UILabel!
     
+    @IBOutlet weak var cancelOrderBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        cornerRatio(view: dateBgView, ratio: 16, shadow: false)
-        cornerRatio(view: timeBgView, ratio: 16, shadow: false)
-        cornerRatio(view: priceBgView, ratio: 16, shadow: false)
+        cornerRatio(view: logoImg, ratio: 12, shadow: false)
+        print(logoImg.frame.height)
+        cornerRatio(view: dateBgView, ratio: 23/2, shadow: false)
+        cornerRatio(view: timeBgView, ratio: 23/2, shadow: false)
+        cornerRatio(view: priceBgView, ratio: 23/2, shadow: false)
+        cornerRatio(view: dateLbl, ratio: 21/2, shadow: false)
+        cornerRatio(view: timeLbl, ratio: 21/2, shadow: false)
+        cornerRatio(view: priceLbl, ratio: 21/2, shadow: false)
+        cornerRatio(view: mainBgForDate, ratio: 25/2, shadow: false)
+        cornerRatio(view: mainBgForTime, ratio: 25/2, shadow: false)
+        cornerRatio(view: mainBgForPrice, ratio: 25/2, shadow: false)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

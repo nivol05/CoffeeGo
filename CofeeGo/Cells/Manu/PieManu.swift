@@ -13,26 +13,30 @@ class PieManu: UITableViewCell {
     @IBOutlet weak var BG: UIView!
     @IBOutlet weak var priceLbl: UILabel!
     @IBOutlet weak var CoffeeImg: UIImageView!
+    @IBOutlet weak var missingItemLbl: UIStackView!
     var productElem : ElementProduct!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        CoffeeImg.layer.cornerRadius = 12
-        
-        CoffeeImg.layer.masksToBounds = true
+        cornerRatio(view: CoffeeImg, ratio: 5, shadow: false)
 
     }
     @IBAction func addElementBtn(_ sender: Any) {
-        let menuElement = OrderItem(product_price: productElem.price,
-                                    product_name: productElem.name,
-                                    product_id : productElem.id,
-                                    imageUrl: CoffeeImg.image!)
-        if OrderData.lessThanLimit(limit: current_coffee_spot.max_order_limit, orderItem: menuElement){
-            OrderData.orderList.append(menuElement)
-        } else {
-            // HIGHER THAN LIMIT
-            print("HIGHER THAN LIMIT")
+        if productElem.active{
+            let menuElement = OrderItem(product_price: productElem.price,
+                                        product_name: productElem.name,
+                                        product_id : productElem.id,
+                                        imageUrl: CoffeeImg.image!)
+            if OrderData.lessThanLimit(limit: current_coffee_spot.max_order_limit, orderItem: menuElement){
+                OrderData.orderList.append(menuElement)
+                OrderData.controller.tableView.reloadData()
+                OrderData.controller.updateLbls()
+                makeToast("Добавлено к заказу")
+            } else {
+                makeToast("Превышен лимит заказа")
+                print("HIGHER THAN LIMIT")
+            }
         }
     }
 

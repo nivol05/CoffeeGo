@@ -31,7 +31,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
 //        let database = Database()
         products = getProductsByType(type: 1)
 //        print("ON \(CoffeeMenuList.test)")
-        self.tableView.contentInset.bottom = 50
+        self.tableView.contentInset.bottom = 70
 //        tableView = UITableView(frame: view.frame)
 //        tableView.layer.frame.size.height = view.frame.height * 1.5
 //        tableView.frame.origin.y += 125
@@ -46,7 +46,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -61,9 +61,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
     
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CoffeeManu" , for : indexPath) as! DropDownCell
-        cell.CoffeeImg.kf.cancelDownloadTask()
-
+        
         if indexPath.row == button_tag {
             print("last cell is seen!!")
 //            self.tableView.beginUpdates()
@@ -72,8 +70,8 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
 
             if lastCell.cellExists {
                 print("per")
-                self.lastCell.animate(duration: 0.3, c: {
-                    self.view.layoutIfNeeded()
+                self.lastCell.animate(duration: 1, c: {
+                    self.view.layoutSubviews()
                 })
 
                 if indexPath.row == button_tag {
@@ -110,17 +108,18 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = products[indexPath.row]
-        var avatar_url: URL
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoffeeManu" , for : indexPath) as! DropDownCell
 //        print(data)
         
         //Name
         cell.nameLbl.text = data.name
         
-        //CoffeeImage
-        avatar_url = URL(string: data.img)!
-        
-        cell.CoffeeImg.kf.setImage(with: avatar_url)
+        //CoffeeImag
+        if data.img != nil{
+            cell.CoffeeImg.kf.setImage(with: URL(string: data.img)!)
+        } else{
+            cell.CoffeeImg.image = #imageLiteral(resourceName: "coffee-cup")
+        }
         
         var price_text = ""
         var onlyPrice : Bool = true
@@ -132,8 +131,8 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
             cell.BGSmallCup.isHidden = false
             cell.smallCupPrice.isHidden = false
             
-            price_text += "\(l_cup) grn / "
-            cell.smallCupPrice.text = "\(l_cup) grn"
+            price_text += "\(l_cup) грн"
+            cell.smallCupPrice.text = "\(l_cup) грн"
             onlyPrice = false
         } else {
             cell.BGSmallCup.isHidden = true
@@ -143,8 +142,8 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         //            // Checking for medium cip
         let m_cup = data.m_cup!
         if m_cup != 0 {
-            price_text += "\(m_cup) grn / "
-            cell.middleCupPrice.text = "\(m_cup) grn"
+            price_text += " / \(m_cup) грн"
+            cell.middleCupPrice.text = "\(m_cup) грн"
             onlyPrice = false
         }
         //
@@ -155,8 +154,8 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
             cell.BGBigCup.isHidden = false
             cell.bigCupPrice.isHidden = false
             
-            price_text += "\(b_cup) grn"
-            cell.bigCupPrice.text = "\(b_cup) grn"
+            price_text += " / \(b_cup) грн"
+            cell.bigCupPrice.text = "\(b_cup) грн"
             
             cell.helperView.isHidden = true
             onlyPrice = false
@@ -170,8 +169,8 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         let price = data.price!
         
         if onlyPrice{
-            price_text += "\(price) grn"
-            cell.middleCupPrice.text = "\(price) grn"
+            price_text += "\(price) грн"
+            cell.middleCupPrice.text = "\(price) грн"
             cell.helperView.isHidden = true
             
             cell.capView.isHidden = true
@@ -183,8 +182,15 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         cell.coffeePrice = data.price
         cell.priceLbl.text = price_text
         
-        cell.open.addTarget(self, action: #selector(cellOpened(sender:)), for: .touchUpInside)
+        if data.active{
+            cell.missingItemLbl.isHidden = true
+            cell.open.addTarget(self, action: #selector(cellOpened(sender:)), for: .touchUpInside)
+        } else{
+            cell.missingItemLbl.isHidden = false
+        }
+     
         cell.aditionalStaff.addTarget(self, action: #selector(cellAditional(sender:)), for: .touchUpInside)
+        cell.addToOrderBtn.addTarget(self, action: #selector(closeCell(sender:)), for: .touchUpInside)
         
         t_count += 1
         cell.cellExists = true
@@ -192,9 +198,9 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         cell.open.tag = indexPath.row
 
         
-        UIView.animate(withDuration: 0) {
-            cell.contentView.layoutIfNeeded()
-        }
+//        UIView.animate(withDuration: 0) {
+//            cell.contentView.layoutIfNeeded()
+//        }
         
         return cell
     }
@@ -229,9 +235,7 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
             button_tag = sender.tag
             print("Close2")
             lastCell = tableView.cellForRow(at: IndexPath(row: button_tag, section: 0)) as! DropDownCell
-//            
-//            lastCell.stuffView.isHidden = false
-//            lastCell.stuffView.alpha = 1
+
             self.lastCell.animate(duration: 0.3, c: {
                 self.view.layoutMarginsDidChange()
             })
@@ -241,6 +245,30 @@ class CoffeeMenuList: UIViewController , UITableViewDataSource, UITableViewDeleg
         OrderData.currAdditionals.removeAll()
         OrderData.currSpecies.removeAll()
         OrderData.currSyrups.removeAll()
+        
+        self.tableView.endUpdates()
+    }
+    
+    @objc func closeCell(sender:UIButton){
+        self.tableView.beginUpdates()
+        
+        if lastCell.cellExists {
+            
+            self.lastCell.animate(duration: 0.3, c: {
+                self.view.layoutMarginsDidChange()
+            })
+            button_tag = -1
+            lastCell = DropDownCell()
+
+        }
+        
+        OrderData.currAdditionals.removeAll()
+        OrderData.currSpecies.removeAll()
+        OrderData.currSyrups.removeAll()
+        
+        OrderData.countAdditionals = 0
+        OrderData.countSyryps = 0
+        OrderData.countSpecies = 0
         
         self.tableView.endUpdates()
     }

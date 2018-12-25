@@ -64,6 +64,14 @@ func setElementCommentList(list: [[String : Any]]) -> [ElementComment]{
     return ret
 }
 
+func setElementFavoriteList(list: [[String : Any]]) -> [ElementFavorite]{
+    var ret = [ElementFavorite]()
+    for x in list{
+        ret.append(ElementFavorite(mas: x))
+    }
+    return ret
+}
+
 class ElementCoffeeNet{
     var id : Int!
     var name : String!
@@ -97,8 +105,12 @@ class ElementCoffeeSpot{
     var max_order_time : String!
     var max_order_limit : String!
     var is_active : Bool!
+    var is_closed : Bool!
     var metro_station : String!
     var card_payment : Bool!
+    var img : String!
+    var stars : Double!
+    var description_full : String!
     
     init(mas: [String : Any]) {
         id = mas["id"] as? Int
@@ -111,8 +123,12 @@ class ElementCoffeeSpot{
         max_order_time = mas["max_order_time"] as? String
         max_order_limit = mas["max_order_limit"] as? String
         is_active = mas["is_active"] as? Bool
+        is_closed = mas["is_closed"] as? Bool
         metro_station = mas["metro_station"] as? String
         card_payment = mas["card_payment"] as? Bool
+        img = mas["img"] as? String
+        stars = mas["stars"] as? Double
+        description_full = mas["description_full"] as? String
     }
 }
 
@@ -226,5 +242,20 @@ class ElementUser{
         first_name = mas["first_name"] as? String
         password = mas["password"] as? String
         username = mas["username"] as? String
+    }
+}
+
+class ElementFavorite{
+    var id : Int!
+    var user : Int!
+    var coffee_net : Int!
+    var coffee_spot : Int!
+    
+    
+    init(mas: [String : Any]) {
+        id = mas["id"] as? Int
+        user = mas["user"] as? Int
+        coffee_net = mas["coffee_net"] as? Int
+        coffee_spot = mas["coffee_spot"] as? Int
     }
 }

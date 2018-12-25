@@ -21,6 +21,7 @@ class OtherMenuList: UIViewController , UITableViewDataSource,UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
 //        let database = Database()
+        self.tableView.contentInset.bottom = 70
         products = getProductsByType(type: 11)
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,14 +41,23 @@ class OtherMenuList: UIViewController , UITableViewDataSource,UITableViewDelegat
         cell?.nameLbl.text = data.name
         
         //CoffeeImage
-        avatar_url = URL(string: data.img)!
-        cell?.CoffeeImg.kf.setImage(with: avatar_url)
+        if data.img != nil{
+            cell?.CoffeeImg.kf.setImage(with: URL(string: data.img)!)
+        } else{
+            cell?.CoffeeImg.image = #imageLiteral(resourceName: "coffee-cup")
+        }
+        
+        if data.active{
+            cell?.missingItemLbl.isHidden = true
+        } else{
+            cell?.missingItemLbl.isHidden = false
+        }
         
         //Price
         var price_text = ""
         
         let price = data.price
-        price_text += "\(price!) grn"
+        price_text += "\(price!) грн"
         
         cell?.priceLbl.text = price_text
         

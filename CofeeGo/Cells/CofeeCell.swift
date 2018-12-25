@@ -21,17 +21,21 @@ class CofeeCell: UITableViewCell {
     @IBOutlet weak var previewImg: UIImageView!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var rateStars: CosmosView!
-//    @IBOutlet weak var backGround: UIView!
+    @IBOutlet weak var addressLbl: UILabel!
+    @IBOutlet weak var metroLbl: UILabel!
+    @IBOutlet weak var metroLineImg: UIImageView!
+    //    @IBOutlet weak var backGround: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         backgroungStyle()
         
-        previewImg.layer.cornerRadius = self.CofeeImg.frame.width / 2
-        let screenWidth = UIScreen.main.bounds.size.width
+        cornerRatio(view: previewImg, ratio: 70 / 2, shadow: false)
         
-        heightCoffeeImg.constant = screenWidth / 1.7777778
+//        let screenWidth = UIScreen.main.bounds.size.height
+        
+//        heightCoffeeImg.constant = screenWidth / 1.7777778
     }
 
     func configureCell(listCoffee : ListCoffee){

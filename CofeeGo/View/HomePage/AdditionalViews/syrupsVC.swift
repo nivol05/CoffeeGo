@@ -8,26 +8,36 @@
 
 import UIKit
 import Alamofire
+import XLPagerTabStrip
 
-class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
+
+class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource,IndicatorInfoProvider{
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title : "Сиропы")
+    }
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptySyrypView: UIView!
     
     var syrup : [[String: Any]] = [[String: Any]]()
+    var selects : [Bool] = [Bool]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         OrderData.tempSyrups = OrderData.currSyrups
+        OrderData.countSyryps = OrderData.tempSyrups.count
+        
         print("SYRUPS \(OrderData.tempSyrups)")
         
-        tableView.isHidden = true
+//        tableView.isHidden = true
 
         getSyrupsForSpot(spotId: "\(current_coffee_spot.id!)").responseJSON { (response) in
-            if let responseValue = response.result.value{
-                self.syrup = responseValue as! [[String : Any]]
+            switch response.result {
+            case .success(let value):
+                self.syrup = value as! [[String : Any]]
                 if self.syrup.count > 0 {
-                    
+                    self.selects = [Bool](repeating: false, count: self.syrup.count)
                     self.emptySyrypView.isHidden = true
                     self.tableView.isHidden = false
                     self.tableView.delegate = self
@@ -36,7 +46,11 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
                 } else {
                     self.emptySyrypView.isHidden = false
                 }
-                
+                break
+            case .failure(let error):
+                self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                print(error)
+                break
             }
         }
         
@@ -56,30 +70,35 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
             let value = OrderData.tempSyrups[i]
             if "\(value["name"]!)" == "\(syrupElem["name"]!)"{
                 cell.checkMark.isHidden = false
+                selects[indexPath.row] = false
                 isSelected = true
                 break
             }
         }
-            if !isSelected{
-                cell.checkMark.isHidden = true
-            }
-        cell.syrupNameLbl.text = syrupElem["name"] as? String
+        if !isSelected{
+            cell.checkMark.isHidden = true
+            selects[indexPath.row] = true
+        }
+        cell.syrupNameLbl.text = "\(syrupElem["name"] as! String) \(syrupElem["price"] as! Int) грн"
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "syrupCell" , for : indexPath) as! SyrupCell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "syrupCell" , for : indexPath) as! SyrupCell
         
         let syrupElem = syrup[indexPath.row]
 
-        if  cell.checkMark.isHidden == true{
-
-            cell.checkMark.isHidden = false
-            OrderData.tempSyrups.append(syrupElem)
+        if  selects[indexPath.row]{
+            if OrderData.countSyryps < 3{
+                OrderData.tempSyrups.append(syrupElem)
+                OrderData.countSyryps += 1
+            }
+//            selects[indexPath.row] = false
+            
             
         } else {
-            cell.checkMark.isHidden = true
+//            selects[indexPath.row] = true
             var pos = 0
             for i in 0..<OrderData.tempSyrups.count{
                 let value = OrderData.tempSyrups[i]
@@ -88,7 +107,7 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
                     break
                 }
             }
-            
+            OrderData.countSyryps -= 1
             OrderData.tempSyrups.remove(at: pos)
         }
         tableView.reloadRows(at: [indexPath], with: .none)

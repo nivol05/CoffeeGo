@@ -9,8 +9,6 @@
 import Foundation
 import Alamofire
 
-var token = ""
-
 let BASE_URL = "http://138.68.79.98"
 
 let REGISTER_USER = "\(BASE_URL)/api/customers/add_new_user/"
@@ -49,10 +47,16 @@ func getToken(username : String, pass : String) -> DataRequest{
                              headers: nil)
 }
 
-func registerUser(user : [String: Any]) -> DataRequest{
+func registerUser(username : String, pass : String) -> DataRequest{
+    
+    let params: [String: Any] = [
+        "username": username,
+        "password": pass
+    ]
+    
     return Alamofire.request(REGISTER_USER,
                              method: .post,
-                             parameters: user,
+                             parameters: params,
                              encoding: URLEncoding(),
                              headers: header)
 }
@@ -65,10 +69,19 @@ func getCoffeeNets() -> DataRequest{
                              headers: header)
 }
 
-func postFcmDevice(device : [String: Any]) -> DataRequest{
+func postFcmDevice(name: String, userId: Int, fcmToken: String) -> DataRequest{
+    let params: [String: Any] = [
+        "name": name,
+        "user": userId,
+        "active" : true,
+        "device_id" : "",
+        "registration_id" : fcmToken ,
+        "type" : "ios"
+    ]
+    
     return Alamofire.request(FCM_URL,
                              method: .post,
-                             parameters: device,
+                             parameters: params,
                              encoding: URLEncoding(),
                              headers: header)
 }
@@ -91,7 +104,7 @@ func getCoffeeSpotsForNet(company : String) -> DataRequest{
 }
 
 func getCommentsForNet(company : String) -> DataRequest{
-    let url = "\(COMMENTS_URL)?name=\(company)"
+    let url = "\(COMMENTS_URL)?coffee_spot_id=\(company)"
     return Alamofire.request(url,
                              method: .get,
                              parameters: nil,
@@ -260,8 +273,8 @@ func getOneOrder(orderId : String) -> DataRequest{
                              headers: header)
 }
 
-func getOrderItemsForUser(userId : String) -> DataRequest{
-    let url = "\(OREDER_ITEMS_URL)?id=\(userId)"
+func getOrderItemsForOrder(orderId : String) -> DataRequest{
+    let url = "\(OREDER_ITEMS_URL)?id=\(orderId)"
     return Alamofire.request(url,
                              method: .get,
                              parameters: nil,
@@ -270,7 +283,7 @@ func getOrderItemsForUser(userId : String) -> DataRequest{
 }
 
 func getUserCommentForNet(userId : String, companyId : String) -> DataRequest{
-    let url = "\(COMMENTS_URL)?check_user_id=\(userId)&check_coffee_net_id=\(companyId)"
+    let url = "\(COMMENTS_URL)?check_user_id=\(userId)&check_coffee_spot_id=\(companyId)"
     return Alamofire.request(url,
                              method: .get,
                              parameters: nil,
@@ -287,8 +300,8 @@ func getActiveUserOrders(userId : String) -> DataRequest{
                              headers: header)
 }
 
-func getCompanySocials(companyId : String) -> DataRequest{
-    let url = "\(SOCIALS_URL)?coffee_net_id=\(companyId)"
+func getSpotSocials(companyId : String) -> DataRequest{
+    let url = "\(SOCIALS_URL)?coffee_spot_id=\(companyId)"
     return Alamofire.request(url,
                              method: .get,
                              parameters: nil,
@@ -298,6 +311,15 @@ func getCompanySocials(companyId : String) -> DataRequest{
 
 func getOneCoffeeSpot(spotId : String) -> DataRequest{
     let url = "\(COFFEE_SPOTS_URL)\(spotId)/"
+    return Alamofire.request(url,
+                             method: .get,
+                             parameters: nil,
+                             encoding: URLEncoding(),
+                             headers: header)
+}
+
+func checkBarista(username: String) -> DataRequest{
+    let url = "\(COFFEE_SPOTS_URL)?username=\(username)"
     return Alamofire.request(url,
                              method: .get,
                              parameters: nil,

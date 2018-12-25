@@ -44,6 +44,7 @@ class Database{
         }
         
         createTableProducts()
+        createTableUser()
     }
     
     func createTableProducts(){
@@ -105,8 +106,7 @@ class Database{
         }
     }
     
-    func getUser() -> ElementUser{
-        var ret : ElementUser!
+    func getUser() -> ElementUser?{
         let select = USER_TABLE.select([
             USER_ID,
             USER_FIRST_NAME,
@@ -122,13 +122,13 @@ class Database{
                 elem["username"] = user[self.USER_USERNAME]
                 elem["password"] = user[self.USER_PASSWORD]
     
-                ret = ElementUser(mas: elem)
+                return ElementUser(mas: elem)
             }
         } catch{
             print(error)
         }
         
-        return ret
+        return nil
     }
     
     func delUser(){

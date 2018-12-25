@@ -33,6 +33,7 @@ class DropDownCell: UITableViewCell {
     
     @IBOutlet weak var sugarTextField: UITextField!
     
+    @IBOutlet weak var missingItemLbl: UIStackView!
     @IBOutlet weak var capView: UIStackView!
     @IBOutlet var aditionalStaff: UIButton!
     @IBOutlet var open: UIButton!
@@ -65,7 +66,8 @@ class DropDownCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        
+
+
         style(view: BGSmallCup, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
         style(view: BGMidleCuo, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
         style(view: BGBigCup, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: false)
@@ -75,7 +77,12 @@ class DropDownCell: UITableViewCell {
         style(view: bigCubBtn, ratio: 5, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
         style(view: addToOrderBtn, ratio: 5, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
         style(view: additionsBtn, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: true)
-        
+
+        sugarTextField.layer.borderColor = UIColor(red: 189/255, green: 189/255, blue: 189/255, alpha: 1).cgColor
+        sugarTextField.layer.borderWidth = 1.0
+
+        cornerRatio(view: sugarTextField, ratio: 5, shadow: false)
+
         CoffeeImg.layer.cornerRadius = 5
         CoffeeImg.layer.masksToBounds = true
     }
@@ -140,26 +147,30 @@ class DropDownCell: UITableViewCell {
     
 
     @IBAction func addToOrderList(_ sender: Any) {
-        let orderItem = OrderItem(product_price: coffeePrice,
-                                  product_name: nameLbl.text!,
-                                  product_id: productElem.id,
-                                  imageUrl: CoffeeImg.image!,
-                                  cup_size : cupSize)
-        orderItem.sugar = sugarCount
-        orderItem.syrups = OrderData.currSyrups
-        orderItem.species = OrderData.currSpecies
-        orderItem.additionals = OrderData.currAdditionals
-        if OrderData.lessThanLimit(limit: current_coffee_spot.max_order_limit, orderItem: orderItem){
-            OrderData.orderList.append(orderItem)
-        } else {
-            // HIGHER THAN LIMIT
-            print("HIGHER THAN LIMIT")
-        }
+        
+            let orderItem = OrderItem(product_price: coffeePrice,
+                                      product_name: nameLbl.text!,
+                                      product_id: productElem.id,
+                                      imageUrl: CoffeeImg.image!,
+                                      cup_size : cupSize)
+            orderItem.sugar = sugarCount
+            orderItem.syrups = OrderData.currSyrups
+            orderItem.species = OrderData.currSpecies
+            orderItem.additionals = OrderData.currAdditionals
+            if OrderData.lessThanLimit(limit: current_coffee_spot.max_order_limit, orderItem: orderItem){
+                OrderData.orderList.append(orderItem)
+                OrderData.controller.tableView.reloadData()
+                OrderData.controller.updateLbls()
+                makeToast("Добавлено к заказу")
+            } else {
+                makeToast("Превышен лимит заказа")
+                print("HIGHER THAN LIMIT")
+            }
         
     }
     
     @IBAction func moreSugerBtn(_ sender: Any) {
-        if sugarCount < 10{
+        if sugarCount < 9{
             sugarCount += 0.5
             sugarTextField.text = "\(sugarCount)"
         }

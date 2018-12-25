@@ -21,6 +21,7 @@ class CakeMenuList: UIViewController , UITableViewDataSource,UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.contentInset.bottom = 70
 //        let database = Database()
         products = getProductsByType(type: 2)
         tableView.delegate = self
@@ -41,14 +42,23 @@ class CakeMenuList: UIViewController , UITableViewDataSource,UITableViewDelegate
         cell?.nameLbl.text = data.name
         
         //CoffeeImage
-        avatar_url = URL(string: data.img)!
-        cell?.CoffeeImg.kf.setImage(with: avatar_url)
+        if data.img != nil{
+            cell?.CoffeeImg.kf.setImage(with: URL(string: data.img)!)
+        } else{
+            cell?.CoffeeImg.image = #imageLiteral(resourceName: "coffee-cup")
+        }
+        
+        if data.active{
+            cell?.missingitemLbl.isHidden = true
+        } else{
+            cell?.missingitemLbl.isHidden = false
+        }
         
         //Price
         var price_text = ""
         
         let price = data.price
-        price_text += "\(price!) grn"
+        price_text += "\(price!) грн"
         
         cell?.priceLbl.text = price_text
         

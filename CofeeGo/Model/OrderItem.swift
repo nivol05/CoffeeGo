@@ -10,15 +10,15 @@ import Foundation
 import UIKit
 public class OrderItem{
     
-     var product_price : Int!
-     var product_name : String!
+    var product_price : Int!
+    var product_name : String!
     var product_id : Int!
-     var imageUrl : UIImage!
-     var sugar : Double!
-     var cup_size : String!
+    var imageUrl : UIImage!
+    var sugar : Double = 0.0
+    var cup_size : String!
     var syrupPrice : Int!
     var syrups = [[String : Any]]()
-     var species = [String]()
+    var species = [[String : Any]]()
     var additionals = [[String : Any]]()
     
     init(product_price : Int ,product_name : String, product_id : Int, imageUrl : UIImage , cup_size : String ) {
@@ -74,7 +74,7 @@ public class OrderItem{
         var resp : String = ""
         if species.count > 0{
             for x in 0..<species.count{
-                let name = species[x]
+                let name = species[x]["name"] as! String
                 resp.append(name)
                 if x != species.count - 1{
                     resp.append(", ")

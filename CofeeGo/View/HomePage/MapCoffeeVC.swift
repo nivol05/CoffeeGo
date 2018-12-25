@@ -5,14 +5,13 @@ import Alamofire
 import GoogleMaps
 import SeamlessSlideUpScrollView
 import Kingfisher
+import NVActivityIndicatorView
 
-class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GMUClusterManagerDelegate{
+class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GMUClusterManagerDelegate , NVActivityIndicatorViewable{
     
-    var coffee = [ElementCoffeeSpot]()
     var menu = [ElementProduct]()
     var productTypes : [[String: Any]] = [[String: Any]]()
     var tabs : [Int]!
-    var activeSpot = false
     
     var CP : CoffeePage!
     var VC : ViewController!
@@ -39,16 +38,9 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
                                                  clusterIconGenerator: iconGenerator)
         clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm,
                                            renderer: renderer)
-        let camera = GMSCameraPosition.camera(withLatitude: 50.44901331994515, longitude: 30.525069320831903, zoom: 13)
         
-        
-        mapView.camera = camera
-        mapView.delegate = self
         clusterManager.setDelegate(self, mapDelegate: self)
-        
-        
-        addCoffeeSpots()
-
+        addCoffeeSpot()
         
 //        mapView.dequeueReusableAnnotationView(withIdentifier: "map")
     }
@@ -73,47 +65,39 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         }
     }
     
-    func addCoffeeSpots(){
-        getCoffeeSpotsForNet(company: current_coffee_net.name).responseJSON { (response) in
-            
-            if let responseValue = response.result.value{
-                
-                self.coffee = setElementCoffeeSpotList(list: responseValue as! [[String : Any]])
-                if self.coffee.count > 0{
-                    for i in 0..<self.coffee.count{
-                        
-                        let spot = self.coffee[i]
-                        
-                        let lat = Double(spot.lat)!
-                        let lng = Double(spot.lng)!
-                        
-                        let marker = GMSMarker()
-                        marker.icon = UIImage(named: "marker")
-                        
-                        let item = POIItem(position: CLLocationCoordinate2DMake(lat, lng), index: i, marker : marker, active: spot.is_active)
-                        self.clusterManager.add(item)
-//                        let marker = GMSMarker()
-//                        marker.icon = GMSMarker.markerImage(with: .black)
-//                        marker.position = CLLocationCoordinate2D(latitude: self.LAT, longitude: self.LNG)
-//                        marker.map = self.mapView
-                    }
-                }
-
+    func addCoffeeSpot(){
+        let lat = Double(current_coffee_spot.lat)!
+        let lng = Double(current_coffee_spot.lng)!
+        
+        let marker = GMSMarker()
+        marker.icon = UIImage(named: "marker")
+        
+        let item = POIItem(position: CLLocationCoordinate2DMake(lat, lng), index: 0, marker : marker, active: !current_coffee_spot.is_closed)
+        self.clusterManager.add(item)
+        
+        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 17)
+        self.mapView.camera = camera
+        self.mapView.delegate = self
+        
+        do {
+            // Set the map style by passing the URL of the local file.
+            if let styleURL = Bundle.main.url(forResource: "map_style_dark", withExtension: "json") {
+                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+            } else {
+                NSLog("Unable to find style.json")
             }
+        } catch {
+            NSLog("One or more of the map styles failed to load. \(error)")
         }
     }
+    
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
         if let poiItem = marker.userData as? POIItem {
             NSLog("Did tap marker for cluster item \(poiItem.index!)")
-            let camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 17)
-            self.mapView.camera = camera
-            self.mapView.delegate = self
-            
-             let spot = coffee[poiItem.index!]
-            activeSpot = spot.is_active
-            self.downloadManuLists(spot: spot)
+            startAnimating(type : NVActivityIndicatorType.ballPulseSync)
 
+            self.isOrderInProcess()
         } else {
             NSLog("Did tap a normal marker")
             let newCamera = GMSCameraPosition.camera(withTarget: marker.position,
@@ -124,25 +108,62 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         return true
     }
     
-    func downloadManuLists(spot : ElementCoffeeSpot){
-        getProductsForSpot(spotId: "\(spot.id!)").responseJSON { (response) in
-            if let responseValue = response.result.value{
-                self.menu = setElementProductList(list: responseValue as! [[String : Any]])
-                self.downloadProductTypes(spot: spot)
-            }
-            
-        }
-    }
-    func downloadProductTypes(spot : ElementCoffeeSpot){
-        getAllProductTypes().responseJSON { (response) in
-            if let responseValue = response.result.value{
-                self.productTypes = responseValue as! [[String : Any]]
-                self.setTabs(spot: spot)
+    func isOrderInProcess(){
+        getActiveUserOrders(userId: "\(current_coffee_user.id!)").responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let orders = value as! [[String : Any]]
+                if orders.count == 0{
+                    //                    self.loadingView.isHidden = false
+                    self.downloadManuLists()
+                    print("USER CAN ORDER")
+                } else{
+                    self.view.makeToast("У вас есть незавершенный заказ")
+                    print("USER HAS ORDERS")
+                    self.stopAnimating()
+                }
+                break
+            case .failure(let error):
+                self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.stopAnimating()
+                print(error)
+                break
             }
         }
     }
     
-    func setTabs(spot : ElementCoffeeSpot){
+    func downloadManuLists(){
+        getProductsForSpot(spotId: "\(current_coffee_spot.id!)").responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                self.menu = setElementProductList(list: value as! [[String : Any]])
+                self.downloadProductTypes()
+                break
+            case .failure(let error):
+                self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.stopAnimating()
+                print(error)
+                break
+            }
+        }
+    }
+    func downloadProductTypes(){
+        getAllProductTypes().responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                self.productTypes = value as! [[String : Any]]
+                self.setTabs()
+                break
+            case .failure(let error):
+                self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.stopAnimating()
+                print(error)
+                break
+            }
+        }
+    }
+    
+    func setTabs(){
         tabs = []
         
         for i in 0..<menu.count{
@@ -161,26 +182,22 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         }
         tabs.sort()
         print(tabs.count)
-        markerCLICK(spot: spot)
+        markerCLICK()
         
     }
     
-    func markerCLICK(spot : ElementCoffeeSpot){
+    func markerCLICK(){
         
         let Storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
         
         controller.tabs = self.tabs
-        controller.activeSpot = self.activeSpot
         
 //        let database = Database()
 //        database.deleteProduct()
 //        database.setProducts(products: menu)
         allSpotProducts = menu
-        
-        current_coffee_spot = spot
-
-        
+        self.stopAnimating()
         self.navigationController?.pushViewController(controller, animated: true)
         
     }

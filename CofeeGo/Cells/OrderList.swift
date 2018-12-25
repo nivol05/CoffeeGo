@@ -17,13 +17,14 @@ class OrderList: UITableViewCell {
     @IBOutlet weak var coffeePrice: UILabel!
     @IBOutlet weak var priceOrderDone: UILabel!
     @IBOutlet weak var additionalLbl: UILabel!
+    @IBOutlet weak var syrypsLbl: UILabel!
+    @IBOutlet weak var speciesLbl: UILabel!
+    @IBOutlet weak var deleteBtn: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        BG.layer.cornerRadius = 12
-        BG.layer.masksToBounds = false
-        img.layer.cornerRadius = 12
-        img.layer.masksToBounds = true
+        
+        cornerRatio(view: img, ratio: 5, shadow: false)
     }
 
 }

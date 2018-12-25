@@ -13,12 +13,18 @@ class OrderData{
     
     static var tempSyrups = [[String : Any]]()
     static var currSyrups = [[String : Any]]()
+    static var countSyryps = 0
     
-    static var tempSpecies = [String]()
-    static var currSpecies = [String]()
+    static var tempSpecies = [[String : Any]]()
+    static var currSpecies = [[String : Any]]()
+    static var countSpecies = 0
     
     static var tempAdditionals = [[String : Any]]()
     static var currAdditionals = [[String : Any]]()
+    static var countAdditionals = 0
+    
+    static var controller : OrderListVC!
+    
     
     static func lessThanLimit(limit : String, orderItem : OrderItem) -> Bool{
         let nextPrice = getAllPrice() + orderItem.product_price
