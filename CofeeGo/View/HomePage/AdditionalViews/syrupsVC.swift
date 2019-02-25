@@ -18,6 +18,7 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource,Ind
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptySyrypView: UIView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var syrup : [[String: Any]] = [[String: Any]]()
     var selects : [Bool] = [Bool]()
@@ -25,6 +26,8 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource,Ind
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadingIndicator.startAnimating()
+        self.loadingIndicator.isHidden = false
         OrderData.tempSyrups = OrderData.currSyrups
         OrderData.countSyryps = OrderData.tempSyrups.count
         
@@ -42,6 +45,8 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource,Ind
                     self.tableView.isHidden = false
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
+                    self.loadingIndicator.stopAnimating()
+                    self.loadingIndicator.isHidden = true
                     self.tableView.reloadData()
                 } else {
                     self.emptySyrypView.isHidden = false
@@ -49,6 +54,7 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource,Ind
                 break
             case .failure(let error):
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.loadingIndicator.isHidden = true
                 print(error)
                 break
             }
@@ -93,6 +99,8 @@ class syrupsVC: UIViewController, UITableViewDelegate, UITableViewDataSource,Ind
             if OrderData.countSyryps < 3{
                 OrderData.tempSyrups.append(syrupElem)
                 OrderData.countSyryps += 1
+            } else{
+                // MAKE TOAST
             }
 //            selects[indexPath.row] = false
             

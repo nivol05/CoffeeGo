@@ -20,6 +20,7 @@
 		EF14A9E4215BE32D002C0A5F /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = EF14A9DF215BE32D002C0A5F /* GQTPointQuadTreeChild.m */; };
 		EF14A9E6215D47B3002C0A5F /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF14A9E5215D47B3002C0A5F /* Database.swift */; };
 		EF16477B2130546900520F4C /* AdditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16477A2130546900520F4C /* AdditionCell.swift */; };
+		EF19E00B21F8FB500005A86A /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19E00A21F8FB500005A86A /* WebViewVC.swift */; };
 		EF1C901921C0092C004D43F2 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1C901821C0092C004D43F2 /* LoginVC.swift */; };
 		EF1C906321C01494004D43F2 /* IQTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1C904D21C01494004D43F2 /* IQTextView.swift */; };
 		EF1C906421C01494004D43F2 /* IQPreviousNextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1C904F21C01494004D43F2 /* IQPreviousNextView.swift */; };
@@ -45,6 +46,8 @@
 		EF2AB95521909E5400AC73F1 /* AllCommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2AB95421909E5400AC73F1 /* AllCommentsVC.swift */; };
 		EF2AB95721909EFC00AC73F1 /* AllCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2AB95621909EFC00AC73F1 /* AllCommentsCell.swift */; };
 		EF2AB9592192262600AC73F1 /* FavoriteListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2AB9582192262600AC73F1 /* FavoriteListCell.swift */; };
+		EF334C0C2213AB3F00D6C0ED /* FullCommetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF334C0B2213AB3F00D6C0ED /* FullCommetVC.swift */; };
+		EF334C0E2214765300D6C0ED /* reloadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF334C0D2214765300D6C0ED /* reloadProtocol.swift */; };
 		EF3653072100A00B005E00D3 /* OrderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3653062100A00B005E00D3 /* OrderList.swift */; };
 		EF36530A2100A4B4005E00D3 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3653092100A4B4005E00D3 /* MainVC.swift */; };
 		EF36530C2100A4CF005E00D3 /* FavoriteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36530B2100A4CF005E00D3 /* FavoriteListVC.swift */; };
@@ -156,6 +159,7 @@
 		EF14A9E2215BE32D002C0A5F /* GQTPointQuadTreeChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GQTPointQuadTreeChild.h; path = "../../Downloads/google-maps-ios-utils-master/src/QuadTree/GQTPointQuadTreeChild.h"; sourceTree = "<group>"; };
 		EF14A9E5215D47B3002C0A5F /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		EF16477A2130546900520F4C /* AdditionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionCell.swift; sourceTree = "<group>"; };
+		EF19E00A21F8FB500005A86A /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		EF1C901821C0092C004D43F2 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		EF1C904D21C01494004D43F2 /* IQTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQTextView.swift; sourceTree = "<group>"; };
 		EF1C904F21C01494004D43F2 /* IQPreviousNextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQPreviousNextView.swift; sourceTree = "<group>"; };
@@ -182,6 +186,8 @@
 		EF2AB95421909E5400AC73F1 /* AllCommentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCommentsVC.swift; sourceTree = "<group>"; };
 		EF2AB95621909EFC00AC73F1 /* AllCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCommentsCell.swift; sourceTree = "<group>"; };
 		EF2AB9582192262600AC73F1 /* FavoriteListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListCell.swift; sourceTree = "<group>"; };
+		EF334C0B2213AB3F00D6C0ED /* FullCommetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCommetVC.swift; sourceTree = "<group>"; };
+		EF334C0D2214765300D6C0ED /* reloadProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reloadProtocol.swift; sourceTree = "<group>"; };
 		EF3653062100A00B005E00D3 /* OrderList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderList.swift; sourceTree = "<group>"; };
 		EF3653092100A4B4005E00D3 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		EF36530B2100A4CF005E00D3 /* FavoriteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListVC.swift; sourceTree = "<group>"; };
@@ -191,6 +197,7 @@
 		EF36531D21061816005E00D3 /* DropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
 		EF36531E21061816005E00D3 /* DropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropDownCell.xib; sourceTree = "<group>"; };
 		EF36532C210F3EEB005E00D3 /* ConectionCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConectionCheck.swift; sourceTree = "<group>"; };
+		EF479FD621D2AACB003E78BD /* GMUMarkerClustering.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMUMarkerClustering.h; sourceTree = "<group>"; };
 		EF498DE32174F62A008231C1 /* speciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speciesVC.swift; sourceTree = "<group>"; };
 		EF498DE52174F67B008231C1 /* speciesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speciesCell.swift; sourceTree = "<group>"; };
 		EF4AF8A0216BE1DF0083B07A /* CommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
@@ -428,6 +435,7 @@
 			children = (
 				EF71621420EEB90F000C0C07 /* ListVC.swift */,
 				EF2AB950218A864C00AC73F1 /* OrderItemsVC.swift */,
+				EF334C0B2213AB3F00D6C0ED /* FullCommetVC.swift */,
 			);
 			path = ListPage;
 			sourceTree = "<group>";
@@ -454,6 +462,7 @@
 				EFF8D5872115EE7400B655CE /* OrderData.swift */,
 				EF14A9E5215D47B3002C0A5F /* Database.swift */,
 				EFD3F5432166B05E00193B76 /* Network.swift */,
+				EF334C0D2214765300D6C0ED /* reloadProtocol.swift */,
 				EFA75FC72181332900E84242 /* Elements.swift */,
 				EFA75FC92181363800E84242 /* Calendar.swift */,
 				EFA75FCB2181375900E84242 /* CurrentData.swift */,
@@ -557,6 +566,7 @@
 			isa = PBXGroup;
 			children = (
 				EFD3F53B2164ECC700193B76 /* SettingVC.swift */,
+				EF19E00A21F8FB500005A86A /* WebViewVC.swift */,
 			);
 			path = SettingPage;
 			sourceTree = "<group>";
@@ -620,6 +630,7 @@
 				EF14A9CC215BE317002C0A5F /* GMUWrappingDictionaryKey.h */,
 				EF14A9CB215BE317002C0A5F /* GMUWrappingDictionaryKey.m */,
 				EF14A9BE215BE30D002C0A5F /* GMUStaticCluster.h */,
+				EF479FD621D2AACB003E78BD /* GMUMarkerClustering.h */,
 				EF14A9BF215BE30D002C0A5F /* GMUStaticCluster.m */,
 				EFD1909F215704B700EC1582 /* GMUMarkerClustering.h */,
 			);
@@ -772,6 +783,7 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SeamlessSlideUpScrollView/SeamlessSlideUpScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/SimplePDF/SimplePDF.framework",
+				"${BUILT_PRODUCTS_DIR}/Siren/Siren.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Tamamushi/Tamamushi.framework",
@@ -800,6 +812,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SeamlessSlideUpScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimplePDF.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siren.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tamamushi.framework",
@@ -827,6 +840,7 @@
 				EF4AF8A1216BE1DF0083B07A /* CommentsCell.swift in Sources */,
 				EFEA59A7212EDC6300265BF3 /* syrupsVC.swift in Sources */,
 				EFEA86E42194FDC100B01E5A /* slideUpViewOnMap.swift in Sources */,
+				EF19E00B21F8FB500005A86A /* WebViewVC.swift in Sources */,
 				EF1E19BF21AE01F10005E8AE /* FirstLoadingVC.swift in Sources */,
 				EF1C906721C01494004D43F2 /* IQToolbar.swift in Sources */,
 				EF71621520EEB90F000C0C07 /* ListVC.swift in Sources */,
@@ -901,10 +915,12 @@
 				EF1C907321C01494004D43F2 /* IQNSArray+Sort.swift in Sources */,
 				EF71621720F12A52000C0C07 /* CoffeeListOnMap.swift in Sources */,
 				EF498DE42174F62A008231C1 /* speciesVC.swift in Sources */,
+				EF334C0C2213AB3F00D6C0ED /* FullCommetVC.swift in Sources */,
 				EF1C906F21C01494004D43F2 /* IQUIScrollView+Additions.swift in Sources */,
 				EF2AB953218A889400AC73F1 /* OrderItemCell.swift in Sources */,
 				EF3653072100A00B005E00D3 /* OrderList.swift in Sources */,
 				EF36531F21061816005E00D3 /* DropDownCell.swift in Sources */,
+				EF334C0E2214765300D6C0ED /* reloadProtocol.swift in Sources */,
 				EF1C906521C01494004D43F2 /* IQTitleBarButtonItem.swift in Sources */,
 				EFC712F220FBC6EA00121607 /* OrdersVC.swift in Sources */,
 				EF14A9D1215BE317002C0A5F /* GMUGridBasedClusterAlgorithm.m in Sources */,

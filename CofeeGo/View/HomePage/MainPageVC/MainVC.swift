@@ -33,7 +33,6 @@ class MainVC : ButtonBarPagerTabStripViewController {
         }
         super.viewDidLoad()
         
-        
 //        let navigationController = navigationController,
 //        let flareGradientImage = CAGradientLayer.primaryGradient(on: (navigationController?.navigationBar)!)
 //        else {
@@ -48,6 +47,8 @@ class MainVC : ButtonBarPagerTabStripViewController {
 //        hidesBottomBarWhenPushed = false
 
     }
+    
+    
     
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {

@@ -104,10 +104,12 @@ class ElementCoffeeSpot{
     var time_finish : String!
     var max_order_time : String!
     var max_order_limit : String!
+    var min_order_time : String!
     var is_active : Bool!
     var is_closed : Bool!
     var metro_station : String!
     var card_payment : Bool!
+    var takeaway : Bool!
     var img : String!
     var stars : Double!
     var description_full : String!
@@ -122,10 +124,12 @@ class ElementCoffeeSpot{
         time_finish = mas["time_finish"] as? String
         max_order_time = mas["max_order_time"] as? String
         max_order_limit = mas["max_order_limit"] as? String
+        min_order_time = mas["min_order_time"] as? String
         is_active = mas["is_active"] as? Bool
         is_closed = mas["is_closed"] as? Bool
         metro_station = mas["metro_station"] as? String
         card_payment = mas["card_payment"] as? Bool
+        takeaway = mas["takeaway"] as? Bool
         img = mas["img"] as? String
         stars = mas["stars"] as? Double
         description_full = mas["description_full"] as? String
@@ -190,6 +194,8 @@ class ElementOrder{
     var order_time : String!
     var status : Int!
     var canceled_barista_message : String!
+    var takeaway : Bool!
+    var delayed_order: Bool!
     
     init(mas: [String : Any]) {
         id = mas["id"] as? Int
@@ -201,6 +207,8 @@ class ElementOrder{
         order_time = mas["order_time"] as? String
         status = mas["status"] as? Int
         canceled_barista_message = mas["canceled_barista_message"] as? String
+        takeaway = mas["takaaway"] as? Bool
+        delayed_order = mas["delayed_order"] as? Bool
     }
 }
 

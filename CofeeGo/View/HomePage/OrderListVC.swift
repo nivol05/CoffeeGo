@@ -32,6 +32,12 @@ class OrderListVC: UIViewController,UITableViewDataSource,UITableViewDelegate{
         tableView.dataSource = self
         tableView.delegate = self
         OrderData.controller = self
+        
+        if header != nil{
+            urOrderLbl.text = "Ваш заказ"
+        } else {
+            urOrderLbl.text = "Войдите чтоб заказать"
+        }
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -123,11 +129,14 @@ class OrderListVC: UIViewController,UITableViewDataSource,UITableViewDelegate{
         } else {
             cell.speciesLbl.text = ""
         }
-        
-        if orderItem.sugar == floor(orderItem.sugar){
-            cell.sugarCountLbl.text = "Сахар: \(Int(orderItem.sugar))"
-        } else{
-            cell.sugarCountLbl.text = "Сахар: \(orderItem.sugar)"
+        if orderItem.sugar == 0{
+            cell.sugarCountLbl.text = ""
+        } else {
+            if orderItem.sugar == floor(orderItem.sugar){
+                cell.sugarCountLbl.text = "Сахар: \(Int(orderItem.sugar))"
+            } else{
+                cell.sugarCountLbl.text = "Сахар: \(orderItem.sugar)"
+            }
         }
         
         return cell
@@ -140,22 +149,28 @@ class OrderListVC: UIViewController,UITableViewDataSource,UITableViewDelegate{
 //        print(sender.tag)
     }
     @IBAction func makeOrderBtn(_ sender: Any) {
-        if current_coffee_spot.is_active{
-            if OrderData.getAllPrice() != 0{
-                performSegue(withIdentifier: "finishPostOrder", sender: self)
-            } else{
-                self.view.makeToast("Заказ пуст")
-                print("ORDER IS EMPTY")
+        if header != nil{
+            if current_coffee_spot.is_active{
+                if OrderData.getAllPrice() != 0{
+                    performSegue(withIdentifier: "finishPostOrder", sender: self)
+                } else{
+                    self.view.makeToast("Заказ пуст")
+                    print("ORDER IS EMPTY")
+                }
+            } else {
+                self.view.makeToast("Кофейня закрыта")
+                print("SPOT IS NOT ACTIVE")
             }
         } else {
-            self.view.makeToast("Кофейня закрыта")
-            print("SPOT IS NOT ACTIVE")
+            self.view.makeToast("Войдите чтоб заказать")
         }
+        
     }
     
     func interface(){
         cornerRatio(view: elementsCountBG, ratio: elementsCountBG.frame.height / 2, shadow: false)
         cornerRatio(view: sliderViewStic, ratio: 2, shadow: true)
+        cornerRatio(view: elementsCount, ratio: elementsCount.frame.height/2, shadow: false)
     }
     
     func updateLbls(){

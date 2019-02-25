@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Siren
 import GoogleMaps
 import Tamamushi
 import PopupDialog
@@ -43,12 +44,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         Messaging.messaging().delegate = self
         
+        defaultExample()
         
         keyboard()
         
         popupDialog()
         
         toast()
+        
         
 //        application.registerForRemoteNotifications()
         
@@ -84,7 +87,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
- 
+        
+        
+        
         isOrdered = true
 //        let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 //        let homePage = mainStoryboard.instantiateViewController(withIdentifier: "TabView") as! TabBar
@@ -106,9 +111,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
 //        print(aps2)
         
-        
-        notification(title: title, body: body)
-        
+        if isNotifsEnabled(){
+            notification(title: title, body: body)
+        }
+            
         completionHandler(UIBackgroundFetchResult.newData)
     }
     
@@ -221,10 +227,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         cb.titleColor     = UIColor(white: 0.6, alpha: 1)
         cb.buttonColor    = UIColor(white: 25/100, alpha: 1)
         cb.separatorColor = UIColor(white: 37/100, alpha: 1)
+        
     }
+    
+    
 }
 
-
+private extension AppDelegate {
+    
+    /// The simplest implementation of Siren.
+    /// All default rules are implemented and the
+    /// results of the completion handler are ignored.
+    func defaultExample() {
+        Siren.AlertType.force
+    }
+}
 //extension UIApplication{
 //    var statusBarView : UIView? {
 //        return value(forKey: "statusBar") as? UIView

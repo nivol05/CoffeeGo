@@ -32,6 +32,9 @@ class ListCell: UITableViewCell {
     
     @IBOutlet weak var cancelOrderBtn: UIButton!
     
+    @IBOutlet weak var transferOrderBtn: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         cornerRatio(view: logoImg, ratio: 12, shadow: false)

@@ -27,8 +27,20 @@ class OrderData{
     
     
     static func lessThanLimit(limit : String, orderItem : OrderItem) -> Bool{
-        let nextPrice = getAllPrice() + orderItem.product_price
+        let nextPrice = getAllPrice() + orderItem.getProductPrice()
         return nextPrice < Int(limit)!;
+    }
+    
+    static func clearAll(){
+        tempAdditionals.removeAll()
+        tempSyrups.removeAll()
+        tempSpecies.removeAll()
+        currAdditionals.removeAll()
+        currSyrups.removeAll()
+        currSpecies.removeAll()
+        countSyryps = 0
+        countSpecies = 0
+        countAdditionals = 0
     }
     
     static func getAllPrice() -> Int{

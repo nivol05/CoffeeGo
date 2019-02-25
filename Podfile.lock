@@ -78,6 +78,7 @@ PODS:
   - ReadMoreTextView (3.0.0)
   - SeamlessSlideUpScrollView (2.0.1)
   - SimplePDF (3.0.0)
+  - Siren (3.4.3)
   - SQLite.swift (0.11.5):
     - SQLite.swift/standard (= 0.11.5)
   - SQLite.swift/standard (0.11.5)
@@ -108,6 +109,7 @@ DEPENDENCIES:
   - ReadMoreTextView
   - SeamlessSlideUpScrollView
   - SimplePDF
+  - Siren
   - SQLite.swift (~> 0.11.5)
   - SVProgressHUD
   - SwiftMessages
@@ -143,6 +145,7 @@ SPEC REPOS:
     - ReadMoreTextView
     - SeamlessSlideUpScrollView
     - SimplePDF
+    - Siren
     - SQLite.swift
     - SVProgressHUD
     - SwiftMessages
@@ -177,6 +180,7 @@ SPEC CHECKSUMS:
   ReadMoreTextView: d872de55c5850c702f8d8ce591fb70e5d00c873a
   SeamlessSlideUpScrollView: fe569043d844015107a58e0d8ea78b97bfa35d2d
   SimplePDF: 903143ede36965886997a5c1bc6b8940b082ba20
+  Siren: e3cf1a93fa0fa73c03452107e95e5c10768d1d08
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftMessages: 32ce3cfc8388b41aae56ff4853cc752a20101147
@@ -185,6 +189,6 @@ SPEC CHECKSUMS:
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: fcee6bcc8a395f03e21b8ad4cf2366033cf8f34e
+PODFILE CHECKSUM: 947c0c6ab4f6cdcd31a81b046bcef2b1bc0cd3e9
 
 COCOAPODS: 1.5.3

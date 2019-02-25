@@ -81,6 +81,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
 
     //1
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return getActiveSpots().count
     }
     //2
@@ -88,7 +89,8 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cofeeCell" , for : indexPath) as? CofeeCell
         let spotElem = getActiveSpots()[indexPath.row]
-        let coffeeElem = getActiveNets()[getNetIndexBySpot(spot: spotElem)]
+        let coffeeElem = allCoffeeNets[getNetIndexBySpot(spot: spotElem)]
+        
         
         var avatar_url: URL
         
@@ -98,7 +100,6 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         
         //              Download data for name lbl
         cell?.nameLbl?.text = coffeeElem.name_other
-        
         //              Make Coffee image
         avatar_url = URL(string: spotElem.img)!
         cell?.CofeeImg.kf.setImage(with: avatar_url)
@@ -132,7 +133,7 @@ class ViewController: UIViewController ,UISearchBarDelegate, UITableViewDelegate
         let cell = Storyboard.instantiateViewController(withIdentifier: "CommentPage") as! PageCoffee
 
         current_coffee_spot = getActiveSpots()[indexPath.row]
-        current_coffee_net = getActiveNets()[getNetIndexBySpot(spot: current_coffee_spot)]
+        current_coffee_net = allCoffeeNets[getNetIndexBySpot(spot: current_coffee_spot)]
         
         self.navigationController?.pushViewController(cell, animated: true)
     }

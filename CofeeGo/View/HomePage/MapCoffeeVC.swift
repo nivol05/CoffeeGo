@@ -7,7 +7,7 @@ import SeamlessSlideUpScrollView
 import Kingfisher
 import NVActivityIndicatorView
 
-class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GMUClusterManagerDelegate , NVActivityIndicatorViewable{
+class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GMUClusterManagerDelegate , NVActivityIndicatorViewable, CLLocationManagerDelegate{
     
     var menu = [ElementProduct]()
     var productTypes : [[String: Any]] = [[String: Any]]()
@@ -26,6 +26,7 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
     @IBOutlet weak var blurImage: UIImageView!
     @IBOutlet weak var mapView: GMSMapView!
     private var clusterManager: GMUClusterManager!
+    private let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,12 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         clusterManager.setDelegate(self, mapDelegate: self)
         addCoffeeSpot()
         
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        //5
+        mapView.isMyLocationEnabled = true
 //        mapView.dequeueReusableAnnotationView(withIdentifier: "map")
     }
     
@@ -50,6 +57,33 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         ImageCache.default.clearMemoryCache()
         
     }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        // 3
+        guard status == .authorizedWhenInUse else {
+            return
+        }
+        
+        // 4
+        locationManager.startUpdatingLocation()
+        
+        
+        //5
+        mapView.isMyLocationEnabled = true
+//        mapView.settings.myLocationButton = true
+    }
+//    
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        guard let location = locations.first else {
+//            return
+//        }
+//        
+//        // 7
+////        mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+//        
+//        // 8
+//        locationManager.stopUpdatingLocation()
+//    }
 
     
     
@@ -96,8 +130,14 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
         if let poiItem = marker.userData as? POIItem {
             NSLog("Did tap marker for cluster item \(poiItem.index!)")
             startAnimating(type : NVActivityIndicatorType.ballPulseSync)
-
-            self.isOrderInProcess()
+            
+            if header != nil{
+                self.isOrderInProcess()
+            } else {
+                self.downloadManuLists()
+            }
+            
+            
         } else {
             NSLog("Did tap a normal marker")
             let newCamera = GMSCameraPosition.camera(withTarget: marker.position,
@@ -188,17 +228,21 @@ class MapCoffeeVC: UIViewController  , MKMapViewDelegate, GMSMapViewDelegate, GM
     
     func markerCLICK(){
         
-        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
-        
-        controller.tabs = self.tabs
-        
-//        let database = Database()
-//        database.deleteProduct()
-//        database.setProducts(products: menu)
-        allSpotProducts = menu
-        self.stopAnimating()
-        self.navigationController?.pushViewController(controller, animated: true)
-        
+        if tabs.count != 0{
+            let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
+            
+            controller.tabs = self.tabs
+            
+            //        let database = Database()
+            //        database.deleteProduct()
+            //        database.setProducts(products: menu)
+            allSpotProducts = menu
+            self.stopAnimating()
+            self.navigationController?.pushViewController(controller, animated: true)
+        } else{
+            stopAnimating()
+            self.view.makeToast("У данной кофейни нету продуктов для заказа")
+        }
     }
 }

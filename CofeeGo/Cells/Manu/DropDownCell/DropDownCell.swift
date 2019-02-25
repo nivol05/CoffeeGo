@@ -26,6 +26,8 @@ class DropDownCell: UITableViewCell {
     @IBOutlet weak var middleCupPrice: UILabel!
     @IBOutlet weak var bigCupPrice: UILabel!
     
+    @IBOutlet weak var moreSugerBtn: UIButton!
+    @IBOutlet weak var lessSugerBtn: UIButton!
     
     @IBOutlet weak var mainBG: UIView!
     @IBOutlet weak var additionsBtn: UIButton!
@@ -77,6 +79,9 @@ class DropDownCell: UITableViewCell {
         style(view: bigCubBtn, ratio: 5, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
         style(view: addToOrderBtn, ratio: 5, color: UIColor.orange.withAlphaComponent(1).cgColor, shadow: false)
         style(view: additionsBtn, ratio: 5, color: UIColor.black.withAlphaComponent(0.2).cgColor, shadow: true)
+        
+        cornerRatio(view: moreSugerBtn, ratio: moreSugerBtn.frame.height/1.5, shadow: true)
+        cornerRatio(view: lessSugerBtn, ratio: lessSugerBtn.frame.height/1.5, shadow: true)
 
         sugarTextField.layer.borderColor = UIColor(red: 189/255, green: 189/255, blue: 189/255, alpha: 1).cgColor
         sugarTextField.layer.borderWidth = 1.0

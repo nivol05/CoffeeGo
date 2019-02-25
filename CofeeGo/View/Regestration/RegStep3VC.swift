@@ -175,6 +175,7 @@ class RegStep3VC: UIViewController, NVActivityIndicatorViewable {
     
     func finishReg(){
         self.stopAnimating()
+        setNotifsEnabled(enabled: true)
         performSegue(withIdentifier: "FirstLoading", sender: nil)
     }
     

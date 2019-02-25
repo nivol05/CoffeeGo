@@ -50,6 +50,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var spotToMapBtn: UIButton!
     @IBOutlet weak var socialStackView: UIView!
+    @IBOutlet weak var addCommentBtn: UIButton!
     
     @IBOutlet weak var cornerView: UIView!
     
@@ -66,6 +67,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     var imageArray = [UIImage]()
     
     static var LoadViewActive = false
+//    static var UPDATE_PAGE = false
 
     
     override func viewDidLoad() {
@@ -86,9 +88,23 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
          logoImg.layer.masksToBounds = true
         cornerView.clipsToBounds = false
         titleLbl.title = current_coffee_net.name_other
+        
+//        if header != nil{
+//            addCommentBtn.isEnabled = true
+//        } else {
+//            addCommentBtn.isEnabled = false
+//        }
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         print("tyta")
+//        if PageCoffee.UPDATE_PAGE{
+//            startAnimating(type : NVActivityIndicatorType.ballPulseSync)
+//            LoadContent()
+//
+//            PageCoffee.UPDATE_PAGE = false
+//        }
+        
         if PageCoffee.LoadViewActive{
             stopAnimating()
             loadingView.isHidden = true
@@ -296,112 +312,7 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
             }
     
     }
-    @IBAction func webBtn(_ sender: Any) {
-        let social = getSocial(socialIndex: 5)
-        guard let url = URL(string: social?["value"] as! String)  else { return }
-        if UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
     
-    @IBAction func facebookBtn(_ sender: Any) {
-        let social = getSocial(socialIndex: 4)
-        guard let url = URL(string: social?["value"] as! String)  else { return }
-        if UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
-    
-    @IBAction func instBtn(_ sender: Any) {
-        let social = getSocial(socialIndex: 3)
-        guard let url = URL(string: social?["value"] as! String)  else { return }
-        if UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
-    
-    @IBAction func phoneBtn(_ sender: Any) {
-        let social = getSocial(socialIndex: 2)
-//        guard let url = URL(string: "tel://\(social?["value"] as! String)")  else { return }
-//        if UIApplication.shared.canOpenURL(url) {
-//            if #available(iOS 10.0, *) {
-//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//            } else {
-//                UIApplication.shared.openURL(url)
-//            }
-//        }
-        
-        if let url = URL(string: "tel://\(social?["value"] as! String)"), UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
-    
-    @IBAction func moreInfo(_ sender: UIButton) {
-        if self.mText{
-            infoLbl.numberOfLines = 0
-           self.btnMoreInfo.setTitle("Показать меньше ▲", for: UIControlState())
-            self.mText = false
-        } else {
-            infoLbl.numberOfLines = 3
-            self.btnMoreInfo.setTitle("Показать больше ▼", for: UIControlState())
-            self.mText = true
-        }
-    }
-    
-    @IBAction func watchAllComments(_ sender: Any) {
-        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let cell = Storyboard.instantiateViewController(withIdentifier: "allCommentsPage") as! AllCommentsVC
-        
-        cell.comments = self.comments
-        cell.users = self.users
-        
-        self.navigationController?.pushViewController(cell, animated: true)
-    }
-    
-    @IBAction func toOrderNext(_ sender: Any) {
-        startAnimating(type : NVActivityIndicatorType.ballPulseSync)
-        isOrderInProcess()
-    }
-    
-    @IBAction func favoriteBtn(_ sender: Any) {
-        if isFavorite(spotId: current_coffee_spot.id){
-            delFavorite()
-        } else{
-            setFavorite()
-        }
-    }
-    
-    // CHANGED
-    func getFilledComments(comments: [ElementComment]){
-        for x in comments{
-            if x.comment != ""{
-                self.comments.append(x)
-            }
-        }
-        commentLbl.text = "Комментарии (\(self.comments.count))"
-        
-        rateLbl.text! = "\(current_coffee_spot.stars!) (\(comments.count))"
-        rateStarView.rating = current_coffee_spot.stars
-        if self.comments.count > 0{
-            getCommentUsers()
-        }
-    }
     
     // CHANGED
     func getCommentUsers(){
@@ -613,19 +524,151 @@ class PageCoffee: UIViewController,  UICollectionViewDelegate , UICollectionView
     
     func goNext(){
         
+        if tabs.count != 0{
+            let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
+            
+            cell.tabs = self.tabs
+            
+            //        let database = Database()
+            //        database.deleteProduct()
+            //        database.setProducts(products: menu)
+            allSpotProducts = menu
+            stopAnimating()
+            PageCoffee.LoadViewActive = true
+            self.navigationController?.pushViewController(cell, animated: true)
+            //        loadingView.isHidden = true
+        } else{
+            stopAnimating()
+            self.view.makeToast("У данной кофейни нету продуктов для заказа")
+        }
+    }
+    
+    @IBAction func webBtn(_ sender: Any) {
+        let social = getSocial(socialIndex: 5)
+        guard let url = URL(string: social?["value"] as! String)  else { return }
+        if UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    @IBAction func facebookBtn(_ sender: Any) {
+        let social = getSocial(socialIndex: 4)
+        guard let urlFacebook = URL(string: "fb://profile/\(social?["value"] as! String)")  else { return }
+        guard let urlWebFb = URL(string: "https://facebook.com/\(social?["value"] as! String)")  else { return }
+        if UIApplication.shared.canOpenURL(urlFacebook) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(urlFacebook, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(urlWebFb)
+            }
+        }
+    }
+    
+    @IBAction func instBtn(_ sender: Any) {
+        let social = getSocial(socialIndex: 3)
+        guard let url = URL(string: social?["value"] as! String)  else { return }
+        if UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    @IBAction func phoneBtn(_ sender: Any) {
+        let social = getSocial(socialIndex: 2)
+        //        guard let url = URL(string: "tel://\(social?["value"] as! String)")  else { return }
+        //        if UIApplication.shared.canOpenURL(url) {
+        //            if #available(iOS 10.0, *) {
+        //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        //            } else {
+        //                UIApplication.shared.openURL(url)
+        //            }
+        //        }
+        
+        if let url = URL(string: "tel://\(social?["value"] as! String)"), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    @IBAction func moreInfo(_ sender: UIButton) {
+        if self.mText{
+            infoLbl.numberOfLines = 0
+            self.btnMoreInfo.setTitle("Показать меньше ▲", for: UIControlState())
+            self.mText = false
+        } else {
+            infoLbl.numberOfLines = 3
+            self.btnMoreInfo.setTitle("Показать больше ▼", for: UIControlState())
+            self.mText = true
+        }
+    }
+    
+    @IBAction func watchAllComments(_ sender: Any) {
         let Storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let cell = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
+        let cell = Storyboard.instantiateViewController(withIdentifier: "allCommentsPage") as! AllCommentsVC
         
-        cell.tabs = self.tabs
+        cell.comments = self.comments
+        cell.users = self.users
         
-        //        let database = Database()
-        //        database.deleteProduct()
-        //        database.setProducts(products: menu)
-        allSpotProducts = menu
-        stopAnimating()
-       PageCoffee.LoadViewActive = true
         self.navigationController?.pushViewController(cell, animated: true)
-//        loadingView.isHidden = true
+    }
+    
+    @IBAction func toOrderNext(_ sender: Any) {
+        startAnimating(type : NVActivityIndicatorType.ballPulseSync)
+        if header != nil{
+            isOrderInProcess()
+        } else {
+            self.startAnimating(type : NVActivityIndicatorType.ballPulseSync)
+            self.downloadManuLists()
+        }
+        
+    }
+    
+    @IBAction func favoriteBtn(_ sender: Any) {
+        if header != nil{
+            if isFavorite(spotId: current_coffee_spot.id){
+                delFavorite()
+            } else{
+                setFavorite()
+            }
+        } else {
+            self.view.makeToast("Чтоб добавить в избранное нужно войти")
+        }
+        
+    }
+    
+    // CHANGED
+    func getFilledComments(comments: [ElementComment]){
+        for x in comments{
+            if x.comment != ""{
+                self.comments.append(x)
+            }
+        }
+        commentLbl.text = "Комментарии (\(self.comments.count))"
+        
+        rateLbl.text! = "\(current_coffee_spot.stars!) (\(comments.count))"
+        rateStarView.rating = current_coffee_spot.stars
+        if self.comments.count > 0{
+            getCommentUsers()
+        }
+    }
+    @IBAction func addCommentBtn(_ sender: Any) {
+        if header != nil{
+            performSegue(withIdentifier: "pressentRateVC", sender: self)
+        } else {
+            self.view.makeToast("Чтоб оставить комментарий нужно войти")
+        }
+        
     }
     
     @IBAction func mapBtn(_ sender: Any) {

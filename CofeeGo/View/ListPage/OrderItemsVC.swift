@@ -154,24 +154,7 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
         }
     
     
-    @IBAction func cancelOrderBtn(_ sender: Any) {
-        showStandardDialog()
-    }
     
-    @IBAction func refreshOrderBtn(_ sender: Any) {
-    startAnimating(type : NVActivityIndicatorType.ballPulseSync)
-        if getSpotById(spotId: self.order.coffee_spot).is_active{
-            if self.itemsIsActive(){
-                self.isOrderInProcess()
-            }
-        } else{
-            self.view.makeToast("На данный момент заказы не доступны")
-        }
-//        performSegue(withIdentifier: "test", sender: self)
-//        self.navigationController?.pushViewController(cell, animated: true)
-//        performSegue(withIdentifier: "reuploadOrder", sender: self)
-
-    }
     
     func getOrder(){
 
@@ -180,9 +163,18 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
             case .success(let value):
                 self.order = ElementOrder(mas: value as! [String : Any])
     
-                self.baristaCOmmentLbl.text = "Комментарий бариста: \(self.order.canceled_barista_message!)"
-                self.userCommentLbl.text = "Ваш комментарий: \(self.order.comment!)"
-
+                if self.order.canceled_barista_message == ""{
+                    self.baristaCOmmentLbl.text = "Комментарий бариста: Нету комментария"
+                } else {
+                    self.baristaCOmmentLbl.text = "Комментарий бариста: \(self.order.canceled_barista_message ?? "Нету комментария")"
+                }
+                
+                if self.order.comment == ""{
+                    self.userCommentLbl.text = "Ваш комментарий: Нету комментария"
+                } else {
+                    self.userCommentLbl.text = "Ваш комментарий: \(self.order.comment!)"
+                }
+                
                 self.setStatusView()
                 
                 self.getItems()
@@ -206,6 +198,7 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
                 break
             case .failure(let error):
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.stopAnimating()
                 print(error)
                 break
             }
@@ -221,6 +214,7 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
                 break
             case .failure(let error):
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.stopAnimating()
                 print(error)
                 break
             }
@@ -247,6 +241,7 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
                     break
                 case .failure(let error):
                     self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                    self.stopAnimating()
                     print(error)
                     break
                 }
@@ -277,6 +272,7 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
                     break
                 case .failure(let error):
                     self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                    self.stopAnimating()
                     print(error)
                     break
                 }
@@ -341,7 +337,7 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
         var isActive = true
         for product in menu{
             for item in orderItems{
-                if item.id == product.id{
+                if item.product == product.id{
                     if !product.active{
                         isActive = false
                         self.view.makeToast("\(product.name!) временно отсутствует")
@@ -351,6 +347,32 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
             }
         }
         return isActive
+    }
+    
+    func checkOrderStatus(_ id : Int){
+        getOneOrder(orderId: "\(id)").responseJSON{ (response) in
+            switch response.result {
+            case .success(let value):
+                let oneOrder = ElementOrder(mas: value as! [String : Any])
+                if oneOrder.status == 6 || oneOrder.status == 3{
+                
+                    self.view.makeToast("Заказ уже нельзя отменить")
+                    
+                } else {
+                    
+                        self.cancelOrder()
+                
+                }
+                
+                
+                break
+            case .failure(let error):
+                self.stopAnimating()
+                print(error)
+                break
+            }
+            
+        }
     }
     
     func isOrderInProcess(){
@@ -390,7 +412,7 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
         
         // Prepare the popup
         let title = ""
-        let message = "Вы уверены что хотите отменить заказ?"
+        let message = "Вы уверены, что хотите отменить заказ?"
         
         // Create the dialog
         let popup = PopupDialog(title: title,
@@ -410,7 +432,7 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
         
         // Create second button
         let buttonTwo = DefaultButton(title: "Да") {
-            self.cancelOrder()
+            self.checkOrderStatus(self.orderID)
         }
         
         // Add buttons to dialog
@@ -419,15 +441,107 @@ class OrderItemsVC: UIViewController, UITableViewDataSource , UITableViewDelegat
         // Present dialog
         self.present(popup, animated: animated, completion: nil)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func Time(){
+        print("TYT2")
+//        let currMins = toMins(time: getTimeNow())
+//        let mins = toMins(time: self.order.order_time)
+//
+//        var minsToOrder = mins - currMins
+//        if minsToOrder < 0{
+//            minsToOrder += 1440
+//        }
+        let mins = toMins(time: self.order.order_time)
+        
+        var minsToOrder = mins - toMins(time: getTimeNow())
+        var beforeToday = true
+        if !isToday(date: self.order.date!){
+            if isBeforeToday(date: self.order.date){
+                beforeToday = false
+            } else {
+                if minsToOrder < 0 {
+                    minsToOrder += 1440 // 1440 mins in 24 hrs
+                }
+            }
+        }
+        if beforeToday == true{
+            if minsToOrder > 3 {
+                    getOrder()
+                    showStandardDialog()
+            } else {
+                if order.status == 1{
+                        getOrder()
+                        showStandardDialog()
+                   
+                } else {
+                    self.view.makeToast("Заказ уже нельзя отменить")
+                    
+                }
+            }
+        } else {
+                self.view.makeToast("Заказ уже нельзя отменить")
+            
+        }
     }
-    */
+    
+    @IBAction func moreBtn(_ sender: Any) {
+        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let cell = Storyboard.instantiateViewController(withIdentifier: "FullCommetVC") as! FullCommetVC
+        
+        if self.order.canceled_barista_message == ""{
+            cell.baristaComment = "Нету комментария"
+        } else {
+            cell.baristaComment = "\(self.order.canceled_barista_message ?? "Нету комментария")"
+        }
+        
+        if self.order.comment == ""{
+            cell.userComment = "Нету комментария"
+        } else {
+            cell.userComment = " \(self.order.comment!)"
+        }
+        self.navigationController?.pushViewController(cell, animated: true)
+    }
+    
+    
+    @IBAction func barMoreBtn(_ sender: Any) {
+        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let cell = Storyboard.instantiateViewController(withIdentifier: "FullCommetVC") as! FullCommetVC
+        
+        
+        if self.order.canceled_barista_message == ""{
+            cell.baristaComment = "Нету комментария"
+        } else {
+            cell.baristaComment = "\(self.order.canceled_barista_message ?? "Нету комментария")"
+        }
+        
+        if self.order.comment == ""{
+            cell.userComment = "Нету комментария"
+        } else {
+            cell.userComment = " \(self.order.comment!)"
+        }
+        self.navigationController?.pushViewController(cell, animated: true)
+    }
+    
+    @IBAction func cancelOrderBtn(_ sender: Any) {
+        Time()
+    }
+    
+    @IBAction func refreshOrderBtn(_ sender: Any) {
+        startAnimating(type : NVActivityIndicatorType.ballPulseSync)
+        if getSpotById(spotId: self.order.coffee_spot).is_active{
+            if self.itemsIsActive(){
+                self.isOrderInProcess()
+            } else{
+                stopAnimating()
+            }
+        } else{
+            self.view.makeToast("На данный момент заказы не доступны")
+            stopAnimating()
+        }
+        //        performSegue(withIdentifier: "test", sender: self)
+        //        self.navigationController?.pushViewController(cell, animated: true)
+        //        performSegue(withIdentifier: "reuploadOrder", sender: self)
+        
+    }
 
 }

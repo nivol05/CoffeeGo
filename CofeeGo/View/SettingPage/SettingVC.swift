@@ -21,23 +21,28 @@ class SettingVC: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var userEmailLbl: UILabel!
     
     
-    let instUrl = ""
-    let webUrl = ""
+    let instUrl = "https://www.instagram.com/coffee.go/"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cornerRatio(view: supportBgView, ratio: 5, shadow: false)
         cornerRatio(view: childSupportBgView, ratio: 5, shadow: false)
         
-        userNameLbl.text = current_coffee_user.first_name!
-        userEmailLbl.text = current_coffee_user.username!
+        if header != nil{
+            userNameLbl.text = current_coffee_user.first_name!
+            userEmailLbl.text = current_coffee_user.username!
+        } else {
+            userNameLbl.text = "Имя"
+            userEmailLbl.text = "Почта"
+        }
+        
     }
     
     func showStandardDialog(animated: Bool = true , tag : Int) {
         
         // Prepare the popup
         let title = ""
-        let message = "Вы уверены что хотите выйти?"
+        let message = "Вы уверены, что хотите выйти?"
         
         // Create the dialog
         let popup = PopupDialog(title: title,
@@ -60,6 +65,13 @@ class SettingVC: UIViewController, MFMailComposeViewControllerDelegate {
             let database = Database()
             database.delUser()
             
+            header = [
+                "Authorization" : ""
+            ]
+            
+            isOrdered = false
+            
+            setNotifsEnabled(enabled: false)
             // LOAD PROGRAMME AGAIN
             self.performSegue(withIdentifier: "logOut", sender: nil)
         }
@@ -97,7 +109,7 @@ class SettingVC: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func coffeeGoWebBtn(_ sender: Any) {
-        guard let url = URL(string: "http://coffeego.club/")  else { return }
+        guard let url = URL(string: BASE_URL)  else { return }
         if UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -108,7 +120,7 @@ class SettingVC: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func coffeeGoInstBtn(_ sender: Any) {
-        guard let url = URL(string: "https://www.instagram.com/coffee.go/")  else { return }
+        guard let url = URL(string: instUrl)  else { return }
         if UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)

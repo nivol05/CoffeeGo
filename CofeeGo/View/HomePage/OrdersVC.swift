@@ -17,8 +17,7 @@ class OrdersVC: ButtonBarPagerTabStripViewController,CTBottomSlideDelegate{
 
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var coffeeImg: UIImageView!
-    @IBOutlet weak var MakeOrderBtn: UIButton!
-    @IBOutlet weak var line: UIView!
+
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var slideUpView: SeamlessSlideUpView!
     @IBOutlet weak var bgBottomConstraint: NSLayoutConstraint!
@@ -70,7 +69,6 @@ class OrdersVC: ButtonBarPagerTabStripViewController,CTBottomSlideDelegate{
         OrderData.controller.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
         self.navigationController?.navigationItem.backBarButtonItem?.isEnabled = false
-        cornerRatio(view: MakeOrderBtn, ratio: 5, shadow: true)
         cornerRatio(view: coffeeImg, ratio: 40/2, shadow: false)
         cornerRatio(view: bottomView, ratio: 20, shadow: false)
         
@@ -79,6 +77,7 @@ class OrdersVC: ButtonBarPagerTabStripViewController,CTBottomSlideDelegate{
         coffeeImg.kf.setImage(with: avatar_url)
         companyNameLbl.text = current_coffee_net.name_other
         spotAddressLbl.text = current_coffee_spot.address
+        
         OrderData.controller.limitLbl.text = "Лимит: \(current_coffee_spot.max_order_limit!) грн"
         OrderData.controller.sumLbl.text = "Сумма: \(0) грн"
     }
@@ -152,16 +151,7 @@ class OrdersVC: ButtonBarPagerTabStripViewController,CTBottomSlideDelegate{
     }
     
     
-    @IBAction func oggleSlideUpView(_ sender: AnyObject) {
-        
-        if self.slideUpView.isHidden {
-            self.slideUpView.show(expandFull: false)
-            slideUpView.isHidden = false
-            tableView.reloadData()
-        } else {
-            self.slideUpView.hide()
-        }
-    }
+
         
     @IBAction func togglePanel(_ sender: Any) {
         bottomController?.expandPanel()

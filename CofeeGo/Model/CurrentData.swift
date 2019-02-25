@@ -119,4 +119,39 @@ func isFavorite(spotId: Int) -> Bool{
     return false
 }
 
+func setCancelInfoAccepted(accepted: Bool){
+    let preferences = UserDefaults.standard
+        preferences.set(accepted, forKey: "cancel_info")
+    preferences.synchronize()
+}
+
+func isCancelInfoAccepted() -> Bool{
+    let preferences = UserDefaults.standard
+    
+    let info = "cancel_info"
+    
+    if preferences.object(forKey: info) == nil {
+        return false
+    } else {
+        return preferences.bool(forKey: info)
+    }
+}
+
+func setNotifsEnabled(enabled: Bool){
+    let preferences = UserDefaults.standard
+    preferences.set(enabled, forKey: "notifs_enabled")
+    preferences.synchronize()
+}
+
+func isNotifsEnabled() -> Bool{
+    let preferences = UserDefaults.standard
+    
+    let info = "notifs_enabled"
+    
+    if preferences.object(forKey: info) == nil {
+        return true
+    } else {
+        return preferences.bool(forKey: info)
+    }
+}
 

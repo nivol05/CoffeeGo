@@ -29,6 +29,12 @@ func getTomorrowDate() -> String{
     return formatter.string(from: tomorrow)
 }
 
+func getDate(dateString: String) -> Date{
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd.MM.yyyy"
+    return formatter.date(from: dateString)!
+}
+
 func compareMins(first: Int, second: Int) -> Int{
     if first > second{
         return 1
@@ -45,6 +51,20 @@ func toMins(time : String) -> Int{
     let minutes = Int(minsMas[1])
     return hours! * 60 + minutes!
 }
+
+func isToday(date: String) -> Bool{
+    let checkingDate = getDate(dateString: date)
+    let today = getDate(dateString: getCurrentDate())
+    return checkingDate == today
+}
+
+func isBeforeToday(date: String) -> Bool{
+    let checkingDate = getDate(dateString: date)
+    let today = getDate(dateString: getCurrentDate())
+    return checkingDate <= today
+}
+
+
 
 func timeInRange(time: String, startRange: String, endRange: String) -> Bool{
     let mins = toMins(time: time)
@@ -69,3 +89,5 @@ func getTime(minutes: Int) -> String{
     orderTime.append("\(mins)")
     return orderTime
 }
+
+

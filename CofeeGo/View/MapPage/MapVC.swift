@@ -9,7 +9,7 @@ import CTSlidingUpPanel
 import NVActivityIndicatorView
 
 class MapVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, GMUClusterManagerDelegate,
-GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable{
+GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable, CLLocationManagerDelegate{
     
     
     
@@ -48,6 +48,8 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable{
     var comments = [ElementComment]()
     var users = [ElementUser]()
     
+    private let locationManager = CLLocationManager()
+    
     //creating a marker view
     let markerView = UIImageView(image: UIImage(named: "map_marker")!.withRenderingMode(.alwaysTemplate))
     
@@ -61,10 +63,24 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable{
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        //5
+        mapView.isMyLocationEnabled = true
+//        mapView.settings.myLocationButton = true
         
         views()
         marker()
+//        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
 
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        parrent.isHidden = true
+        bottomController?.hidePanel()
     }
     
     func didPanelCollapse()
@@ -137,6 +153,33 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable{
         return cell
     }
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        // 3
+        guard status == .authorizedWhenInUse else {
+            return
+        }
+        
+        // 4
+        locationManager.startUpdatingLocation()
+        
+        
+        //5
+        mapView.isMyLocationEnabled = true
+//        mapView.settings.myLocationButton = true
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else {
+            return
+        }
+        
+        // 7
+        mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        
+        // 8
+        locationManager.stopUpdatingLocation()
+    }
+    
     func views(){
         loadingCommentsView.isHidden = false
         
@@ -195,7 +238,7 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable{
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         fadeView(view: loadingCommentsView, delay: 0.2, isHiden: false)
         if let poiItem = marker.userData as? POIItem {
-            let spot = allCoffeeSpots[poiItem.index]
+            let spot = getActiveSpots()[poiItem.index]
             if allCoffeeNets == nil{
                 getAllCoffeeNets(spot: spot, marker: marker)
             } else {
@@ -268,7 +311,7 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable{
         self.mapView.delegate = self
         
         current_coffee_spot = spot
-        current_coffee_net = getActiveNets()[getNetIndexBySpot(spot: spot)]
+        current_coffee_net = allCoffeeNets[getNetIndexBySpot(spot: spot)]
         
         parrent.isHidden = false
         bottomController?.expandPanel()
@@ -285,8 +328,16 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable{
             coffeeName.text = current_coffee_net.name_other!
             coffeeStars.rating = current_coffee_spot.stars!
             coffeeAddress.text = spot.address!
-            coffeeDistance.text = getDistance(latF: 50.4316131848082, lngF: 30.5161834114672,
-                                              latS: Double(spot.lat)!, lngS: Double(spot.lng)!)
+            
+            if locationManager.location?.accessibilityActivate() != nil {
+                coffeeDistance.isHidden = false
+                coffeeDistance.text = getDistance(latF: (locationManager.location?.coordinate.latitude)!, lngF: (locationManager.location?.coordinate.longitude)!,
+                                                  latS: Double(spot.lat)!, lngS: Double(spot.lng)!)
+            } else {
+                coffeeDistance.isHidden = true
+            }
+            
+            
             coffeeWorkTime.text = "Время работи -  \(spot.time_start!) : \(spot.time_finish!)"
             
             
@@ -467,22 +518,33 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable{
     
     func goNext(){
         
-        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
-        
-        controller.tabs = self.tabs
-        
-        //        let database = Database()
-        //        database.deleteProduct()
-        //        database.setProducts(products: menu)
-        allSpotProducts = menu
-        loadingView.isHidden = true
-        stopAnimating()
-        self.navigationController?.pushViewController(controller, animated: true)
+        if tabs.count != 0{
+            let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = Storyboard.instantiateViewController(withIdentifier: "manuPage") as! OrdersVC
+            
+            controller.tabs = self.tabs
+            
+            //        let database = Database()
+            //        database.deleteProduct()
+            //        database.setProducts(products: menu)
+            allSpotProducts = menu
+            loadingView.isHidden = true
+            stopAnimating()
+            self.navigationController?.pushViewController(controller, animated: true)
+        } else{
+            stopAnimating()
+            self.view.makeToast("У данной кофейни нету продуктов для заказа")
         }
+    }
     @IBAction func toOrderNext(_ sender: Any) {
         self.startAnimating(type : NVActivityIndicatorType.ballPulseSync)
-        isOrderInProcess()
+        if header != nil{
+            isOrderInProcess()
+        } else {
+            self.startAnimating(type : NVActivityIndicatorType.ballPulseSync)
+            self.downloadManuLists()
+        }
+        
     }
     
     @IBAction func moveToPageCoffee(_ sender: Any) {

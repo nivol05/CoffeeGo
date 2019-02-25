@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-let BASE_URL = "http://138.68.79.98"
+let BASE_URL = "https://coffeego.app"
 
 let REGISTER_USER = "\(BASE_URL)/api/customers/add_new_user/"
 let TOKEN_URL = "\(BASE_URL)/api/customers/api-token-auth/"
@@ -29,7 +29,7 @@ let SYRUPS_URL = "\(BASE_URL)/api/customers/syrups/"
 let SPECIES_URL = "\(BASE_URL)/api/customers/species/"
 let ADDITIONALS_URL = "\(BASE_URL)/api/customers/additionals/"
 
-var header : HTTPHeaders = [
+var header : HTTPHeaders? = [
     "Authorization": ""
 ]
 

@@ -55,5 +55,7 @@ target 'CofeeGo' do
 	pod 'NVActivityIndicatorView'
     
     pod 'SwiftMessages'
+    
+    pod 'Siren'
 
 end

@@ -31,7 +31,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mv1-aM-9QG">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="95"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wb7-bp-jxN">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wb7-bp-jxN">
                                                         <rect key="frame" x="248" y="0.0" width="95" height="95"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -228,18 +228,18 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCp-5S-dhF">
-                                                                <rect key="frame" x="55.5" y="6" width="34.5" height="34"/>
+                                                                <rect key="frame" x="55.5" y="7.5" width="31" height="31"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="aCp-5S-dhF" secondAttribute="height" multiplier="1:1" id="4Z2-3J-S9b"/>
                                                                 </constraints>
-                                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                                 <state key="normal" image="min"/>
                                                                 <connections>
                                                                     <action selector="lessSugarBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qdi-Mp-uZT"/>
                                                                 </connections>
                                                             </button>
                                                             <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0.0" borderStyle="roundedRect" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zbn-dL-jWv">
-                                                                <rect key="frame" x="100" y="8" width="40" height="30"/>
+                                                                <rect key="frame" x="96.5" y="8" width="40" height="30"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="40" id="eY9-FO-TfF"/>
@@ -249,18 +249,18 @@
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMT-l7-C4N">
-                                                                <rect key="frame" x="150" y="6" width="34" height="34"/>
+                                                                <rect key="frame" x="146.5" y="7.5" width="30.5" height="31"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="gMT-l7-C4N" secondAttribute="height" multiplier="1:1" id="zzO-oU-6WC"/>
                                                                 </constraints>
-                                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                                 <state key="normal" image="add"/>
                                                                 <connections>
                                                                     <action selector="moreSugerBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="n1E-y6-pEN"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Faj-Ex-BXW">
-                                                                <rect key="frame" x="194" y="8" width="149" height="30"/>
+                                                                <rect key="frame" x="187" y="8" width="156" height="30"/>
                                                                 <color key="backgroundColor" red="0.99939423800000005" green="0.44205600020000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="Wjf-qT-ZPk"/>
@@ -321,10 +321,10 @@
                                             <constraint firstAttribute="height" constant="238.5" id="ANI-O3-IfV"/>
                                             <constraint firstAttribute="trailing" secondItem="oOJ-F8-pJE" secondAttribute="trailing" id="IUI-wz-xHE"/>
                                             <constraint firstAttribute="bottom" secondItem="g14-zw-miy" secondAttribute="bottom" id="KEv-it-G4F"/>
-                                            <constraint firstItem="gMT-l7-C4N" firstAttribute="width" secondItem="T76-0m-Yfz" secondAttribute="width" multiplier="0.1" id="Rkg-6F-GdU"/>
+                                            <constraint firstItem="gMT-l7-C4N" firstAttribute="width" secondItem="T76-0m-Yfz" secondAttribute="width" multiplier="0.09" id="Rkg-6F-GdU"/>
                                             <constraint firstItem="tTY-2U-Tpt" firstAttribute="height" secondItem="T76-0m-Yfz" secondAttribute="height" multiplier="0.45" id="WQY-dd-SBH"/>
                                             <constraint firstItem="g14-zw-miy" firstAttribute="leading" secondItem="T76-0m-Yfz" secondAttribute="leading" id="ZVm-q9-jsv"/>
-                                            <constraint firstItem="aCp-5S-dhF" firstAttribute="width" secondItem="T76-0m-Yfz" secondAttribute="width" multiplier="0.1" id="bxQ-t2-QYq"/>
+                                            <constraint firstItem="aCp-5S-dhF" firstAttribute="width" secondItem="T76-0m-Yfz" secondAttribute="width" multiplier="0.09" id="bxQ-t2-QYq"/>
                                             <constraint firstAttribute="trailing" secondItem="g14-zw-miy" secondAttribute="trailing" id="jFh-bN-tPs"/>
                                             <constraint firstItem="oOJ-F8-pJE" firstAttribute="top" secondItem="T76-0m-Yfz" secondAttribute="top" id="l98-5e-Hjs"/>
                                             <constraint firstItem="3W1-Q2-0bk" firstAttribute="height" secondItem="T76-0m-Yfz" secondAttribute="height" multiplier="0.4" id="qSL-Cr-FX1"/>
@@ -390,10 +390,12 @@
                 <outlet property="bigCupPrice" destination="DwR-cH-oFN" id="v9e-uO-xff"/>
                 <outlet property="capView" destination="p5U-Ii-Vmo" id="nAI-Nf-9pp"/>
                 <outlet property="helperView" destination="8g8-DJ-L0V" id="wv9-Cg-Roq"/>
+                <outlet property="lessSugerBtn" destination="aCp-5S-dhF" id="FEO-Ec-JES"/>
                 <outlet property="mainBG" destination="Ayq-Hq-h57" id="KvH-Px-Q2z"/>
                 <outlet property="middleCupBtn" destination="D9e-4O-CSm" id="Pyp-Xl-0lZ"/>
                 <outlet property="middleCupPrice" destination="uv0-hc-SGO" id="DWI-ej-cXD"/>
                 <outlet property="missingItemLbl" destination="SAG-eQ-AXs" id="ANM-zV-bTY"/>
+                <outlet property="moreSugerBtn" destination="gMT-l7-C4N" id="wHL-xt-G1c"/>
                 <outlet property="nameLbl" destination="5gc-yZ-0Jk" id="XMh-v5-Tn0"/>
                 <outlet property="open" destination="5yj-DR-jKO" id="hwe-MO-6Wl"/>
                 <outlet property="priceLbl" destination="fEY-ob-kJu" id="Kag-gM-vfG"/>

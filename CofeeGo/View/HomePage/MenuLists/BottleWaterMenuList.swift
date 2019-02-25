@@ -155,22 +155,20 @@ class BottleWaterMenuList: UIViewController  , UITableViewDataSource,UITableView
         cell.coffeePrice = data.price
         cell.priceLbl.text = price_text
         
+        cell.open.tag = indexPath.row
+        cell.open.addTarget(self, action: #selector(cellOpened(sender:)), for: .touchUpInside)
+        
         if data.active{
             cell.missingItemLbl.isHidden = true
-            cell.open.addTarget(self, action: #selector(cellOpened(sender:)), for: .touchUpInside)
         } else{
             cell.missingItemLbl.isHidden = false
         }
-        
         
         cell.aditionalStaff.addTarget(self, action: #selector(cellAditional(sender:)), for: .touchUpInside)
         cell.addToOrderBtn.addTarget(self, action: #selector(closeCell(sender:)), for: .touchUpInside)
         
         t_count += 1
         cell.cellExists = true
-        
-        cell.open.tag = indexPath.row
-        
         
         UIView.animate(withDuration: 0) {
             cell.contentView.layoutIfNeeded()
@@ -185,41 +183,39 @@ class BottleWaterMenuList: UIViewController  , UITableViewDataSource,UITableView
     
     @objc func cellOpened(sender:UIButton) {
         //        tableView.reloadData()
-        self.tableView.beginUpdates()
-        
-        let previousCellTag = button_tag
-        
-        if lastCell.cellExists {
-            print("Close1")
+        if products[sender.tag].active{
+            self.tableView.beginUpdates()
             
-            self.lastCell.animate(duration: 0.3, c: {
-                self.view.layoutMarginsDidChange()
-            })
+            let previousCellTag = button_tag
             
-            if sender.tag == button_tag {
-                button_tag = -1
-                lastCell = DropDownCell()
+            if lastCell.cellExists {
+                print("Close1")
+                
+                self.lastCell.animate(duration: 0.3, c: {
+                    self.view.layoutMarginsDidChange()
+                })
+                
+                if sender.tag == button_tag {
+                    button_tag = -1
+                    lastCell = DropDownCell()
+                }
             }
-        }
-        
-        if sender.tag != previousCellTag {
-            button_tag = sender.tag
-            print("Close2")
-            lastCell = tableView.cellForRow(at: IndexPath(row: button_tag, section: 0)) as! DropDownCell
-            //
-            //            lastCell.stuffView.isHidden = false
-            //            lastCell.stuffView.alpha = 1
-            self.lastCell.animate(duration: 0.3, c: {
-                self.view.layoutMarginsDidChange()
-            })
             
+            if sender.tag != previousCellTag {
+                button_tag = sender.tag
+                print("Close2")
+                lastCell = tableView.cellForRow(at: IndexPath(row: button_tag, section: 0)) as! DropDownCell
+                
+                self.lastCell.animate(duration: 0.3, c: {
+                    self.view.layoutMarginsDidChange()
+                })
+                
+            }
+            
+            OrderData.clearAll()
+            
+            self.tableView.endUpdates()
         }
-        
-        OrderData.currAdditionals.removeAll()
-        OrderData.currSpecies.removeAll()
-        OrderData.currSyrups.removeAll()
-        
-        self.tableView.endUpdates()
     }
     
     @objc func closeCell(sender:UIButton){
@@ -235,9 +231,7 @@ class BottleWaterMenuList: UIViewController  , UITableViewDataSource,UITableView
             
         }
         
-        OrderData.currAdditionals.removeAll()
-        OrderData.currSpecies.removeAll()
-        OrderData.currSyrups.removeAll()
+        OrderData.clearAll()
         
         self.tableView.endUpdates()
     }

@@ -18,12 +18,16 @@ class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource,In
    
     @IBOutlet weak var emptyAdditionalsView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var species : [[String: Any]] = [[String: Any]]()
     var selects : [Bool] = [Bool]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.loadingIndicator.startAnimating()
+        self.loadingIndicator.isHidden = false
         
         OrderData.tempSpecies = OrderData.currSpecies
         OrderData.countSpecies = OrderData.tempSpecies.count
@@ -39,6 +43,8 @@ class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource,In
                     self.tableView.isHidden = false
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
+                    self.loadingIndicator.stopAnimating()
+                    self.loadingIndicator.isHidden = true
                     self.tableView.reloadData()
                 }
                 else{
@@ -48,6 +54,8 @@ class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource,In
                 break
             case .failure(let error):
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.loadingIndicator.isHidden = true
+                self.loadingIndicator.stopAnimating()
                 print(error)
                 break
             }
@@ -93,10 +101,12 @@ class speciesVC: UIViewController,  UITableViewDelegate,UITableViewDataSource,In
         if  selects[indexPath.row]{
             
 //            selects[indexPath.row] = false
-            if OrderData.countSpecies < 3{
+            if OrderData.countSpecies < 5{
              
                 OrderData.tempSpecies.append(addElem)
                 OrderData.countSpecies += 1
+            } else{
+                // MAKE TOAST
             }
             
         } else {

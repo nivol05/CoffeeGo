@@ -27,6 +27,7 @@ class rateVC: UIViewController {
         style()
         isCommentedByUser()
         self.hideKeyboardWhenTappedAround()
+        
     }
     
     func style(){
@@ -43,11 +44,12 @@ class rateVC: UIViewController {
                 postNewComment(text: commentTextView.text, rate: rateStar.rating)
             } else {
                 self.view.makeToast("Оценка обязаетельна")
-                print("CANT BE 0 SUKA")
             }
         } else {
             if commentedElem.comment != commentTextView.text
                 || commentedElem.stars != rateStar.rating{
+                
+//                PageCoffee.UPDATE_PAGE = true
                 postNewComment(text: commentTextView.text, rate: rateStar.rating)
             } else {
                 dismiss(animated: true, completion: nil)

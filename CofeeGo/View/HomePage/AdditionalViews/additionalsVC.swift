@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import XLPagerTabStrip
+import Toast_Swift
 
 
 class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSource,IndicatorInfoProvider{
@@ -20,6 +21,7 @@ class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSourc
 
     @IBOutlet weak var emptyAdditionalsView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var additional : [[String: Any]] = [[String: Any]]()
     var selects : [Bool] = [Bool]()
@@ -27,15 +29,19 @@ class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadingIndicator.startAnimating()
+        self.loadingIndicator.isHidden = false
         OrderData.tempAdditionals = OrderData.currAdditionals
         OrderData.countAdditionals = OrderData.tempAdditionals.count
         
         print(OrderData.countAdditionals)
         
+        
 //        tableView.isHidden = true
         getAdditionalsForSpot(spotId: "\(current_coffee_spot.id!)").responseJSON { (response) in
             switch response.result {
             case .success(let value):
+                
                 self.additional = value as! [[String : Any]]
                 if self.additional.count > 0{
                     self.selects = [Bool](repeating: false, count: self.additional.count)
@@ -43,6 +49,8 @@ class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSourc
                     self.tableView.isHidden = false
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
+                    self.loadingIndicator.stopAnimating()
+                    self.loadingIndicator.isHidden = true
                     self.tableView.reloadData()
                 }
                 else{
@@ -53,6 +61,8 @@ class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSourc
             case .failure(let error):
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
                 print(error)
+                self.loadingIndicator.isHidden = true
+                self.loadingIndicator.stopAnimating()
                 break
             }
         }
@@ -106,10 +116,12 @@ class additionalsVC: UIViewController , UITableViewDelegate,UITableViewDataSourc
 
         
          if selects[indexPath.row]{
-            if OrderData.countAdditionals < 3{
+            if OrderData.countAdditionals < 5{
                 OrderData.tempAdditionals.append(addElem)
                 OrderData.countAdditionals += 1
                 print("OrderData add")
+            } else{
+                // MAKE TOAST
             }
 //            cell.checkMark.isHidden = false
 //            selects[indexPath.row] = false

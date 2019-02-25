@@ -8,8 +8,9 @@
 
 import UIKit
 import SwiftyJSON
+import NVActivityIndicatorView
 
-class postOrderVC: UIViewController {
+class postOrderVC: UIViewController , NVActivityIndicatorViewable  {
     
     var currentTime : Int!
     var postedId : Int!
@@ -17,36 +18,85 @@ class postOrderVC: UIViewController {
     var order: ElementOrder!
     var orderItems: [ElementOrderItem]!
     
+    var delay: Bool = false
+    var reloadList: reloadProtocol!
+    
+    let buttonsColors = [
+        UIColor.init(red: 1, green: 111/255, blue: 0, alpha: 1),
+        
+        UIColor.init(white: 50/100, alpha: 1)]
+    
 //    @IBOutlet weak var timePicker: UITextField!
     @IBOutlet weak var commentView: UITextView!
     @IBOutlet weak var orderTimeLbl: UILabel!
     @IBOutlet weak var timePicker: UIDatePicker!
+    @IBOutlet weak var cancelInfoView: UIView!
+    @IBOutlet weak var orderDataView: ZFRippleButton!
+    @IBOutlet weak var takeaway: UIStackView!
+    @IBOutlet weak var takeAwaySwitch: UISwitch!
+    
+    @IBOutlet weak var cancelInfoSwitch: UISwitch!
+    @IBOutlet weak var cancelInfoAccept: UIButton!
+    @IBOutlet weak var cancelInfoCanceled: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        interface()
         
-        print(order)
+        if order != nil{
+            current_coffee_spot = getSpotById(spotId: order.coffee_spot)
+        }
+        
         currentTime = toMins(time: getTimeNow())
-        
-        self.hideKeyboardWhenTappedAround()
 
         let calendar = Calendar.current
         var components = DateComponents()
-        components.hour = 0
-        components.minute = 5
+        var compMax = DateComponents()
         
-        orderTimeLbl.text = getTime(minutes: currentTime + 5)
+        compMax.hour = 0
+        compMax.minute = Int(current_coffee_spot.max_order_time ?? "1440")
+        
+        components.hour = 0
+        components.minute = Int(current_coffee_spot.min_order_time ?? "5")
+        
+        orderTimeLbl.text = getTime(minutes: currentTime + Int(current_coffee_spot.min_order_time ?? "5")!)
         
         timePicker.setDate(calendar.date(from: components)!, animated: false)
         timePicker.date = calendar.date(from: components)!
         
         timePicker.minimumDate = calendar.date(from: components)!
+        timePicker.maximumDate = calendar.date(from: compMax)!
+        
+        
 //        timePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
 
 //        timePicker.text = "50"
         // Do any additional setup after loading the view.
     }
+    
+    func interface(){
+        
+        cornerRatio(view: commentView, ratio: 5, shadow: true)
+        cancelInfoAccept.backgroundColor = buttonsColors[0]
+        cancelInfoCanceled.backgroundColor = buttonsColors[0]
+        cornerRatio(view: cancelInfoAccept, ratio: 5, shadow: true)
+        cornerRatio(view: cancelInfoCanceled, ratio: 5, shadow: true)
+        cornerRatio(view: cancelInfoView, ratio: 5, shadow: true)
+        
+        self.hideKeyboardWhenTappedAround()
+        
+        if isCancelInfoAccepted(){
+            cancelInfoView.isHidden = true
+            orderDataView.alpha = 1
+        } else{
+            cancelInfoView.isHidden = false
+            orderDataView.alpha = 0
+        }
+        
+    }
+    
+    
     
     func dateChanged(_ sender: UIDatePicker) {
         let components = Calendar.current.dateComponents([.hour, .minute], from: sender.date)
@@ -78,7 +128,8 @@ class postOrderVC: UIViewController {
                 "comment": commentView.text!,
                 "order_time": orderTime,
                 "status": 1,
-                "canceled_barista_message": ""
+                "canceled_barista_message": "",
+                "takeaway" : takeAwaySwitch.isOn
             ]
         } else {
             orderToPost = [
@@ -90,7 +141,9 @@ class postOrderVC: UIViewController {
                 "comment": commentView.text!,
                 "order_time": orderTime,
                 "status": 1,
-                "canceled_barista_message": ""
+                "canceled_barista_message": "",
+                "takeaway" : takeAwaySwitch.isOn
+                
             ]
         }
         print("Post \(orderToPost)")
@@ -106,6 +159,7 @@ class postOrderVC: UIViewController {
                 break
             case .failure(let error):
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.stopAnimating()
                 print(error)
                 break
             }
@@ -143,6 +197,8 @@ class postOrderVC: UIViewController {
         }
         print(orderItemPost)
         
+        
+        
         var fin = false
         if order != nil{
             if pos != orderItems.count - 1{
@@ -166,6 +222,7 @@ class postOrderVC: UIViewController {
                 break
             case .failure(let error):
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.stopAnimating()
                 print(error)
                 break
             }
@@ -173,7 +230,7 @@ class postOrderVC: UIViewController {
     }
     
     //Move to orders tab
-    func finishOrder(){
+    func finishOrder(delay: Bool = false){
         order = nil
         self.dismiss(animated: true, completion: nil)
     }
@@ -181,15 +238,10 @@ class postOrderVC: UIViewController {
     
     @IBAction func confirmOrder(_ sender: Any) {
         print("Post")
-        
-        if order != nil{
-            current_coffee_spot = getSpotById(spotId: order.coffee_spot)
-        }
-        
+        startAnimating(type : NVActivityIndicatorType.ballPulseSync)
         currentTime = toMins(time: getTimeNow())
         print("Post \(getTime(minutes: currentTime!))")
-        
-        let date = self.timePicker.date
+                let date = self.timePicker.date
         let components = Calendar.current.dateComponents([.hour, .minute], from: date)
         let hour = components.hour!
         let minute = components.minute!
@@ -198,30 +250,59 @@ class postOrderVC: UIViewController {
         
         let pickedTime = getTime(minutes: (currentTime + orderTime) % 1440)
         
-        if timeInRange(time: pickedTime, startRange: current_coffee_spot.time_start!, endRange: current_coffee_spot.time_finish!){
-            print("Her")
-            if orderTime < 5{
-                // MAKE WARNING NOT LESS THAN 5
-            } else{
-                
-                if compareMins(first: currentTime, second: toMins(time: pickedTime)) == -1 {
-                    postOrder(date: getCurrentDate(), orderTime: pickedTime)
+        if !delay{
+            if order != nil{
+                current_coffee_spot = getSpotById(spotId: order.coffee_spot)
+            }
+            
+            
+            
+            if timeInRange(time: pickedTime, startRange: current_coffee_spot.time_start!, endRange: current_coffee_spot.time_finish!){
+                print("Her")
+                if orderTime < Int(current_coffee_spot.min_order_time) ?? 5{
+                    self.view.makeToast("Нельзя заказать раньше \(current_coffee_spot.min_order_time ?? "5") минут")
+                    self.stopAnimating()
                 } else {
-                    postOrder(date: getTomorrowDate(), orderTime: pickedTime)
+                    if compareMins(first: currentTime, second: toMins(time: pickedTime)) == -1 {
+                        postOrder(date: getCurrentDate(), orderTime: pickedTime)
+                    } else {
+                        postOrder(date: getTomorrowDate(), orderTime: pickedTime)
+                    }
+                    //                dismiss(animated: true, completion: nil)
+                    isOrdered = true
+                    performSegue(withIdentifier: "showFirstView", sender: nil)
+                    //
                 }
-                //                dismiss(animated: true, completion: nil)
-                isOrdered = true
-                performSegue(withIdentifier: "showFirstView", sender: nil)
-                
-                
-                //
+            } else {
+                print("gtn")
+                print("min \(current_coffee_spot.min_order_time!)")
+                self.view.makeToast("Кофейня работает (\(current_coffee_spot.time_start!) - \(current_coffee_spot.time_finish!))")
             }
         } else {
-            print("gtn")
-            self.view.makeToast("Кофейня работает (\(current_coffee_spot.time_start!) - \(current_coffee_spot.time_finish!))")
+            delayOrder(orderTime: pickedTime)
         }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
     }
     
+    func delayOrder(orderTime: String){
+        var orderToPost = [String : Any]()
+        orderToPost["delayed_order"] = true
+        orderToPost["order_time"] = orderTime
+        
+        patchOrder(orderId: "\(self.order.id!)", order: orderToPost).responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                print(value)
+                self.finishOrder(delay: true)
+                break
+            case .failure(let error):
+                self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                print(error)
+                self.stopAnimating()
+                break
+            }
+        }
+    }
     func tryReuploadOrder(){
         if self.order.id != nil{
             commentView.text = order.comment
@@ -231,6 +312,23 @@ class postOrderVC: UIViewController {
     @IBAction func timePicker(_ sender: UIDatePicker) {
         print(sender.date)
         dateChanged(sender)
+    }
+    
+    @IBAction func cancelInfoSwitched(_ sender: Any) {
+        if cancelInfoSwitch.isOn{
+            cancelInfoCanceled.isEnabled = false
+            cancelInfoCanceled.backgroundColor = buttonsColors[1]
+        } else{
+            cancelInfoCanceled.isEnabled = true
+            cancelInfoCanceled.backgroundColor = buttonsColors[0]
+        }
+    }
+    
+    @IBAction func cancelInfoAccepted(_ sender: Any) {
+        fadeView(view: orderDataView, delay: 0.2, isHiden: false)
+        cancelInfoView.isHidden = true
+        //        orderDataView.isHidden = false
+        setCancelInfoAccepted(accepted: cancelInfoSwitch.isOn)
     }
     
 }

@@ -123,6 +123,7 @@ class LoginVC: UIViewController, NVActivityIndicatorViewable {
     
     func finishSignIn(){
         self.stopAnimating()
+        setNotifsEnabled(enabled: true)
         performSegue(withIdentifier: "loginToFirstVC", sender: self)
     }
     

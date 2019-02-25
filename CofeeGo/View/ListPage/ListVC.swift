@@ -42,11 +42,15 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleLbl: UINavigationItem!
     
+    @IBOutlet weak var bottomLbl: UILabel!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var internetTrobleView: UIStackView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         
         if Connectivity.isConnectedToInternet() {
 //            loadingView.isHidden = false
@@ -58,7 +62,7 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
             tableView.addSubview(refresh)
             tableView.dataSource = self
             tableView.delegate = self
-            getOrders()
+            
         } else {
             
         }
@@ -69,7 +73,15 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
         if Connectivity.isConnectedToInternet() {
             tableView.isHidden = false
             internetTrobleView.isHidden = true
-            getOrders()
+            if header != nil{
+                getOrders()
+                bottomLbl.text = "Сделайте заказ и просмотрите его здесь"
+            } else {
+                loadingView.isHidden = false
+                bottomLbl.text = "Для того чтоб появился список заказов нужно войти"
+                stopAnimating()
+            }
+            
         } else {
             tableView.isHidden = true
             internetTrobleView.isHidden = false
@@ -107,9 +119,15 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
         cell.statusLbl.textColor = statusColors[order.status!]
         if order.status == 1 || order.status == 2{
             cell.cancelOrderBtn.isHidden = false
+            cornerRatio(view: cell.transferOrderBtn, ratio: 5, shadow: false)
+            cell.transferOrderBtn.isHidden = false
+            cell.transferOrderBtn.tag = indexPath.row
+            cell.transferOrderBtn.addTarget(self, action: #selector(transferOrder(sender:)), for: .touchUpInside)
+            cell.cancelOrderBtn.tag = indexPath.row
             cell.cancelOrderBtn.addTarget(self, action: #selector(cancelOrderBtn(sender:)), for: .touchUpInside)
         } else {
             cell.cancelOrderBtn.isHidden = true
+            cell.transferOrderBtn.isHidden = true
         }
         
         
@@ -124,18 +142,10 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
-    @objc func refreshPage(){
-        if Connectivity.isConnectedToInternet() {
-            getOrders()
-        }
-        
-    }
     
-    @objc func cancelOrderBtn(sender : UIButton){
-        showStandardDialog(tag: sender.tag)
-    }
     
     func getOrders(){
+        
         getOrdersForUser(userId: "\(current_coffee_user.id!)").responseJSON { (response) in
             
             switch response.result {
@@ -173,6 +183,7 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
     
     
     
+    
     func cancelOrder(order: ElementOrder, elementPos: Int){
         
         var orderToPost = [String : Any]()
@@ -189,10 +200,49 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
                 // MAKE CANCEL BUTTON HIDDEN
                 break
             case .failure(let error):
+                self.stopAnimating()
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
                 print(error)
                 break
             }
+        }
+    }
+    
+    func checkOrderStatus(_ id : Int, _ tag : Int, delay: Bool = false){
+        getOneOrder(orderId: "\(id)").responseJSON{ (response) in
+            switch response.result {
+            case .success(let value):
+                let oneOrder = ElementOrder(mas: value as! [String : Any])
+                
+                if oneOrder.status == 6 || oneOrder.status == 3{
+                    if delay{
+                        self.view.makeToast("Заказ уже нельзя перенести")
+                    } else{
+                        self.view.makeToast("Заказ уже нельзя отменить")
+                    }
+                } else {
+                    if delay{
+                        let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let cell = Storyboard.instantiateViewController(withIdentifier: "finishPostOrder") as! postOrderVC
+                        print(self.orders[tag])
+                        cell.delay = true
+                        cell.order = self.orders[tag]
+                        self.stopAnimating()
+                        
+                        self.present(cell, animated: true, completion: nil)
+                    } else{
+                        self.cancelOrder(order: self.orders[tag], elementPos: tag)
+                    }
+                }
+                
+                
+                break
+            case .failure(let error):
+                self.stopAnimating()
+                print(error)
+                break
+            }
+            
         }
     }
     
@@ -219,6 +269,7 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
                 self.tableView?.reloadData()
                 break
             case .failure(let error):
+                self.stopAnimating()
                 self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
                 print(error)
                 break
@@ -261,9 +312,10 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
     
     func showStandardDialog(animated: Bool = true , tag : Int) {
         
+//        let order = self.orders[tag]
         // Prepare the popup
         let title = ""
-        let message = "Вы уверены что хотите отменить заказ?"
+        let message = "Вы уверены, что хотите отменить заказ?"
         
         // Create the dialog
         let popup = PopupDialog(title: title,
@@ -283,7 +335,11 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
         
         // Create second button
         let buttonTwo = DefaultButton(title: "Да") {
-            self.cancelOrder(order: self.orders[tag], elementPos: tag)
+            self.startAnimating(type : NVActivityIndicatorType.ballPulseSync)
+            self.checkOrderStatus(self.orders[tag].id, tag)
+                //            self.cancelOrder(order: self.orders[tag], elementPos: tag)
+            
+            self.getOrders()
         }
         
         // Add buttons to dialog
@@ -292,4 +348,91 @@ class ListVC: UIViewController, UITableViewDataSource , UITableViewDelegate , NV
         // Present dialog
         self.present(popup, animated: animated, completion: nil)
     }
+    
+    func Time(tag: Int, delay: Bool = false){
+        print("TYT2")
+//        let currMins = toMins(time: getTimeNow())
+//        let mins = toMins(time: self.orders[tag].order_time)
+//
+//        var minsToOrder = mins - currMins
+//        if minsToOrder < 0{
+//            minsToOrder += 1440
+//        }
+        
+        let mins = toMins(time: self.orders[tag].order_time)
+        var beforeToday = true
+        var minsToOrder = mins - toMins(time: getTimeNow())
+        if !isToday(date: self.orders[tag].date!){
+            if isBeforeToday(date: self.orders[tag].date){
+                beforeToday = false
+            } else {
+                if minsToOrder < 0 {
+                    minsToOrder += 1440 // 1440 mins in 24 hrs
+                }
+            }
+        }
+        if beforeToday == true{
+            if minsToOrder > 3{
+                
+                if !delay{
+                    getOrders()
+                    showStandardDialog(tag: tag)
+                } else{
+                    self.checkOrderStatus(self.orders[tag].id, tag, delay: true)
+                }
+                
+            } else {
+                if orders[tag].status == 1{
+                    if !delay{
+                        getOrders()
+                        showStandardDialog(tag: tag)
+                    } else{
+                        self.checkOrderStatus(self.orders[tag].id, tag, delay: true)
+                    }
+                } else {
+                    if !delay{
+                    self.view.makeToast("Заказ уже нельзя отменить")
+                    } else{
+                        self.view.makeToast("Заказ уже нельзя перенести")
+                    }
+                }
+            }
+        } else {
+            if !delay{
+                self.view.makeToast("Заказ уже нельзя отменить")
+            } else{
+                self.view.makeToast("Заказ уже нельзя перенести")
+            }
+        }
+        
+    }
+    
+    @objc func loadList(){
+        //load data here
+        getOrders()
+        self.tableView.reloadData()
+    }
+    
+    @objc func refreshPage(){
+        if Connectivity.isConnectedToInternet() {
+            getOrders()
+        }
+        
+    }
+    
+    @objc func cancelOrderBtn(sender : UIButton){
+        
+//        let order = self.orders[sender.tag]
+        getOrders()
+        Time(tag: sender.tag)
+    }
+    
+    @objc func transferOrder(sender : UIButton){
+        
+        //        let order = self.orders[sender.tag]
+        getOrders()
+        Time(tag: sender.tag, delay: true)
+    }
+    
+    
 }
