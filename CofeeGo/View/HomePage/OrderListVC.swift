@@ -8,8 +8,9 @@
 
 import UIKit
 import Toast_Swift
+import NVActivityIndicatorView
 
-class OrderListVC: UIViewController,UITableViewDataSource,UITableViewDelegate{
+class OrderListVC: UIViewController,UITableViewDataSource,UITableViewDelegate,NVActivityIndicatorViewable{
     
     @IBOutlet weak var sliderViewStic: UIView!
     @IBOutlet weak var bottomBgView: UIView!
@@ -149,22 +150,45 @@ class OrderListVC: UIViewController,UITableViewDataSource,UITableViewDelegate{
 //        print(sender.tag)
     }
     @IBAction func makeOrderBtn(_ sender: Any) {
-        if header != nil{
-            if current_coffee_spot.is_active{
-                if OrderData.getAllPrice() != 0{
-                    performSegue(withIdentifier: "finishPostOrder", sender: self)
+        isOrderInProcess()
+    }
+    func isOrderInProcess(){
+        getActiveUserOrders(userId: "\(current_coffee_user.id!)").responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let orders = value as! [[String : Any]]
+                if orders.count == 0{
+                    //                    self.loadingView.isHidden = false
+//                    self.startAnimating(type : NVActivityIndicatorType.ballPulseSync)
+                    if header != nil{
+                        if current_coffee_spot.is_active{
+                            if OrderData.getAllPrice() != 0{
+                                self.performSegue(withIdentifier: "finishPostOrder", sender: self)
+                            } else{
+                                self.view.makeToast("Заказ пуст")
+                                print("ORDER IS EMPTY")
+                            }
+                        } else {
+                            self.view.makeToast("Кофейня закрыта")
+                            print("SPOT IS NOT ACTIVE")
+                        }
+                    } else {
+                        self.view.makeToast("Войдите чтоб заказать")
+                    }
+                    print("USER CAN ORDER")
                 } else{
-                    self.view.makeToast("Заказ пуст")
-                    print("ORDER IS EMPTY")
+                    self.view.makeToast("У вас есть незавершенный заказ")
+                    self.stopAnimating()
+                    print("USER HAS ORDERS")
                 }
-            } else {
-                self.view.makeToast("Кофейня закрыта")
-                print("SPOT IS NOT ACTIVE")
+                break
+            case .failure(let error):
+                self.view.makeToast("Произошла ошибка загрузки, попробуйте еще раз")
+                self.stopAnimating()
+                print(error)
+                break
             }
-        } else {
-            self.view.makeToast("Войдите чтоб заказать")
         }
-        
     }
     
     func interface(){

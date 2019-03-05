@@ -127,6 +127,7 @@ class postOrderVC: UIViewController , NVActivityIndicatorViewable  {
                 "username": current_coffee_user.first_name!,
                 "comment": commentView.text!,
                 "order_time": orderTime,
+                "is_online" : true,
                 "status": 1,
                 "canceled_barista_message": "",
                 "takeaway" : takeAwaySwitch.isOn
@@ -140,6 +141,7 @@ class postOrderVC: UIViewController , NVActivityIndicatorViewable  {
                 "username": current_coffee_user.first_name!,
                 "comment": commentView.text!,
                 "order_time": orderTime,
+                "is_online" : true,
                 "status": 1,
                 "canceled_barista_message": "",
                 "takeaway" : takeAwaySwitch.isOn
@@ -232,7 +234,9 @@ class postOrderVC: UIViewController , NVActivityIndicatorViewable  {
     //Move to orders tab
     func finishOrder(delay: Bool = false){
         order = nil
-        self.dismiss(animated: true, completion: nil)
+        isOrdered = true
+        performSegue(withIdentifier: "showFirstView", sender: nil)
+//        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -245,18 +249,18 @@ class postOrderVC: UIViewController , NVActivityIndicatorViewable  {
         let components = Calendar.current.dateComponents([.hour, .minute], from: date)
         let hour = components.hour!
         let minute = components.minute!
-        
+
         let orderTime = hour * 60 + minute
-        
+
         let pickedTime = getTime(minutes: (currentTime + orderTime) % 1440)
-        
+
         if !delay{
             if order != nil{
                 current_coffee_spot = getSpotById(spotId: order.coffee_spot)
             }
-            
-            
-            
+
+
+
             if timeInRange(time: pickedTime, startRange: current_coffee_spot.time_start!, endRange: current_coffee_spot.time_finish!){
                 print("Her")
                 if orderTime < Int(current_coffee_spot.min_order_time) ?? 5{
@@ -268,9 +272,10 @@ class postOrderVC: UIViewController , NVActivityIndicatorViewable  {
                     } else {
                         postOrder(date: getTomorrowDate(), orderTime: pickedTime)
                     }
-                    //                dismiss(animated: true, completion: nil)
+//                    //                dismiss(animated: true, completion: nil)
                     isOrdered = true
                     performSegue(withIdentifier: "showFirstView", sender: nil)
+        
                     //
                 }
             } else {

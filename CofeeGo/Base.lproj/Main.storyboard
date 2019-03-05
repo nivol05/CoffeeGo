@@ -4417,7 +4417,6 @@
                         <outlet property="statusLbl" destination="Ns8-2i-OvB" id="WEb-sO-4fC"/>
                         <outlet property="tableView" destination="9iq-1e-aAm" id="aqE-gm-sv8"/>
                         <outlet property="userCommentLbl" destination="3Jw-9k-M53" id="T1q-2b-n6C"/>
-                        <segue destination="OBb-WM-e3N" kind="presentation" identifier="test" id="HnC-ef-Ca2"/>
                         <segue destination="2jM-5V-tvO" kind="show" id="ATf-6Q-zyd"/>
                     </connections>
                 </viewController>
@@ -4493,29 +4492,29 @@
             <objects>
                 <viewController storyboardIdentifier="finishPostOrder" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" id="OBb-WM-e3N" customClass="postOrderVC" customModule="CofeeGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pPP-D1-T7q">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Orm-Up-iv6">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="792"/>
                                 <connections>
                                     <action selector="cancelOrder:" destination="OBb-WM-e3N" eventType="touchUpInside" id="Xwr-u5-tCp"/>
                                 </connections>
                             </button>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FsQ-Mt-yCY" customClass="ZFRippleButton" customModule="CofeeGo" customModuleProvider="target">
-                                <rect key="frame" x="15" y="70" width="384" height="616"/>
+                                <rect key="frame" x="15" y="70" width="384" height="692"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="fwg-Vt-6Ss">
-                                        <rect key="frame" x="20" y="30" width="344" height="524.33333333333337"/>
+                                        <rect key="frame" x="20" y="30" width="344" height="596.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Время, через которое Вы будете готовы забрать заказ" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="uxb-fC-BNK">
-                                                <rect key="frame" x="0.0" y="0.0" width="344" height="55.333333333333336"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="344" height="62.333333333333336"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <datePicker contentMode="scaleToFill" verticalCompressionResistancePriority="749" enabled="NO" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="cTP-DT-G96">
-                                                <rect key="frame" x="12" y="62.333333333333343" width="320" height="177"/>
+                                                <rect key="frame" x="12" y="70" width="320" height="216"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="562605785.31419098">
                                                     <!--2018-10-30 15:23:05 +0000-->
                                                 </date>
@@ -4525,7 +4524,7 @@
                                                 </connections>
                                             </datePicker>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="oDM-7c-fzX">
-                                                <rect key="frame" x="0.0" y="246.33333333333331" width="344" height="23"/>
+                                                <rect key="frame" x="0.0" y="293.66666666666669" width="344" height="23"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Заказ будет готов в" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXy-0W-Ntd">
                                                         <rect key="frame" x="0.0" y="0.0" width="255.66666666666666" height="23"/>
@@ -4545,7 +4544,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ahS-KK-nTf">
-                                                <rect key="frame" x="0.0" y="276.33333333333331" width="344" height="31"/>
+                                                <rect key="frame" x="0.0" y="324.33333333333331" width="344" height="31"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="С собой" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twk-mk-xeh">
                                                         <rect key="frame" x="0.0" y="0.0" width="289" height="31"/>
@@ -4559,13 +4558,13 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Комментарий:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b6R-iW-4om">
-                                                <rect key="frame" x="0.0" y="314.33333333333331" width="344" height="18"/>
+                                                <rect key="frame" x="0.0" y="363" width="344" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2vt-EG-p89">
-                                                <rect key="frame" x="0.0" y="339.33333333333331" width="344" height="184.99999999999994"/>
+                                                <rect key="frame" x="0.0" y="388.66666666666669" width="344" height="207.66666666666669"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
@@ -4585,10 +4584,10 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="IWV-Cx-PtA">
-                                        <rect key="frame" x="10" y="569.33333333333337" width="364" height="36.666666666666629"/>
+                                        <rect key="frame" x="10" y="641.33333333333337" width="364" height="40.666666666666629"/>
                                         <subviews>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6tR-ns-GYE" customClass="ZFRippleButton" customModule="CofeeGo" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="179.66666666666666" height="36.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="179.66666666666666" height="40.666666666666664"/>
                                                 <color key="backgroundColor" red="1" green="0.43529411759999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Отменить" backgroundImage="gradient">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4610,7 +4609,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yR7-YS-SiI" customClass="ZFRippleButton" customModule="CofeeGo" customModuleProvider="target">
-                                                <rect key="frame" x="187.66666666666663" y="0.0" width="176.33333333333337" height="36.666666666666664"/>
+                                                <rect key="frame" x="187.66666666666663" y="0.0" width="176.33333333333337" height="40.666666666666664"/>
                                                 <color key="backgroundColor" red="1" green="0.43529411759999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Заказать" backgroundImage="gradient">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4661,7 +4660,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fWz-0N-neI">
-                                <rect key="frame" x="30" y="268" width="354" height="200"/>
+                                <rect key="frame" x="30" y="306" width="354" height="200"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ghV-tY-2Y8">
                                         <rect key="frame" x="10" y="20" width="334" height="170"/>
@@ -6231,7 +6230,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Eg3-hc-5cU"/>
-        <segue reference="HnC-ef-Ca2"/>
         <segue reference="wQt-np-9Et"/>
         <segue reference="MFy-2d-ZJC"/>
     </inferredMetricsTieBreakers>
