@@ -89,6 +89,9 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable, CLLocati
         
 
     }
+    func didPanelMove(panelOffset: CGFloat) {
+        cornerRatio(view: parrent, ratio: 20 - (panelOffset * 20), shadow: false)
+    }
     func didPanelExpand(){
         print("Expanded")
     }
@@ -232,9 +235,7 @@ GMSMapViewDelegate,CTBottomSlideDelegate , NVActivityIndicatorViewable, CLLocati
         
     }
     
-    func didPanelMove(panelOffset: CGFloat) {
-        cornerRatio(view: parrent, ratio: 20 - (panelOffset * 20), shadow: false)
-    }
+    
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         fadeView(view: loadingCommentsView, delay: 0.2, isHiden: false)
         if let poiItem = marker.userData as? POIItem {
